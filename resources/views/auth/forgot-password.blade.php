@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo class="w-20 h-20 fill-transparent stroke-current stroke-1 text-teal-600" />
             </a>
         </x-slot>
 
@@ -22,7 +22,6 @@
             <!-- Email Address -->
             <div>
                 <x-input-label for="email" :value="__('Email')" />
-
                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
@@ -32,5 +31,9 @@
                 </x-primary-button>
             </div>
         </form>
+
+        <x-slot name="credits">
+            @include('layouts.credits')
+        </x-slot>
     </x-auth-card>
 </x-guest-layout>

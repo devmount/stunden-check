@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo class="w-20 h-20 fill-transparent stroke-current stroke-1 text-teal-600" />
             </a>
         </x-slot>
 
@@ -35,5 +35,9 @@
                 </button>
             </form>
         </div>
+
+        <x-slot name="credits">
+            @include('layouts.credits')
+        </x-slot>
     </x-auth-card>
 </x-guest-layout>

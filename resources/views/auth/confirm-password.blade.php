@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo class="w-20 h-20 fill-transparent stroke-current stroke-1 text-teal-600" />
             </a>
         </x-slot>
 
@@ -19,11 +19,7 @@
             <!-- Password -->
             <div>
                 <x-input-label for="password" :value="__('Password')" />
-
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+                <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="flex justify-end mt-4">
@@ -32,5 +28,9 @@
                 </x-primary-button>
             </div>
         </form>
+
+        <x-slot name="credits">
+            @include('layouts.credits')
+        </x-slot>
     </x-auth-card>
 </x-guest-layout>
