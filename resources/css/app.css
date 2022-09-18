@@ -1,0 +1,9 @@
+.app-logo {
+  stroke-width: 1.5;
+  stroke: #2563eb;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 3rem;
+  height: 3rem;
+}
