@@ -1,4 +1,4 @@
-<div class="flex justify-between mt-4 sm:items-center">
+<div class="flex justify-between mt-4 sm:items-center px-2">
     <div class="text-center text-sm text-gray-500 sm:text-left">
         <div class="flex items-center">
             <svg viewBox="0 0 24 24" class="stroke-current stroke-2 fill-transparent -mt-px w-5 h-5 text-gray-400">
