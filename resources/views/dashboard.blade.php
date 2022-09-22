@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Übersicht Stunden') }}
             </h2>
-            <x-primary-button>
+            <x-primary-button class="transition duration-150 ease-in-out" data-target-modal="new-position">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <line x1="12" y1="5" x2="12" y2="19" />
@@ -92,4 +92,16 @@
             </div>
         </div>
     </div>
+    {{-- dialog to add new position --}}
+    <x-modal id="new-position">
+        <x-slot name="title">
+            Stunden schreiben
+        </x-slot>
+        Hier kann eine neue Position angelegt werden.
+        <x-slot name="action">
+            <x-primary-button>
+                {{ __('Speichern') }}
+            </x-primary-button>
+        </x-slot>
+    </x-modal>
 </x-app-layout>
