@@ -10,7 +10,7 @@
         x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="transform opacity-100"
         x-transition:leave-end="transform opacity-0"
-        class="bg-slate-800/[.5] fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto flex items-center justify-center"
+        class="bg-slate-800/[.5] fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto flex items-center justify-center z-10"
         tabindex="-1"
         aria-hidden="true"
         style="display: none;"
