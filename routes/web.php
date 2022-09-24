@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',        fn () => view('dashboard'))->middleware(['auth'])->name('dashboard');
-Route::get('/profile', fn () => view('profile')  )->middleware(['auth'])->name('profile');
+Route::get('/',         fn () => view('dashboard'))->middleware(['auth'])->name('dashboard');
+Route::get('/accounts', fn () => view('accounts') )->middleware(['auth'])->name('accounts');
+Route::get('/profile',  fn () => view('profile')  )->middleware(['auth'])->name('profile');
 
 require __DIR__.'/auth.php';
