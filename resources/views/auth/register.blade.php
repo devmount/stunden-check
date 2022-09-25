@@ -14,34 +14,54 @@
             @csrf
 
             <!-- First Name -->
-            <div>
-                <x-input-label for="firstname" :value="__('Vorname')" />
-                <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus />
-            </div>
-
+            <x-text-input
+                id="firstname"
+                class="block w-full"
+                type="text"
+                name="firstname"
+                :label="__('Vorname')"
+                :value="old('firstname')"
+                required
+                autofocus
+            />
             <!-- Last Name -->
-            <div class="mt-4">
-                <x-input-label for="lastname" :value="__('Nachname')" />
-                <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required autofocus />
-            </div>
-
+            <x-text-input
+                id="lastname"
+                class="block mt-4 w-full"
+                type="text"
+                name="lastname"
+                :label="__('Nachname')"
+                :value="old('lastname')"
+                required
+            />
             <!-- Email Address -->
-            <div class="mt-4">
-                <x-input-label for="email" :value="__('E-Mail-Adresse')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
+            <x-text-input
+                id="email"
+                class="block mt-4 w-full"
+                type="email"
+                name="email"
+                :label="__('E-Mail-Adresse')"
+                :value="old('email')"
+                required
+            />
             <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Passwort')" />
-                <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
+            <x-text-input
+                id="password"
+                class="block mt-4 w-full"
+                type="password"
+                name="password"
+                :label="__('Passwort')"
+                required
+            />
             <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Passwort bestätigen')" />
-                <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
-            </div>
+            <x-text-input
+                id="password_confirmation"
+                class="block mt-4 w-full"
+                type="password"
+                name="password_confirmation"
+                :label="__('Passwort bestätigen')"
+                required
+            />
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">

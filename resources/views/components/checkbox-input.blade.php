@@ -1,6 +1,6 @@
 @props(['label'])
 
-<label {{ $attributes->merge(['class' => 'inline-flex items-center']) }}>
+<label {{ $attributes->merge(['class' => 'inline-flex items-center text-sm text-gray-700']) }}>
 	<input
 		id="{{ $attributes['for'] }}"
 		type="checkbox"

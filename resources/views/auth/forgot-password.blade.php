@@ -3,12 +3,14 @@
         <x-slot name="logo">
             <a href="/" class="flex items-center">
                 <x-application-logo class="w-14 h-14 sm:w-20 sm:h-20 fill-transparent stroke-current stroke-1 text-teal-600" />
-                <span class="text-teal-600 text-3xl sm:text-5xl">{{ config('app.name', 'StundenCheck') }}</span>
+                <span class="text-teal-600 text-3xl sm:text-5xl">
+                    {{ config('app.name', 'StundenCheck') }}
+                </span>
             </a>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('Du hast dein Passwort vergessen? Kein Problem. Gib deine registrierte E-Mail-Adresse an und du bekommst eine E-Mail die einen Link zum zurücksetzen deines Passwortes enthält.') }}
         </div>
 
         <!-- Session Status -->
@@ -21,14 +23,20 @@
             @csrf
 
             <!-- Email Address -->
-            <div>
-                <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
+            <x-text-input
+                id="email"
+                class="block mt-1 w-full"
+                type="email"
+                name="email"
+                :label="__('E-Mail-Adresse')"
+                :value="old('email')"
+                required
+                autofocus
+            />
 
             <div class="flex items-center justify-end mt-4">
                 <x-primary-button>
-                    {{ __('Email Password Reset Link') }}
+                    {{ __('Passwort-Zurücksetzen Link zusenden') }}
                 </x-primary-button>
             </div>
         </form>
