@@ -83,7 +83,6 @@
       name="firstname2"
       :value="old('firstname1')"
       :label="__('Vorname')"
-      required
     />
     <!-- 2. lastname -->
     <x-text-input
@@ -92,7 +91,6 @@
       name="lastname2"
       :value="old('lastname1')"
       :label="__('Nachname')"
-      required
     />
     <!-- 2. email -->
     <x-text-input
@@ -101,7 +99,6 @@
       name="email2"
       :value="old('email1')"
       :label="__('E-Mail-Adresse')"
-      required
     />
     <!-- 2. isAdmin -->
     <x-checkbox-input
