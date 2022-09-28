@@ -13,7 +13,7 @@
 			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-b border-gray-200">
 
 				<div class="mb-4">
-					Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.
+					{{ __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.') }}
 				</div>
 
 				<form x-ref="newAccount" method="POST" action="{{ route('accounts-add') }}">

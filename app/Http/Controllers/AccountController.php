@@ -80,6 +80,6 @@ class AccountController extends Controller
 			]);
 		}
 
-		return redirect()->route('accounts');
+		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich angelegt.');
 	}
 }

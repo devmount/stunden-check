@@ -67,36 +67,15 @@
 							</td>
 							<td>
 								<div class="flex flex-row">
-									{{-- dialog to edit existing account --}}
-									<x-modal class="max-w-3xl">
-										<x-slot name="trigger">
-											<button class="transition duration-150 ease-in-out">
-												<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
-													<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-													<path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
-													<path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
-													<line x1="16" y1="5" x2="19" y2="8" />
-												</svg>
-											</button>
-										</x-slot>
-
-										<x-slot name="title">
-											Konto und Personen bearbeiten
-										</x-slot>
-
-										<div class="mb-4">Nimm hier Änderungen am Konto und den zugeordneten Personen vor.</div>
-
-										<form id="edit-account-form" method="POST" action="{{ route('dashboard') }}">
-											@csrf
-											@include('forms.account-formfields')
-										</form>
-
-										<x-slot name="action">
-											<x-primary-button onclick="event.preventDefault();document.getElementById('edit-account-form').submit();">
-												{{ __('Speichern') }}
-											</x-primary-button>
-										</x-slot>
-									</x-modal>
+									{{-- link to edit existing account --}}
+									<button onclick="window.location='{{ route('accounts-add') }}'" class="transition duration-150 ease-in-out">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+											<path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+											<path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+											<line x1="16" y1="5" x2="19" y2="8" />
+										</svg>
+									</button>
 
 									{{-- dialog to delete existing account --}}
 									<x-modal class="max-w-lg">
@@ -132,4 +111,8 @@
 			</div>
 		</div>
 	</div>
+
+	@if (session('status'))
+		<x-toast>{{ session('status') }}</x-toast>
+	@endif
 </x-app-layout>
