@@ -13,16 +13,6 @@
 					Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.
 				</div>
 
-				@if ($errors->any())
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
-
 				<form x-ref="newAccount" method="POST" action="{{ route('accounts-add') }}">
 					@csrf
 					@include('forms.account-formfields')

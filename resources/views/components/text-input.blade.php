@@ -6,14 +6,20 @@
 ])
 
 <label class="{{ $attributes['class'] }}">
-	<span class="mb-1 text-sm text-gray-700">{{ $label ?? $slot }}</span>
+	<span class="mb-1 text-sm text-gray-700">
+		{{ $label ?? $slot }}
+		@if ($required) <span class="text-red-400">*</span> @endif
+	</span>
 	<input
 		{{ $disabled ? 'disabled' : '' }}
-		class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+		class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50 @error($attributes['name']) border-red-400 @enderror"
 		type="{{ $attributes['type'] }}"
 		name="{{ $attributes['name'] }}"
-		value="{{ $attributes[':value'] }}"
+		value="{{ $attributes['value'] }}"
 		{{ $required ? 'required' : '' }}
 		{{ $autofocus ? 'autofocus' : '' }}
 	/>
 </label>
+@error($attributes['name'])
+	<div class="text-sm text-red-600">{{ $message }}</div>
+@enderror

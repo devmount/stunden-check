@@ -62,24 +62,22 @@ class AccountController extends Controller
 			'target_hours'        => $request->target_hours,
 		]);
 
-		$user1 = new User([
+		$account->users()->create([
 			'firstname'           => $request->firstname1,
 			'lastname'            => $request->lastname1,
 			'email'               => $request->email1,
 			'password'            => Hash::make('test'),
 			'is_admin'            => $request->has('is_admin1'),
 		]);
-		$account->users()->save($user1);
 		
 		if ($request->firstname2 && $request->lastname2 && $request->email2) {
-			$user2 = User::create([
+			$account->users()->create([
 				'firstname'         => $request->firstname2,
 				'lastname'          => $request->lastname2,
 				'email'             => $request->email2,
 				'password'          => Hash::make('test'),
 				'is_admin'          => $request->has('is_admin2'),
 			]);
-			$account->users()->save($user2);
 		}
 
 		return redirect()->route('accounts');

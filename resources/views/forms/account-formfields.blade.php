@@ -65,9 +65,9 @@
       :label="__('E-Mail-Adresse')"
       required
     />
-    <!-- 1. is_admin -->
+    <!-- 1. isAdmin -->
     <x-checkbox-input
-      for="is_admin1"
+      for="isAdmin1"
       :label="__('Administrator')"
       class="mt-4"
     />
@@ -75,7 +75,7 @@
 
   <!-- second person -->
   <div class="w-1/2">
-    <h3>2. Person</h3>
+    <h3>2. Person (optional)</h3>
     <!-- 2. firstname -->
     <x-text-input
       class="mt-4 block w-full"
@@ -100,9 +100,9 @@
       :value="old('email1')"
       :label="__('E-Mail-Adresse')"
     />
-    <!-- 2. is_admin -->
+    <!-- 2. isAdmin -->
     <x-checkbox-input
-      for="is_admin2"
+      for="isAdmin2"
       :label="__('Administrator')"
       class="mt-4"
     />
