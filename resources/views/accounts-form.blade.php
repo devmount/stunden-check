@@ -1,7 +1,10 @@
 <x-app-layout>
 	<x-slot name="header">
 		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
-			<a href="{{ route('accounts') }}">{{ __('Übersicht Konten') }}</a> / {{ __('Konto und Personen anlegen') }}
+			<a href="{{ route('accounts') }}" class="transition text-teal-600 hover:text-teal-400">
+				{{ __('Übersicht Konten') }}
+			</a>
+			/ {{ __('Konto und Personen anlegen') }}
 		</h2>
 	</x-slot>
 
