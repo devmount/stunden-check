@@ -32,7 +32,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'isAdmin',
+        'is_admin',
+        'account_id',
     ];
 
     /**
@@ -43,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user that owns the phone.
+     */
+    public function account()
+    {
+        return $this->belongsTo('App\Models\Account');
+    }
 }

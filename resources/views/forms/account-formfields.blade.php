@@ -5,9 +5,9 @@
     :label="__('Aktiv')"
     class="w-1/2"
   />
-  <!-- separateAccounting -->
+  <!-- separate_accounting -->
   <x-checkbox-input
-    for="separateAccounting"
+    for="separate_accounting"
     :label="__('Getrennte Abrechnung')"
     class="w-1/2"
   />
@@ -27,8 +27,8 @@
   <x-text-input
     class="block w-1/2"
     type="number"
-    name="targetHours"
-    :value="old('targetHours')"
+    name="target_hours"
+    :value="old('target_hours')"
     :label="__('Abweichende Mindestanzahl Pflichtstunden')"
     required
   />
@@ -65,9 +65,9 @@
       :label="__('E-Mail-Adresse')"
       required
     />
-    <!-- 1. isAdmin -->
+    <!-- 1. is_admin -->
     <x-checkbox-input
-      for="isAdmin1"
+      for="is_admin1"
       :label="__('Administrator')"
       class="mt-4"
     />
@@ -100,9 +100,9 @@
       :value="old('email1')"
       :label="__('E-Mail-Adresse')"
     />
-    <!-- 2. isAdmin -->
+    <!-- 2. is_admin -->
     <x-checkbox-input
-      for="isAdmin2"
+      for="is_admin2"
       :label="__('Administrator')"
       class="mt-4"
     />

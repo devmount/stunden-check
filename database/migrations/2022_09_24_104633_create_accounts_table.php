@@ -18,29 +18,29 @@ return new class extends Migration
             $table->id();
             $table->boolean('active')->default('1');
             $table->date('start');
-            $table->decimal('targetHours', $precision = 8, $scale = 2);
-            $table->boolean('separateAccounting')->default('0');
+            $table->decimal('target_hours', $precision = 8, $scale = 2);
+            $table->boolean('separate_accounting')->default('0');
             $table->timestamps();
         });
         Schema::table('users', function($table) {
-            $table->unsignedBigInteger('accountId')->nullable();
-            $table->foreign('accountId')->references('id')->on('accounts');
+            $table->unsignedBigInteger('account_id')->nullable();
+            $table->foreign('account_id')->references('id')->on('accounts');
         });
 
         // insert admin account on create
         DB::table('accounts')->insert([
             'active' => true,
             'start' => now(),
-            'targetHours' => 24,
-            'separateAccounting' => false,
+            'target_hours' => 24,
+            'separate_accounting' => false,
         ]);
         DB::table('users')->insert([
             'firstname' => 'Ada',
             'lastname' => 'Admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('Joh.3,16'),
-            'isAdmin' => true,
-            'accountId' => 1,
+            'is_admin' => true,
+            'account_id' => 1,
         ]);
     }
 
@@ -53,7 +53,7 @@ return new class extends Migration
     {
         DB::table('users')->truncate();
         Schema::table('users', function($table) {
-            $table->dropColumn('accountId');
+            $table->dropColumn('account_id');
         });
         Schema::dropIfExists('accounts');
     }

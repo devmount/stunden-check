@@ -17,8 +17,8 @@ class Account extends Model
     protected $fillable = [
         'active',
         'start',
-        'targetHours',
-        'separateAccounting',
+        'target_hours',
+        'separate_accounting',
     ];
 
     /**
@@ -26,6 +26,6 @@ class Account extends Model
      */
     public function users()
     {
-        return $this->hasMany('App\Models\User','accountId','id');
+        return $this->hasMany('App\Models\User','account_id','id');
     }
 }

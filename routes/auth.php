@@ -34,5 +34,6 @@ Route::middleware('auth')->group(function () {
 	Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 	// accounts administration
 	Route::get('accounts', [AccountController::class, 'index'])->name('accounts');
-	Route::post('accounts', [AccountController::class, 'store']);
+	Route::get('accounts/add', [AccountController::class, 'create'])->name('accounts-add');
+	Route::post('accounts/add', [AccountController::class, 'store']);
 });

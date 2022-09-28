@@ -11,37 +11,14 @@
 				<div class="px-6 pb-4 flex justify-between items-center">
 					<div>Aktive Konten</div>
 					{{-- dialog to add new account --}}
-					<x-modal class="max-w-3xl">
-						<x-slot name="trigger">
-							<x-primary-button class="transition duration-150 ease-in-out">
-								<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-									<line x1="12" y1="5" x2="12" y2="19" />
-									<line x1="5" y1="12" x2="19" y2="12" />
-								</svg>
-								{{ __('Neues Konto') }}
-							</x-primary-button>
-						</x-slot>
-
-						<x-slot name="title">
-							Konto und Personen anlegen
-						</x-slot>
-
-						<div class="mb-4">
-							Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.
-						</div>
-
-						<form x-ref="newAccount" method="POST" action="{{ route('accounts') }}">
-							@csrf
-							@include('forms.account-formfields')
-						</form>
-
-						<x-slot name="action">
-							<x-primary-button @click="$refs.newAccount.reportValidity() ? $refs.newAccount.submit() : null">
-								{{ __('Speichern') }}
-							</x-primary-button>
-						</x-slot>
-					</x-modal>
+					<x-primary-button onclick="window.location='{{ route('accounts-add') }}'" class="transition duration-150 ease-in-out">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+							<line x1="12" y1="5" x2="12" y2="19" />
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+						{{ __('Neues Konto') }}
+					</x-primary-button>
 				</div>
 				<table class="items-center bg-transparent w-full border-collapse">
 					<thead>
