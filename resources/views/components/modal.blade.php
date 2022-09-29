@@ -1,5 +1,5 @@
 <div class="relative" x-data="{ open: false }">
-	<div @click="open = ! open">
+	<div @click="open = ! open" class="flex">
 		{{ $trigger }}
 	</div>
 	<div

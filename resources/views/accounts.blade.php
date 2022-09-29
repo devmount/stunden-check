@@ -48,8 +48,12 @@
 							<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
 								<div class="flex flex-row gap-4">
 								@foreach ($account->users as $user)
-									<div class="flex flex-row">
-										<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-1" viewBox="0 0 24 24">
+									<div class="flex flex-row" title="{{ $user->is_admin ? 'Administrator' : '' }}">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="w-6 h-6 mr-2 fill-transparent {{ $user->is_admin ? 'stroke-teal-600' : 'stroke-current' }} stroke-1"
+											viewBox="0 0 24 24"
+										>
 											<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 											<circle cx="12" cy="7" r="4" />
 											<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
@@ -68,7 +72,7 @@
 							<td>
 								<div class="flex flex-row">
 									{{-- link to edit existing account --}}
-									<button onclick="window.location='{{ route('accounts-add') }}'" class="transition duration-150 ease-in-out">
+									<button onclick="window.location='{{ route('accounts-edit', $account->id) }}'" class="transition duration-150 ease-in-out">
 										<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
 											<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 											<path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />

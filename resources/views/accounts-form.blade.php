@@ -4,7 +4,7 @@
 			<a href="{{ route('accounts') }}" class="transition text-teal-600 hover:text-teal-400">
 				{{ __('Übersicht Konten') }}
 			</a>
-			/ {{ __('Konto und Personen anlegen') }}
+			/ {{ isset($account) ? __('Konto und Personen bearbeiten') : __('Konto und Personen anlegen') }}
 		</h2>
 	</x-slot>
 
@@ -13,10 +13,12 @@
 			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-b border-gray-200">
 
 				<div class="mb-4">
-					{{ __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.') }}
+					{{ isset($accounts)
+						? __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.')
+						: __('Passe hier die Daten des Kontos und der zugehörigen Personen an.') }}
 				</div>
 
-				<form x-ref="newAccount" method="POST" action="{{ route('accounts-add') }}">
+				<form method="POST" action="{{ isset($account) ? route('accounts-edit', $account->id) : route('accounts-add') }}">
 					@csrf
 					@include('forms.account-formfields')
 

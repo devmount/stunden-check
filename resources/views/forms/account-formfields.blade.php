@@ -1,15 +1,17 @@
 <div class="flex gap-4">
   <!-- active -->
   <x-checkbox-input
-    for="active"
-    :label="__('Aktiv')"
+    name="active"
     class="w-1/2"
+    :label="__('Aktiv')"
+    :checked="old('active', isset($account) ? $account->active : false)"
   />
   <!-- separate_accounting -->
   <x-checkbox-input
-    for="separate_accounting"
-    :label="__('Getrennte Abrechnung')"
+    name="separate_accounting"
     class="w-1/2"
+    :label="__('Getrennte Abrechnung')"
+    :checked="old('separate_accounting', isset($account) ? $account->separate_accounting : false)"
   />
 </div>
 
@@ -19,7 +21,7 @@
     class="block w-1/2"
     type="date"
     name="start"
-    :value="old('start')"
+    :value="old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : null)"
     :label="__('Datum Einstieg')"
     required
   />
@@ -28,7 +30,7 @@
     class="block w-1/2"
     type="number"
     name="target_hours"
-    :value="old('target_hours')"
+    :value="old('target_hours', isset($account) ? $account->target_hours : null)"
     :label="__('Abweichende Mindestanzahl Pflichtstunden')"
     required
   />
@@ -43,7 +45,7 @@
       class="mt-4 block w-full"
       type="text"
       name="firstname1"
-      :value="old('firstname1')"
+      :value="old('firstname1', isset($account) ? $account->users[0]->firstname : null)"
       :label="__('Vorname')"
       required
     />
@@ -52,7 +54,7 @@
       class="mt-4 block w-full"
       type="text"
       name="lastname1"
-      :value="old('lastname1')"
+      :value="old('lastname1', isset($account) ? $account->users[0]->lastname : null)"
       :label="__('Nachname')"
       required
     />
@@ -61,15 +63,16 @@
       class="mt-4 block w-full"
       type="email"
       name="email1"
-      :value="old('email1')"
+      :value="old('email1', isset($account) ? $account->users[0]->email : null)"
       :label="__('E-Mail-Adresse')"
       required
     />
-    <!-- 1. isAdmin -->
+    <!-- 1. is_admin -->
     <x-checkbox-input
-      for="isAdmin1"
+      name="is_admin1"
+      class="block mt-4"
       :label="__('Administrator')"
-      class="mt-4"
+      :checked="old('is_admin1', isset($account) ? $account->users[0]->is_admin : false)"
     />
   </div>
 
@@ -81,7 +84,7 @@
       class="mt-4 block w-full"
       type="text"
       name="firstname2"
-      :value="old('firstname1')"
+      :value="old('firstname2', isset($account) && isset($account->users[1]) ? $account->users[1]->firstname : null)"
       :label="__('Vorname')"
     />
     <!-- 2. lastname -->
@@ -89,7 +92,7 @@
       class="mt-4 block w-full"
       type="text"
       name="lastname2"
-      :value="old('lastname1')"
+      :value="old('lastname2', isset($account) && isset($account->users[1]) ? $account->users[1]->lastname : null)"
       :label="__('Nachname')"
     />
     <!-- 2. email -->
@@ -97,14 +100,15 @@
       class="mt-4 block w-full"
       type="email"
       name="email2"
-      :value="old('email1')"
+      :value="old('email2', isset($account) && isset($account->users[1]) ? $account->users[1]->email : null)"
       :label="__('E-Mail-Adresse')"
     />
-    <!-- 2. isAdmin -->
+    <!-- 2. is_admin -->
     <x-checkbox-input
-      for="isAdmin2"
+      name="is_admin2"
+      class="block mt-4"
       :label="__('Administrator')"
-      class="mt-4"
+      :checked="old('is_admin2', isset($account) && isset($account->users[1]) ? $account->users[1]->is_admin : false)"
     />
   </div>
 </div>
