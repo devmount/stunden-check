@@ -16,8 +16,11 @@ class AccountController extends Controller
 	 */
 	public function index()
 	{
-		$accounts = Account::with('users')->get();
-		return view('accounts')->with('accounts', $accounts);
+		$activeAccounts = Account::active()->with('users')->get();
+		$archivedAccounts = Account::archived()->with('users')->get();
+		return view('accounts')
+			->with('activeAccounts', $activeAccounts)
+			->with('archivedAccounts', $archivedAccounts);
 	}
 
 	/**
@@ -147,6 +150,41 @@ class AccountController extends Controller
 		$account->save();
 
 		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich archiviert.');
+	}
+
+	/**
+	 * Handle an incoming account recycling request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  Integer  $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 *
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function recycle(Request $request, $id)
+	{
+		$account = Account::find($id);
+		$account->active = true;
+		$account->save();
+
+		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich reaktiviert.');
+	}
+
+	/**
+	 * Handle an incoming account deletion request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  Integer  $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 *
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function delete(Request $request, $id)
+	{
+		$account = Account::find($id);
+		$account->delete();
+
+		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich gelöscht.');
 	}
 
 	/**

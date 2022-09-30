@@ -28,4 +28,24 @@ class Account extends Model
     {
         return $this->hasMany('App\Models\User','account_id','id');
     }
+
+    /**
+     * Scope a query to only include active accounts.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
+    /**
+     * Scope a query to only include archived accounts.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeArchived($query)
+    {
+        return $query->where('active', 0);
+    }
 }
