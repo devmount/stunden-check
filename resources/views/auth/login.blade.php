@@ -37,7 +37,7 @@
 			<x-checkbox-input
 				for="remember"
 				:label="__('Angemeldet bleiben')"
-				class="mt-4"
+				class="block mt-4"
 			/>
 
 			<div class="flex items-center justify-end mt-4">

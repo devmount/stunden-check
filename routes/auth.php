@@ -38,4 +38,5 @@ Route::middleware('auth')->group(function () {
 	Route::post('accounts/add', [AccountController::class, 'store']);
 	Route::get('accounts/edit/{id}', [AccountController::class, 'edit'])->name('accounts-edit');
 	Route::post('accounts/edit/{id}', [AccountController::class, 'update']);
+	Route::post('accounts/archive/{id}', [AccountController::class, 'archive'])->name('accounts-archive');
 });

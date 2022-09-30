@@ -31,7 +31,7 @@ class AccountController extends Controller
 	}
 
 	/**
-	 * Handle an incoming account request.
+	 * Handle an incoming account creation request.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\RedirectResponse
@@ -83,7 +83,7 @@ class AccountController extends Controller
 	}
 
 	/**
-	 * Handle an incoming account request.
+	 * Handle an incoming account modification request.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  Integer  $id
@@ -117,11 +117,11 @@ class AccountController extends Controller
 				$account->users[1]->is_admin  = $request->has('is_admin2');
 			} else {
 				$account->users()->create([
-					'firstname'         => $request->input('firstname2'),
-					'lastname'          => $request->input('lastname2'),
-					'email'             => $request->input('email2'),
-					'password'          => Hash::make('test'),
-					'is_admin'          => $request->has('is_admin2'),
+					'firstname' => $request->input('firstname2'),
+					'lastname'  => $request->input('lastname2'),
+					'email'     => $request->input('email2'),
+					'password'  => Hash::make('test'),
+					'is_admin'  => $request->has('is_admin2'),
 				]);
 			}
 		}
@@ -129,6 +129,24 @@ class AccountController extends Controller
 		$account->push();
 
 		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich aktualisiert.');
+	}
+
+	/**
+	 * Handle an incoming account archive request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  Integer  $id
+	 * @return \Illuminate\Http\RedirectResponse
+	 *
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function archive(Request $request, $id)
+	{
+		$account = Account::find($id);
+		$account->active = false;
+		$account->save();
+
+		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich archiviert.');
 	}
 
 	/**
