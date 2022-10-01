@@ -9,14 +9,17 @@ Prerequisites:
 
 ```bash
 git clone https://github.com/devmount/stunden-check # get files
-cd stunden-check               # switch to app directory
-composer install               # install dependencies
-cp .env.example .env           # init environment configuration
-touch database/database.sqlite # create database file
-php artisan migrate            # create database structure
-php artisan key:generate       # build a secure key for the app
-php artisan serve              # start dev webserver
+cd stunden-check                        # switch to app directory
+composer install                        # install dependencies
+cp .env.example .env                    # init environment configuration
+touch database/database.sqlite          # create database file
+php artisan migrate                     # create database structure
+php artisan key:generate                # build a secure key for the app
+php artisan db:seed --class=AdminSeeder # create initial admin user
+php artisan serve                       # start dev webserver
 ```
+
+Now you can log in as initial user (email: `admin@example.com`, password: `Joh.3,16`).
 
 ## License
 
