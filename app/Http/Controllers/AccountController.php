@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Account;
+use App\Models\User;
+use App\Models\Excemption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -70,6 +71,15 @@ class AccountController extends Controller
 			]);
 		}
 
+		if (count($request->ex_start) > 0 && count($request->ex_start) == count($request->ex_end)) {
+			for ($i=0; $i < count($request->ex_start); $i++) { 
+				$account->excemptions()->create([
+					'start'            => $request->ex_start[$i],
+					'end'              => $request->ex_end[$i],
+				]);
+			}
+		}
+
 		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich angelegt.');
 	}
 
@@ -125,6 +135,16 @@ class AccountController extends Controller
 					'email'     => $request->input('email2'),
 					'password'  => Hash::make('test'),
 					'is_admin'  => $request->has('is_admin2'),
+				]);
+			}
+		}
+
+		if (count($request->ex_start) > 0 && count($request->ex_start) == count($request->ex_end)) {
+			for ($i=0; $i < count($request->ex_start); $i++) { 
+				// TODO handle existing excemptions
+				$account->excemptions()->create([
+					'start' => $request->ex_start[$i],
+					'end'   => $request->ex_end[$i],
 				]);
 			}
 		}
@@ -210,6 +230,8 @@ class AccountController extends Controller
 			'lastname2'           => 'nullable|string|max:255',
 			'email2'              => 'nullable|string|email|max:255|unique:users,email' . ($uid2 ? ',' . $uid2 : ''),
 			'is_admin2'           => 'nullable|boolean',
+			'ex_start'            => 'nullable|array',
+			'ex_end'              => 'nullable|array',
 		];
 	}
 }

@@ -95,7 +95,9 @@
 								{{ hdate($account->start) }}
 							</td>
 							<td class="px-6 py-4 align-center whitespace-nowrap">
-								&mdash;
+								@foreach ($account->excemptions as $ex)
+									<div>{{ hdate($ex->start) }}&mdash;{{ hdate($ex->end) }}</div>
+								@endforeach
 							</td>
 							<td>
 								<div class="flex flex-row justify-end pr-2">

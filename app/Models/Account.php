@@ -31,6 +31,14 @@ class Account extends Model
     }
 
     /**
+     * get all excemptions assigned to this account
+     */
+    public function excemptions()
+    {
+        return $this->hasMany('App\Models\Excemption','account_id','id');
+    }
+
+    /**
      * Scope a query to only include active accounts.
      *
      * @return \Illuminate\Database\Eloquent\Builder

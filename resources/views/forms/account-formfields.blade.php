@@ -36,10 +36,10 @@
   />
 </div>
 
-<div class="mt-4 flex gap-4">
+<div class="mt-8 flex gap-4">
   <!-- first person -->
   <div class="w-1/2">
-    <h3>1. Person</h3>
+    <h3 class="text-xl">1. Person</h3>
     <!-- 1. firstname -->
     <x-text-input
       class="mt-4 block w-full"
@@ -78,7 +78,7 @@
 
   <!-- second person -->
   <div class="w-1/2">
-    <h3>2. Person (optional)</h3>
+    <h3 class="text-xl">2. Person (optional)</h3>
     <!-- 2. firstname -->
     <x-text-input
       class="mt-4 block w-full"
@@ -111,4 +111,38 @@
       :checked="old('is_admin2', isset($account) && isset($account->users[1]) ? $account->users[1]->is_admin : false)"
     />
   </div>
+</div>
+
+<div class="mt-8" x-data="{ excemptions: {{ isset($account) ? collect($account->excemptions) : '[]' }} }">
+  <!-- excemptions first person -->
+  <h3 class="text-xl">Befreiung von der Stundenpflicht</h3>
+  <template x-for="ex in excemptions" v-bind:key="ex.id">
+    <div class="flex gap-4 mt-2 items-center">
+      <!-- start date -->
+      <input
+    		class="block w-1/3 w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+        type="date"
+        x-bind:value="ex.start"
+        name="ex_start[]"
+      />
+      <!-- end date -->
+      bis
+      <input
+        class="block w-1/3 w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+        type="date"
+        x-bind:value="ex.end"
+        name="ex_end[]"
+      />
+    </div>
+  </template>
+  <button
+    class="transition duration-150 ease-in-out mt-2"
+    @click="event.preventDefault();excemptions.push({});"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
+  </button>
 </div>
