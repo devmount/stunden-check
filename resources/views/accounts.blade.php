@@ -52,8 +52,8 @@
 						</tr>
 					</thead>
 					<tbody>
-					@foreach ($activeAccounts as $account)
-						<tr>
+					@foreach ($activeAccounts as $i => $account)
+						<tr class="{{ $i%2 == 1 ? 'bg-slate-50' : ''}} hover:bg-slate-200">
 							<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
 								{{ $account->id }}
 							</td>
@@ -150,8 +150,8 @@
 						</tr>
 					</thead>
 					<tbody>
-					@foreach ($archivedAccounts as $account)
-						<tr>
+					@foreach ($archivedAccounts as $i => $account)
+						<tr class="{{ $i%2 == 1 ? 'bg-slate-50' : ''}} hover:bg-slate-200">
 							<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
 								{{ $account->id }}
 							</td>
