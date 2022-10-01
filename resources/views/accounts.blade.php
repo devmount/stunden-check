@@ -76,7 +76,7 @@
 								</div>
 							</td>
 							<td class="px-6 py-4 align-middle whitespace-nowrap">
-								{{ $account->start }}
+								{{ hdate($account->start) }}
 							</td>
 							<td class="px-6 py-4 align-center whitespace-nowrap">
 								&mdash;
@@ -174,7 +174,7 @@
 								</div>
 							</td>
 							<td class="px-6 py-4 align-middle whitespace-nowrap">
-								{{ $account->start }}
+								{{ hdate($account->start) }}
 							</td>
 							<td class="px-6 py-4 align-center whitespace-nowrap">
 								&mdash;

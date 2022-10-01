@@ -31,7 +31,7 @@
     type="number"
     name="target_hours"
     :value="old('target_hours', isset($account) ? $account->target_hours : null)"
-    :label="__('Abweichende Mindestanzahl Pflichtstunden')"
+    :label="__('Mindestanzahl Pflichtstunden')"
     required
   />
 </div>
