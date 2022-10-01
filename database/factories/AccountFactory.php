@@ -35,6 +35,7 @@ class AccountFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'active' => false,
+                'archived_at' => fake()->dateTimeBetween('-2 weeks'),
             ];
         });
     }

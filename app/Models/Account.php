@@ -19,6 +19,7 @@ class Account extends Model
         'start',
         'target_hours',
         'separate_accounting',
+        'archcived_at',
     ];
 
     /**

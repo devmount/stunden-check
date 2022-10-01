@@ -147,6 +147,7 @@ class AccountController extends Controller
 	{
 		$account = Account::find($id);
 		$account->active = false;
+		$account->archived_at = now();
 		$account->save();
 
 		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich archiviert.');

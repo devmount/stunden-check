@@ -9,17 +9,33 @@
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 			<div
 				class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-6 border-b border-gray-200"
-				x-data="{ tabs: ['Aktive Konten', 'Archiv'], active: 0 }"
+				x-data="{
+					tabs: ['active', 'archived'],
+					active: 'active',
+				}"
 			>
 				<div class="px-6 pb-4 flex justify-between items-center">
 					<div class="inline-flex bg-slate-100 rounded-lg gap-1 p-2">
-						<template x-for="(tab, index) in tabs">
-							<button @click="active = index"
-								:class="[index === active && 'bg-white text-black shadow', index !== active && 'text-slate-600']"
-								class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
-								x-text="tab">
-							</button>
-						</template>
+						<button
+							@click="active = 'active'"
+							:class="[active === 'active' && 'bg-white text-black shadow', active !== 'active' && 'text-slate-600']"
+							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
+						>
+							Aktive Konten
+							@if (count($activeAccounts) > 0)
+								<span class="inline-block rounded ml-2 px-1 bg-slate-400 text-sm text-white">{{ count($activeAccounts) }}</span>
+							@endif
+						</button>
+						<button
+							@click="active = 'archived'"
+							:class="[active === 'archived' && 'bg-white text-black shadow', active !== 'archived' && 'text-slate-600']"
+							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
+						>
+							Archiv
+							@if (count($archivedAccounts) > 0)
+								<span class="inline-block rounded ml-2 px-1 bg-slate-400 text-sm text-white">{{ count($archivedAccounts) }}</span>
+							@endif
+						</button>
 					</div>
 					{{-- dialog to add new account --}}
 					<x-primary-button onclick="window.location='{{ route('accounts-add') }}'" class="transition duration-150 ease-in-out">
@@ -32,7 +48,7 @@
 					</x-primary-button>
 				</div>
 				{{-- active accounts table --}}
-				<table x-show="active === 0" class="items-center bg-transparent w-full border-collapse">
+				<table x-show="active === 'active'" class="items-center bg-transparent w-full border-collapse">
 					<thead>
 						<tr>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -130,7 +146,7 @@
 					</tbody>
 				</table>
 				{{-- archived accounts table --}}
-				<table x-show="active === 1" class="items-center bg-transparent w-full border-collapse">
+				<table x-show="active === 'archived'" class="items-center bg-transparent w-full border-collapse">
 					<thead>
 						<tr>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -143,7 +159,7 @@
 								{{ __('Eingestiegen am') }}
 							</th>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-								{{ __('Befreit am') }}
+								{{ __('Archiviert am') }}
 							</th>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 							</th>
@@ -177,7 +193,7 @@
 								{{ hdate($account->start) }}
 							</td>
 							<td class="px-6 py-4 align-center whitespace-nowrap">
-								&mdash;
+								{{ hdate($account->archived_at) }}
 							</td>
 							<td>
 								<div class="flex flex-row justify-end pr-2">
