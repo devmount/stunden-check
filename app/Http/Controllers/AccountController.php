@@ -112,16 +112,19 @@ class AccountController extends Controller
 
 		$request->validate($this->rules($uid1, $uid2));
 
+		// handle account
 		$account->active              = $request->has('active');
 		$account->separate_accounting = $request->has('separate_accounting');
 		$account->start               = $request->input('start');
 		$account->target_hours        = $request->input('target_hours');
 
+		// handle first person
 		$account->users[0]->firstname = $request->input('firstname1');
 		$account->users[0]->lastname  = $request->input('lastname1');
 		$account->users[0]->email     = $request->input('email1');
 		$account->users[0]->is_admin  = $request->has('is_admin1');
 
+		// handle second person
 		if ($request->firstname2 && $request->lastname2 && $request->email2) {
 			if (isset($account->users[1])) {
 				$account->users[1]->firstname = $request->input('firstname2');
@@ -139,9 +142,13 @@ class AccountController extends Controller
 			}
 		}
 
-		if (count($request->ex_start) > 0 && count($request->ex_start) == count($request->ex_end)) {
+		// handle excemptions
+		if (!empty($request->ex_delete)) {
+			$ids = array_map('intval', explode(',', $request->ex_delete));
+			Excemption::destroy($ids);
+		}
+		if ($request->ex_start && count($request->ex_start) > 0 && count($request->ex_start) == count($request->ex_end)) {
 			for ($i=0; $i < count($request->ex_start); $i++) { 
-				// TODO handle existing excemptions
 				$account->excemptions()->create([
 					'start' => $request->ex_start[$i],
 					'end'   => $request->ex_end[$i],
@@ -232,6 +239,7 @@ class AccountController extends Controller
 			'is_admin2'           => 'nullable|boolean',
 			'ex_start'            => 'nullable|array',
 			'ex_end'              => 'nullable|array',
+			'ex_delete'           => 'nullable|string',
 		];
 	}
 }

@@ -113,33 +113,56 @@
   </div>
 </div>
 
-<div class="mt-8" x-data="{ excemptions: {{ isset($account) ? collect($account->excemptions) : '[]' }} }">
-  <!-- excemptions first person -->
+<div
+  class="mt-8"
+  x-data="{ list: {{ isset($account) ? collect($account->excemptions) : '[]' }}, add: 0, remove: []}"
+>
+  <!-- excemptions for account -->
   <h3 class="text-xl">Befreiung von der Stundenpflicht</h3>
-  <template x-for="ex in excemptions" v-bind:key="ex.id">
+  <template x-for="ex in list">
+    <template x-if="! remove.includes(ex.id)">
+      <div class="flex gap-4 mt-2 items-center">
+        <div x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
+        &mdash;
+        <div x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
+        <button
+          class="transition duration-150 ease-in-out"
+          @click="event.preventDefault();remove.push(ex.id);"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </template>
+  </template>
+  <input type="hidden" name="ex_delete" x-bind:value="remove">
+  <template x-for="i in add">
     <div class="flex gap-4 mt-2 items-center">
       <!-- start date -->
       <input
     		class="block w-1/3 w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
         type="date"
-        x-bind:value="ex.start"
         name="ex_start[]"
+        required
       />
       <!-- end date -->
       bis
       <input
         class="block w-1/3 w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
         type="date"
-        x-bind:value="ex.end"
         name="ex_end[]"
+        required
       />
     </div>
   </template>
   <button
     class="transition duration-150 ease-in-out mt-2"
-    @click="event.preventDefault();excemptions.push({});"
+    @click="event.preventDefault();add++;"
   >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <line x1="12" y1="5" x2="12" y2="19" />
       <line x1="5" y1="12" x2="19" y2="12" />
