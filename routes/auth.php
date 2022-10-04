@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ParameterController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -42,4 +43,6 @@ Route::middleware('admin')->group(function () {
 	Route::post('accounts/archive/{id}', [AccountController::class, 'archive'])->name('accounts-archive');
 	Route::post('accounts/recycle/{id}', [AccountController::class, 'recycle'])->name('accounts-recycle');
 	Route::post('accounts/delete/{id}', [AccountController::class, 'delete'])->name('accounts-delete');
+	Route::get('settings', [ParameterController::class, 'edit'])->name('settings');
+	Route::post('settings', [ParameterController::class, 'update']);
 });

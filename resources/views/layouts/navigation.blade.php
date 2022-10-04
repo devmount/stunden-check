@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('accounts')" :active="request()->is('accounts*')">
                             {{ __('Konten') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('settings')" :active="request()->is('settings*')">
+                            {{ __('Einstellungen') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -74,6 +77,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('accounts')" :active="request()->routeIs('accounts')">
                 {{ __('Konten') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('settings')" :active="request()->routeIs('settings')">
+                {{ __('Einstellungen') }}
             </x-responsive-nav-link>
         </div>
 
