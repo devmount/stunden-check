@@ -19,7 +19,7 @@ php artisan db:seed --class=AdminSeeder # create initial admin user
 php artisan serve                       # start dev webserver
 ```
 
-Now you can log in as initial user (email: `admin@example.com`, password: `Joh.3,16`).
+Now you can log in with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
 
 ## License
 
