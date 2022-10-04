@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Account');
     }
+
+    /**
+     * get all positions completed by this user
+     */
+    public function positions()
+    {
+        return $this->hasMany('App\Models\Position','user_id','id');
+    }
 }

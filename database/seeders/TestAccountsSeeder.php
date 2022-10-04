@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Account;
 use App\Models\User;
+use App\Models\Position;
 
 class TestAccountsSeeder extends Seeder
 {
@@ -19,13 +20,21 @@ class TestAccountsSeeder extends Seeder
         // create 30 active random test accounts
         Account::factory()
             ->count(30)
-            ->has(User::factory()->count(2))
+            ->has(
+                User::factory()
+                    ->count(2)
+                    ->has(Position::factory()->count(8))
+            )
             ->create();
 
         // create 10 archived random test accounts
         Account::factory()
             ->count(10)
-            ->has(User::factory()->count(2))
+            ->has(
+                User::factory()
+                    ->count(2)
+                    ->has(Position::factory()->count(8))
+            )
             ->archived()
             ->create();
     }
