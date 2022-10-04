@@ -23,7 +23,7 @@
 						>
 							Aktive Konten
 							@if (count($activeAccounts) > 0)
-								<span class="inline-block rounded ml-2 px-1 bg-slate-400 text-sm text-white">{{ count($activeAccounts) }}</span>
+								<span class="inline-block ml-3 font-bold">{{ count($activeAccounts) }}</span>
 							@endif
 						</button>
 						<button
@@ -33,7 +33,7 @@
 						>
 							Archiv
 							@if (count($archivedAccounts) > 0)
-								<span class="inline-block rounded ml-2 px-1 bg-slate-400 text-sm text-white">{{ count($archivedAccounts) }}</span>
+								<span class="inline-block ml-3 font-bold">{{ count($archivedAccounts) }}</span>
 							@endif
 						</button>
 					</div>
