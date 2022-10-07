@@ -80,7 +80,9 @@ class AccountController extends Controller
 			}
 		}
 
-		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich angelegt.');
+		return redirect()
+			->route('accounts')
+			->with('status', 'Das Konto wurde erfolgreich angelegt.');
 	}
 
 	/**
@@ -158,7 +160,9 @@ class AccountController extends Controller
 
 		$account->push();
 
-		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich aktualisiert.');
+		return redirect()
+			->route('accounts')
+			->with('status', 'Das Konto wurde erfolgreich aktualisiert.');
 	}
 
 	/**
@@ -177,7 +181,9 @@ class AccountController extends Controller
 		$account->archived_at = now();
 		$account->save();
 
-		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich archiviert.');
+		return redirect()
+			->route('accounts')
+			->with('status', 'Das Konto wurde erfolgreich archiviert.');
 	}
 
 	/**
@@ -195,7 +201,9 @@ class AccountController extends Controller
 		$account->active = true;
 		$account->save();
 
-		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich reaktiviert.');
+		return redirect()
+			->route('accounts')
+			->with('status', 'Das Konto wurde erfolgreich reaktiviert.');
 	}
 
 	/**
@@ -212,7 +220,9 @@ class AccountController extends Controller
 		$account = Account::find($id);
 		$account->delete();
 
-		return redirect()->route('accounts')->with('status', 'Das Konto wurde erfolgreich gelöscht.');
+		return redirect()
+			->route('accounts')
+			->with('status', 'Das Konto wurde erfolgreich gelöscht.');
 	}
 
 	/**

@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 	Route::post('/positions/add', [PositionController::class, 'store']);
 	Route::get('/positions/edit/{id}', [PositionController::class, 'edit'])->name('positions-edit');
 	Route::post('/positions/edit/{id}', [PositionController::class, 'update']);
+	Route::post('/positions/delete/{id}', [PositionController::class, 'delete'])->name('positions-delete');
 	Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
 	Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
 		->middleware(['signed', 'throttle:6,1'])->name('verification.verify');

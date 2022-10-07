@@ -93,12 +93,17 @@ class PositionController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  \App\Models\Position  $position
+	 * @param  Integer  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Position $position)
+	public function delete($id)
 	{
-		//
+		$position = Position::find($id);
+		$position->delete();
+
+		return redirect()
+			->route('dashboard')
+			->with('status', 'Der Eintrag wurde erfolgreich gelöscht.');
 	}
 
 	/**

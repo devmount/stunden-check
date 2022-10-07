@@ -102,9 +102,12 @@
 										<div class="mb-4">Möchtest du diesen Eintrag wirklich löschen?</div>
 
 										<x-slot name="action">
-											<x-danger-button>
-												{{ __('Löschen') }}
-											</x-danger-button>
+											<form method="POST" action="{{ route('positions-delete', $position->id) }}">
+												@csrf
+												<x-danger-button>
+													{{ __('Löschen') }}
+												</x-danger-button>
+											</form>
 										</x-slot>
 									</x-modal>
 								</div>
