@@ -29,6 +29,11 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <!-- Toast Notifications -->
+            @if (session('status'))
+                <x-toast>{{ session('status') }}</x-toast>
+            @endif
         </div>
     </body>
 </html>

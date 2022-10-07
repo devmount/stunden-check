@@ -253,8 +253,4 @@
 			</div>
 		</div>
 	</div>
-
-	@if (session('status'))
-		<x-toast>{{ session('status') }}</x-toast>
-	@endif
 </x-app-layout>

@@ -31,35 +31,14 @@
 				<div class="px-6 pb-4 flex justify-between items-center">
 					<div>Geleistete Stunden</div>
 					{{-- dialog to add new position --}}
-					<x-modal class="max-w-lg">
-						<x-slot name="trigger">
-							<x-primary-button class="transition duration-150 ease-in-out">
-								<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-									<line x1="12" y1="5" x2="12" y2="19" />
-									<line x1="5" y1="12" x2="19" y2="12" />
-								</svg>
-								{{ __('Neuer Eintrag') }}
-							</x-primary-button>
-						</x-slot>
-
-						<x-slot name="title">
-							Stunden schreiben
-						</x-slot>
-
-						<div class="mb-4">Gib hier an, wie lang und was du gearbeitet hast.</div>
-
-						<form id="new-position-form" method="POST" action="{{ route('dashboard') }}">
-							@csrf
-							@include('forms.position-formfields')
-						</form>
-
-						<x-slot name="action">
-							<x-primary-button onclick="event.preventDefault();document.getElementById('new-position-form').submit();">
-								{{ __('Speichern') }}
-							</x-primary-button>
-						</x-slot>
-					</x-modal>
+					<x-primary-button onclick="window.location='{{ route('positions-add') }}'" class="transition duration-150 ease-in-out">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+							<line x1="12" y1="5" x2="12" y2="19" />
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+						{{ __('Neuer Eintrag') }}
+					</x-primary-button>
 				</div>
 				<table class="items-center bg-transparent w-full border-collapse">
 					<thead>
@@ -78,103 +57,69 @@
 						</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
-							Rasen gemäht auf gesamten Kita-Gelände
-						</td>
-						<td class="px-6 py-4 align-middle whitespace-nowrap">
-							22. August 2022
-						</td>
-						<td class="px-6 py-4 align-center whitespace-nowrap">
-							4
-						</td>
-						<td>
-							<div class="flex flex-row">
-								{{-- dialog to edit existing position --}}
-								<x-modal class="max-w-lg">
-									<x-slot name="trigger">
-										<button class="transition duration-150 ease-in-out">
-											<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
-												<path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
-												<line x1="16" y1="5" x2="19" y2="8" />
-											</svg>
-										</button>
-									</x-slot>
+					@forelse ($positions as $i => $position)
+						<tr>
+							<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
+								{{ $position->description }}
+							</td>
+							<td class="px-6 py-4 align-middle whitespace-nowrap">
+								{{ hdate($position->completed_at) }}
+							</td>
+							<td class="px-6 py-4 align-center whitespace-nowrap">
+								{{ $position->hours }}
+							</td>
+							<td>
+								<div class="flex flex-row">
+									{{-- dialog to edit existing position --}}
+									<button onclick="window.location='{{ route('positions-edit', $position->id) }}'" class="transition duration-150 ease-in-out">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+											<path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+											<path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+											<line x1="16" y1="5" x2="19" y2="8" />
+										</svg>
+									</button>
 
-									<x-slot name="title">
-										Eintrag bearbeiten
-									</x-slot>
+									{{-- dialog to delete existing position --}}
+									<x-modal class="max-w-lg">
+										<x-slot name="trigger">
+											<button class="transition duration-150 ease-in-out">
+												<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+													<line x1="4" y1="7" x2="20" y2="7" />
+													<line x1="10" y1="11" x2="10" y2="17" />
+													<line x1="14" y1="11" x2="14" y2="17" />
+													<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+													<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+												</svg>
+											</button>
+										</x-slot>
 
-									<div class="mb-4">Gib hier an, wie lang und was du gearbeitet hast.</div>
+										<x-slot name="title">
+											Eintrag Löschen
+										</x-slot>
 
-									<form id="new-position-form" method="POST" action="{{ route('dashboard') }}">
-										@csrf
-										@include('forms.position-formfields')
-									</form>
+										<div class="mb-4">Möchtest du diesen Eintrag wirklich löschen?</div>
 
-									<x-slot name="action">
-										<x-primary-button onclick="event.preventDefault();document.getElementById('new-position-form').submit();">
-											{{ __('Speichern') }}
-										</x-primary-button>
-									</x-slot>
-								</x-modal>
-
-								{{-- dialog to delete existing position --}}
-								<x-modal class="max-w-lg">
-									<x-slot name="trigger">
-										<button class="transition duration-150 ease-in-out">
-											<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<line x1="4" y1="7" x2="20" y2="7" />
-												<line x1="10" y1="11" x2="10" y2="17" />
-												<line x1="14" y1="11" x2="14" y2="17" />
-												<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-												<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-											</svg>
-										</button>
-									</x-slot>
-
-									<x-slot name="title">
-										Eintrag Löschen
-									</x-slot>
-
-									<div class="mb-4">Möchtest du diesen Eintrag wirklich löschen?</div>
-
-									<x-slot name="action">
-										<x-danger-button>
-											{{ __('Löschen') }}
-										</x-danger-button>
-									</x-slot>
-								</x-modal>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
-							Klo geputzt im Fachwerkhaus
-						</td>
-						<td class="px-6 py-4 align-middle whitespace-nowrap">
-							25. August 2022
-						</td>
-						<td class="px-6 py-4 align-center whitespace-nowrap">
-							2
-						</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
-							Holztor repariert
-						</td>
-						<td class="px-6 py-4 align-middle whitespace-nowrap">
-							26. August 2022
-						</td>
-						<td class="px-6 py-4 align-center whitespace-nowrap">
-							2
-						</td>
-						<td></td>
-					</tr>
+										<x-slot name="action">
+											<x-danger-button>
+												{{ __('Löschen') }}
+											</x-danger-button>
+										</x-slot>
+									</x-modal>
+								</div>
+							</td>
+						</tr>
+					@empty
+						<tr>
+							<td colspan="4">
+								<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
+									{{-- <div class="font-bold">{{ __('Achtung!') }}</div> --}}
+									{{ __('Es sind noch keine Einträge vorhanden.') }}
+								</div>
+							</td>
+						</tr>
+					@endforelse
 					</tbody>
 				</table>
 			</div>

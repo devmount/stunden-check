@@ -143,7 +143,7 @@
     <div class="flex gap-4 mt-2 items-center">
       <!-- start date -->
       <input
-    		class="block w-1/3 w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+    		class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
         type="date"
         name="ex_start[]"
         required
@@ -151,7 +151,7 @@
       <!-- end date -->
       bis
       <input
-        class="block w-1/3 w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+        class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
         type="date"
         name="ex_end[]"
         required
