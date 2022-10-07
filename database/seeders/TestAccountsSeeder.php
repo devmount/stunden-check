@@ -10,32 +10,32 @@ use App\Models\Position;
 
 class TestAccountsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        // create 30 active random test accounts
-        Account::factory()
-            ->count(30)
-            ->has(
-                User::factory()
-                    ->count(2)
-                    ->has(Position::factory()->count(8))
-            )
-            ->create();
+	/**
+	 * Run the database seeds.
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
+		// create 30 active random test accounts
+		Account::factory()
+			->count(30)
+			->has(
+				User::factory()
+					->count(2)
+					->has(Position::factory()->count(8))
+			)
+			->create();
 
-        // create 10 archived random test accounts
-        Account::factory()
-            ->count(10)
-            ->has(
-                User::factory()
-                    ->count(2)
-                    ->has(Position::factory()->count(8))
-            )
-            ->archived()
-            ->create();
-    }
+		// create 10 archived random test accounts
+		Account::factory()
+			->count(10)
+			->has(
+				User::factory()
+					->count(2)
+					->has(Position::factory()->count(8))
+			)
+			->archived()
+			->create();
+	}
 }
