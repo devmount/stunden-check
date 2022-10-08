@@ -32,6 +32,8 @@
 	name="target_hours"
 	:value="old('target_hours', isset($account) ? $account->target_hours : null)"
 	:label="__('Mindestanzahl Pflichtstunden')"
+	step="0.25"
+	min="0.25"
 	required
   />
 </div>

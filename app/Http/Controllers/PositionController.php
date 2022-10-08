@@ -118,6 +118,7 @@ class PositionController extends Controller
 			'hours'        => 'required|numeric',
 			'category_id'  => 'required|numeric',
 			'description'  => 'required|string',
+			'go_back'      => 'nullable|boolean',
 		];
 	}
 }

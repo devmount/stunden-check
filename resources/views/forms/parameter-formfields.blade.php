@@ -39,6 +39,8 @@
 			name="target_hours"
 			:value="old('target_hours', $parameters['target_hours'])"
 			:label="__('Mindestanzahl Pflichtstunden')"
+			step="0.25"
+			min="0.25"
 			required
 		/>
 		<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">

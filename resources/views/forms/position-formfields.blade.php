@@ -19,6 +19,8 @@
 			name="hours"
 			:label="__('Stundenanzahl')"
 			:value="old('hours', isset($position) ? $position->hours : null)"
+			step="0.25"
+			min="0.25"
 			required
 		/>
 	</div>

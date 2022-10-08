@@ -2,7 +2,7 @@
 	'label' => '',
 	'disabled' => false,
 	'required' => false,
-	'autofocus' => false
+	'autofocus' => false,
 ])
 
 <label class="{{ $attributes['class'] }}">
@@ -16,6 +16,9 @@
 		type="{{ $attributes['type'] }}"
 		name="{{ $attributes['name'] }}"
 		value="{{ $attributes['value'] }}"
+		{{ $attributes['step'] ? 'step=' . $attributes['step'] : '' }}
+		{{ $attributes['min'] ? 'min=' . $attributes['min'] : '' }}
+		{{ $attributes['max'] ? 'max=' . $attributes['max'] : '' }}
 		{{ $required ? 'required' : '' }}
 		{{ $autofocus ? 'autofocus' : '' }}
 	/>
