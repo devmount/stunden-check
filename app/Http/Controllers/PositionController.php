@@ -16,7 +16,7 @@ class PositionController extends Controller
 	public function index()
 	{
 		return view('dashboard')
-			->with('positions', auth()->user()->positions)
+			->with('user', auth()->user())
 			->with('categories', Category::get());
 	}
 

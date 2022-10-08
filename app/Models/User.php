@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Parameter;
+use \DateTime;
 
 class User extends Authenticatable
 {
@@ -60,4 +62,43 @@ class User extends Authenticatable
 	{
 		return $this->hasMany('App\Models\Position','user_id','id');
 	}
+
+	/**
+	 * get total number of hours of all positions
+	 */
+	public function getSumHoursAttribute()
+	{
+		$hours = 0;
+		foreach ($this->positions as $p) {
+			$hours += $p->hours;
+		}
+		return $hours;
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of current cycle
+	 */
+	public function getMissingHoursAttribute()
+	{
+		$cycle = new DateTime(Parameter::key('start_accounting'));
+		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
+		$start = new DateTime($this->account->start);
+		$years = $start->diff($end)->y;
+		return $this->account->target_hours*$years - $this->sum_hours;
+	}
+
+	/**
+	 * get sum of hours in current cycle
+	 */
+	public function getCycleHoursAttribute()
+	{
+		$cycle = new DateTime(Parameter::key('start_accounting'));
+		$start = $cycle < now() ? $cycle : $cycle->modify('-1 year');
+		$hours = 0;
+		foreach ($this->positions->where('completed_at', '>', $start->format('Y-m-d')) as $p) {
+			$hours += $p->hours;
+		}
+		return $hours;
+	}
+
 }

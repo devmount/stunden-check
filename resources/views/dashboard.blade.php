@@ -9,18 +9,18 @@
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid gap-4 grid-cols-3 justify-between">
 			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-slate-600 border-4 border-white">
 				Insgesamt
-				<div class="text-6xl font-medium">35</div>
-				Stunden geleistet
-			</div>
-			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-teal-600 border-4 border-white">
-				Aktuelle Abrechnungsperiode
-				<div class="text-6xl font-medium">11</div>
+				<div class="text-6xl font-medium">{{ $user->sum_hours }}</div>
 				Stunden geleistet
 			</div>
 			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-amber-600 border-4 border-white">
-				Aktuelle Abrechnungsperiode
-				<div class="text-6xl font-medium">13</div>
+				Insgesamt
+				<div class="text-6xl font-medium">{{ $user->missing_hours }}</div>
 				Stunden ausstehend
+			</div>
+			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-teal-600 border-4 border-white">
+				Aktuelle Abrechnungsperiode
+				<div class="text-6xl font-medium">{{ $user->cycle_hours }} / {{ $user->account->target_hours }}</div>
+				Stunden geleistet
 			</div>
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					@forelse ($positions as $i => $position)
+					@forelse ($user->positions as $i => $position)
 						<tr>
 							<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
 								{{ $position->description }}

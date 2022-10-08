@@ -21,4 +21,15 @@ class Parameter extends Model
 		'key',
 		'value',
 	];
+
+	/**
+	 * Get parameter by key.
+	 *
+	 * @param  String  $key
+	 * @return String
+	 */
+	public static function key(String $key)
+	{
+		return self::where('key', '=', $key)->first()->value;
+	}
 }
