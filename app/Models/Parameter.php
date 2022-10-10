@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\InputType;
+use \DateTime;
 
 class Parameter extends Model
 {
@@ -31,5 +32,16 @@ class Parameter extends Model
 	public static function key(String $key)
 	{
 		return self::where('key', '=', $key)->first()->value;
+	}
+
+	/**
+	 * Get start_accounting parameter.
+	 *
+	 * @return DateTime
+	 */
+	public static function startAccounting()
+	{
+		$start = new DateTime(self::where('key', '=', 'start_accounting')->first()->value);
+		return date_date_set($start, date("Y"), $start->format('m'), $start->format('d'));
 	}
 }

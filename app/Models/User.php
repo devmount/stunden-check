@@ -80,7 +80,8 @@ class User extends Authenticatable
 	 */
 	public function getMissingHoursAttribute()
 	{
-		$cycle = new DateTime(Parameter::key('start_accounting'));
+		$cycle = Parameter::startAccounting();
+		error_log(json_encode($cycle));
 		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
 		$start = new DateTime($this->account->start);
 		$years = $start->diff($end)->y;
@@ -92,7 +93,7 @@ class User extends Authenticatable
 	 */
 	public function getCycleHoursAttribute()
 	{
-		$cycle = new DateTime(Parameter::key('start_accounting'));
+		$cycle = Parameter::startAccounting();
 		$start = $cycle < now() ? $cycle : $cycle->modify('-1 year');
 		$hours = 0;
 		foreach ($this->positions->where('completed_at', '>', $start->format('Y-m-d')) as $p) {
