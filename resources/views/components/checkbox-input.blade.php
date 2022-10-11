@@ -14,3 +14,8 @@
 	/>
 	<span class="ml-2">{{ $label ?? $slot }}</span>
 </label>
+@if ($attributes['info'])
+	<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
+		{{ $attributes['info'] }}
+	</div>
+@endif

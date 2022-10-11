@@ -5,15 +5,13 @@
 			class="mt-4 block w-full"
 			name="cycle_accounting"
 			:label="__('Abrechnungsperiode')"
+			:info="__('Regelmäßigkeit, in der sich der Zeitraum der Abrechnung wiederholt.')"
 			required
 		>
 			<option {{ old('cycle_accounting', $parameters['cycle_accounting']) == 'annual' ? 'selected' : '' }}>
 				{{ __('Jährlich') }}
 			</option>
 		</x-select-input>
-		<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
-			{{ __('Regelmäßigkeit, in der sich der Zeitraum der Abrechnung wiederholt.') }}
-		</div>
 	</div>
 	<div class="w-1/2">
 		{{-- accounting start date --}}
@@ -23,11 +21,9 @@
 			name="start_accounting"
 			:value="old('start_accounting', $parameters['start_accounting'])"
 			:label="__('Start Abrechnungsperiode')"
+			:info="__('Beginn einer allgemeinen Abrechnungsperiode. Das Jahr dient nur als Referenz und hat keine Relevanz.')"
 			required
 		/>
-		<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
-			{{ __('Beginn einer allgemeinen Abrechnungsperiode. Das Jahr dient nur als Referenz und hat keine Relevanz.') }}
-		</div>
 	</div>
 </div>
 <div class="flex gap-4 mt-4">
@@ -39,13 +35,11 @@
 			name="target_hours"
 			:value="old('target_hours', $parameters['target_hours'])"
 			:label="__('Mindestanzahl Pflichtstunden')"
+			:info="__('Anzahl zu erbringender Pflichtstunden pro Abrechnungsperiode.')"
 			step="0.25"
 			min="0.25"
 			required
 		/>
-		<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
-			{{ __('Anzahl zu erbringender Pflichtstunden pro Abrechnungsperiode.') }}
-		</div>
 	</div>
 	<div class="w-1/2">
 	</div>
@@ -57,15 +51,13 @@
 			class="mt-4 block w-full"
 			name="cycle_reminder"
 			:label="__('Turnus Erinnerungs-E-Mails')"
+			:info="__('Regelmäßigkeit, in der E-Mails zur Erinnerung versendet werden.')"
 			required
 		>
 			<option {{ old('cycle_reminder', $parameters['cycle_reminder']) == 'monthly' ? 'selected' : '' }}>
 				{{ __('Monatlich') }}
 			</option>
 		</x-select-input>
-		<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
-			{{ __('Regelmäßigkeit, in der E-Mails zur Erinnerung versendet werden.') }}
-		</div>
 	</div>
 	<div class="w-1/2">
 		{{-- start day of email reminder --}}
@@ -73,6 +65,7 @@
 			class="mt-4 block w-full"
 			name="start_reminder"
 			:label="__('Tag Erinnerungs-E-Mails')"
+			:info="__('Tag an dem E-Mails zur Erinnerung versendet werden.')"
 			required
 		>
 			@foreach ([1,14,28] as $d)
@@ -84,8 +77,5 @@
 				</option>
 			@endforeach
 		</x-select-input>
-		<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
-			{{ __('Tag an dem E-Mails zur Erinnerung versendet werden.') }}
-		</div>
 	</div>
 </div>

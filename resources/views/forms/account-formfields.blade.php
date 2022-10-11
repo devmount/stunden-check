@@ -1,41 +1,49 @@
 <div class="flex gap-4">
-  <!-- active -->
-  <x-checkbox-input
-		name="active"
-		class="w-1/2"
-		:label="__('Aktiv')"
-		:checked="old('active', isset($account) ? $account->active : false)"
-  />
-  <!-- separate_accounting -->
-  <x-checkbox-input
-		name="separate_accounting"
-		class="w-1/2"
-		:label="__('Getrennte Abrechnung')"
-		:checked="old('separate_accounting', isset($account) ? $account->separate_accounting : false)"
-  />
+	<div class="w-1/2">
+		<!-- active -->
+		<x-checkbox-input
+			name="active"
+			:label="__('Aktiv')"
+			:info="__('Aktive Konten werden ausgewertet, inaktive Konten sind im Archiv gelistet.')"
+			:checked="old('active', isset($account) ? $account->active : false)"
+		/>
+	</div>
+	<div class="w-1/2">
+		<!-- separate_accounting -->
+		<x-checkbox-input
+			name="separate_accounting"
+			:label="__('Getrennte Abrechnung')"
+			:info="__('Bei getrennter Abrechnung werden die zugeordneten Personen einzeln ausgewertet.')"
+			:checked="old('separate_accounting', isset($account) ? $account->separate_accounting : false)"
+		/>
+	</div>
 </div>
 
 <div class="flex gap-4 mt-4">
-  <!-- date (no time needed) -->
-  <x-text-input
-		class="block w-1/2"
-		type="date"
-		name="start"
-		:value="old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : null)"
-		:label="__('Datum Einstieg')"
-		required
-  />
-  <!-- hours -->
-  <x-text-input
-		class="block w-1/2"
-		type="number"
-		name="target_hours"
-		:value="old('target_hours', isset($account) ? $account->target_hours : null)"
-		:label="__('Mindestanzahl Pflichtstunden')"
-		step="0.25"
-		min="0.25"
-		required
-  />
+	<div class="w-1/2">
+		<!-- date (no time needed) -->
+		<x-text-input
+			type="date"
+			name="start"
+			:value="old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : null)"
+			:label="__('Datum Einstieg')"
+			:info="__('Ist der Einstieg nicht zum Start der Abrechnungsperiode, so sind Stunden nur anteilig zu erbringen.')"
+			required
+		/>
+	</div>
+	<div class="w-1/2">
+		<!-- hours -->
+		<x-text-input
+			type="number"
+			name="target_hours"
+			:value="old('target_hours', isset($account) ? $account->target_hours : null)"
+			:label="__('Mindestanzahl Pflichtstunden')"
+			:info="__('Gilt immer für das gesamte Konto. Bei getrennter Abrechnung ist von jeder Person die Hälfte zu erbringen.')"
+			step="0.25"
+			min="0.25"
+			required
+		/>
+	</div>
 </div>
 
 <div class="mt-8 flex gap-4">
