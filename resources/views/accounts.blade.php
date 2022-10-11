@@ -64,6 +64,9 @@
 								{{ __('Befreit am') }}
 							</th>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+								{{ __('Status') }}
+							</th>
+							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 							</th>
 						</tr>
 					</thead>
@@ -98,6 +101,41 @@
 								@foreach ($account->excemptions as $ex)
 									<div>{{ hdate($ex->start) }}&mdash;{{ hdate($ex->end) }}</div>
 								@endforeach
+							</td>
+							<td class="px-6 py-4 align-middle whitespace-nowrap">
+								@if ($account->separate_accounting)
+									<div class="flex gap-4 items-center">
+										@foreach ($account->users as $user)
+											<div class="flex gap-2 items-center">
+												<div class="w-2 h-2 rounded-full
+													@switch($user->status)
+														@case(0) bg-red-500   @break
+														@case(1) bg-amber-500 @break
+														@case(2) bg-teal-500  @break
+														@default
+													@endswitch
+													"></div>
+												<div>
+													{{ $user->sum_hours }} / {{ $user->total_hours }}
+												</div>
+											</div>
+										@endforeach
+									</div>
+								@else
+									<div class="flex gap-2 items-center">
+										<div class="w-2 h-2 rounded-full
+											@switch($account->status)
+												@case(0) bg-red-500   @break
+												@case(1) bg-amber-500 @break
+												@case(2) bg-teal-500  @break
+												@default
+											@endswitch
+										"></div>
+										<div>
+											{{ $account->sum_hours }} / {{ $account->total_hours }}
+										</div>
+									</div>
+								@endif
 							</td>
 							<td>
 								<div class="flex flex-row justify-end pr-2">

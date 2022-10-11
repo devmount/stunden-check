@@ -81,7 +81,6 @@ class User extends Authenticatable
 	public function getMissingHoursAttribute()
 	{
 		$cycle = Parameter::startAccounting();
-		error_log(json_encode($cycle));
 		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
 		$start = new DateTime($this->account->start);
 		$years = $start->diff($end)->y;
@@ -102,4 +101,21 @@ class User extends Authenticatable
 		return $hours;
 	}
 
+	/**
+	 * get total target number of hours
+	 */
+	public function getTotalHoursAttribute()
+	{
+		return $this->sum_hours + $this->missing_hours;
+	}
+
+	/**
+	 * get status depending on number of hours worked
+	 */
+	public function getStatusAttribute()
+	{
+		if ($this->total_hours - $this->missing_hours < $this->total_hours/2) return 0;
+		if ($this->sum_hours < $this->total_hours) return 1;
+		if ($this->sum_hours >= $this->total_hours) return 2;
+	}
 }

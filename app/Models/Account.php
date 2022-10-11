@@ -57,4 +57,46 @@ class Account extends Model
 	{
 		return $query->where('active', 0);
 	}
+
+	/**
+	 * get total number of hours of all positions of all users
+	 */
+	public function getSumHoursAttribute()
+	{
+		$hours = 0;
+		foreach ($this->users as $u) {
+			$hours += $u->sum_hours;
+		}
+		return $hours;
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of current cycle
+	 */
+	public function getMissingHoursAttribute()
+	{
+		$hours = 0;
+		foreach ($this->users as $u) {
+			$hours += $u->missing_hours;
+		}
+		return $hours;
+	}
+
+	/**
+	 * get total target number of hours
+	 */
+	public function getTotalHoursAttribute()
+	{
+		return $this->sum_hours + $this->missing_hours;
+	}
+
+	/**
+	 * get status color depending on number of hours worked
+	 */
+	public function getStatusAttribute()
+	{
+		if ($this->total_hours - $this->missing_hours < $this->total_hours/2) return 0;
+		if ($this->sum_hours < $this->total_hours) return 1;
+		if ($this->sum_hours >= $this->total_hours) return 2;
+	}
 }
