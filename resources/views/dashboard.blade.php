@@ -12,9 +12,12 @@
 				<div class="text-6xl font-medium">{{ $user->sum_hours }}</div>
 				Stunden geleistet
 			</div>
-			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-amber-600 border-4 border-white">
+			<div class="
+				overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white border-4 border-white
+				@if ($user->missing_hours > 0) bg-amber-600 @else bg-slate-600 @endif
+			">
 				Insgesamt
-				<div class="text-6xl font-medium">{{ $user->missing_hours }}</div>
+				<div class="text-6xl font-medium">{{ $user->missing_hours >= 0 ? $user->missing_hours : 0 }}</div>
 				Stunden ausstehend
 			</div>
 			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-teal-600 border-4 border-white">

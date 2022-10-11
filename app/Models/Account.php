@@ -87,6 +87,7 @@ class Account extends Model
 	 */
 	public function getTotalHoursAttribute()
 	{
+		// TODO
 		return $this->sum_hours + $this->missing_hours;
 	}
 

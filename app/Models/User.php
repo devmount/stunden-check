@@ -106,6 +106,7 @@ class User extends Authenticatable
 	 */
 	public function getTotalHoursAttribute()
 	{
+		// TODO
 		return $this->sum_hours + $this->missing_hours;
 	}
 
