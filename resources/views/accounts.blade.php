@@ -116,7 +116,7 @@
 													@endswitch
 													"></div>
 												<div>
-													{{ $user->sum_hours }} / {{ $user->total_hours }}
+													{{ $user->sum_hours }} / {{ round($user->total_hours, 1) }}
 												</div>
 											</div>
 										@endforeach
@@ -132,7 +132,7 @@
 											@endswitch
 										"></div>
 										<div>
-											{{ $account->sum_hours }} / {{ $account->total_hours }}
+											{{ $account->sum_hours }} / {{ round($account->total_hours, 1) }}
 										</div>
 									</div>
 								@endif

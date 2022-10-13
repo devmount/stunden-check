@@ -9,20 +9,28 @@
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid gap-4 grid-cols-3 justify-between">
 			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-slate-600 border-4 border-white">
 				Insgesamt
-				<div class="text-6xl font-medium">{{ $user->sum_hours }}</div>
+				<div class="text-6xl font-medium">
+					{{ $sum_hours }}
+				</div>
 				Stunden geleistet
 			</div>
 			<div class="
 				overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white border-4 border-white
-				@if ($user->missing_hours > 0) bg-amber-600 @else bg-slate-600 @endif
+				@if ($missing_hours > 0) bg-amber-600 @else bg-slate-600 @endif
 			">
 				Insgesamt
-				<div class="text-6xl font-medium">{{ $user->missing_hours >= 0 ? $user->missing_hours : 0 }}</div>
+				<div class="text-6xl font-medium">
+					{{ $missing_hours }}
+				</div>
 				Stunden ausstehend
 			</div>
 			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-teal-600 border-4 border-white">
 				Aktuelle Abrechnungsperiode
-				<div class="text-6xl font-medium">{{ $user->cycle_hours }} / {{ $user->account->target_hours }}</div>
+				<div class="text-6xl font-medium">
+					{{ $cycle_hours }}
+					/
+					{{ $total_hours }}
+				</div>
 				Stunden geleistet
 			</div>
 		</div>

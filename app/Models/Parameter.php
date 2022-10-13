@@ -41,7 +41,7 @@ class Parameter extends Model
 	 */
 	public static function startAccounting()
 	{
-		$start = new DateTime(self::where('key', '=', 'start_accounting')->first()->value);
+		$start = new DateTime(self::key('start_accounting'));
 		return date_date_set($start, date("Y"), $start->format('m'), $start->format('d'));
 	}
 }

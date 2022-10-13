@@ -64,6 +64,17 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * get number of hours to work for a single user
+	 */
+	public function getTargetHoursAttribute()
+	{
+		// half hours needed when separate accounting is active
+		return $this->account->separate_accounting
+			? $this->account->target_hours/2
+			: $this->account->target_hours;
+	}
+
+	/**
 	 * get total number of hours of all positions
 	 */
 	public function getSumHoursAttribute()
@@ -76,15 +87,28 @@ class User extends Authenticatable
 	}
 
 	/**
-	 * get hours still to work to reach quota until end of current cycle
+	 * get total target number of hours
 	 */
-	public function getMissingHoursAttribute()
+	public function getTotalHoursAttribute()
 	{
 		$cycle = Parameter::startAccounting();
 		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
 		$start = new DateTime($this->account->start);
-		$years = $start->diff($end)->y;
-		return $this->account->target_hours*$years - $this->sum_hours;
+		$diff = $start->diff($end);
+		$years = $diff->y;
+		// calculate fraction if account start differs from cycle start
+		if ($diff->m > 0 or $diff->d > 0) {
+			$years += $diff->days / (($years+1)*365);
+		}
+		return $this->target_hours * $years;
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of current cycle
+	 */
+	public function getMissingHoursAttribute()
+	{
+		return $this->total_hours - $this->sum_hours;
 	}
 
 	/**
@@ -99,15 +123,6 @@ class User extends Authenticatable
 			$hours += $p->hours;
 		}
 		return $hours;
-	}
-
-	/**
-	 * get total target number of hours
-	 */
-	public function getTotalHoursAttribute()
-	{
-		// TODO
-		return $this->sum_hours + $this->missing_hours;
 	}
 
 	/**

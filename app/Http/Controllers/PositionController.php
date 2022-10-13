@@ -15,8 +15,19 @@ class PositionController extends Controller
 	 */
 	public function index()
 	{
+		$u        = auth()->user();
+		$a        = $u->account;
+		$separate = $a->separate_accounting;
+		$sum      = $separate ? $u->sum_hours     : $a->sum_hours;
+		$missing  = $separate ? $u->missing_hours : $a->missing_hours;
+		$cycle    = $separate ? $u->cycle_hours   : $a->cycle_hours;
+		$total    = $separate ? $u->total_hours   : $a->total_hours;
 		return view('dashboard')
-			->with('user', auth()->user())
+			->with('user', $u)
+			->with('sum_hours', $sum)
+			->with('missing_hours', $missing >= 0 ? round($missing, 1) : 0)
+			->with('cycle_hours', round($cycle, 1))
+			->with('total_hours', round($total, 1))
 			->with('categories', Category::get());
 	}
 

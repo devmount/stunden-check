@@ -71,6 +71,18 @@ class Account extends Model
 	}
 
 	/**
+	 * get total target number of hours
+	 */
+	public function getTotalHoursAttribute()
+	{
+		$hours = $this->users[0]->total_hours;
+		if ($this->sesparate_accounting) {
+			$hours += $this->users[1]->total_hours;
+		}
+		return $hours;
+	}
+
+	/**
 	 * get hours still to work to reach quota until end of current cycle
 	 */
 	public function getMissingHoursAttribute()
@@ -83,12 +95,15 @@ class Account extends Model
 	}
 
 	/**
-	 * get total target number of hours
+	 * get sum of hours in current cycle
 	 */
-	public function getTotalHoursAttribute()
+	public function getCycleHoursAttribute()
 	{
-		// TODO
-		return $this->sum_hours + $this->missing_hours;
+		$hours = 0;
+		foreach ($this->users as $u) {
+			$hours += $u->cycle_hours;
+		}
+		return $hours;
 	}
 
 	/**
@@ -96,6 +111,7 @@ class Account extends Model
 	 */
 	public function getStatusAttribute()
 	{
+		// TODO
 		if ($this->total_hours - $this->missing_hours < $this->total_hours/2) return 0;
 		if ($this->sum_hours < $this->total_hours) return 1;
 		if ($this->sum_hours >= $this->total_hours) return 2;
