@@ -39,9 +39,10 @@
 	<div class="pb-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-6 border-b border-gray-200">
+
+				{{-- me --}}
 				<div class="px-6 pb-4 flex justify-between items-center">
-					<div>Geleistete Stunden</div>
-					{{-- dialog to add new position --}}
+					<div>Meine Stunden</div>
 					<x-primary-button onclick="window.location='{{ route('positions-add') }}'" class="transition duration-150 ease-in-out">
 						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
 							<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -128,14 +129,60 @@
 						<tr>
 							<td colspan="4">
 								<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
-									{{-- <div class="font-bold">{{ __('Achtung!') }}</div> --}}
-									{{ __('Es sind noch keine Einträge vorhanden.') }}
+									{{ __('Hier sind noch keine Einträge vorhanden.') }}
 								</div>
 							</td>
 						</tr>
 					@endforelse
 					</tbody>
 				</table>
+
+				{{-- partner --}}
+				@if ($partner)
+					<div class="px-6 pb-4 mt-12 flex justify-between items-center">
+						<div>{{ $partner->firstname }}'s Stunden</div>
+					</div>
+					<table class="items-center bg-transparent w-full border-collapse">
+						<thead>
+							<tr>
+								<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+									Beschreibung
+								</th>
+								<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+									Datum
+								</th>
+								<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+									Anzahl Stunden
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+						@forelse ($partner->positions as $i => $position)
+							<tr>
+								<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
+									{{ $position->description }}
+								</td>
+								<td class="px-6 py-4 align-middle whitespace-nowrap">
+									{{ hdate($position->completed_at) }}
+								</td>
+								<td class="px-6 py-4 align-center whitespace-nowrap">
+									{{ $position->hours }}
+								</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="4">
+									<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
+										{{-- <div class="font-bold">{{ __('Achtung!') }}</div> --}}
+										{{ __('Hier sind noch keine Einträge vorhanden.') }}
+									</div>
+								</td>
+							</tr>
+						@endforelse
+						</tbody>
+					</table>
+				@endif
+
 			</div>
 		</div>
 	</div>

@@ -18,12 +18,15 @@ class PositionController extends Controller
 		$u        = auth()->user();
 		$a        = $u->account;
 		$separate = $a->separate_accounting;
+		$p        = count($a->users) > 1 && !$separate ? $a->users[1] : null;
 		$sum      = $separate ? $u->sum_hours     : $a->sum_hours;
 		$missing  = $separate ? $u->missing_hours : $a->missing_hours;
 		$cycle    = $separate ? $u->cycle_hours   : $a->cycle_hours;
 		$total    = $separate ? $u->total_hours   : $a->total_hours;
+
 		return view('dashboard')
 			->with('user', $u)
+			->with('partner', $p)
 			->with('sum_hours', $sum)
 			->with('missing_hours', $missing >= 0 ? round($missing, 1) : 0)
 			->with('cycle_hours', round($cycle, 1))

@@ -100,6 +100,7 @@ class User extends Authenticatable
 		if ($diff->m > 0 or $diff->d > 0) {
 			$years += $diff->days / (($years+1)*365);
 		}
+		// TODO reduce by excemptions
 		return $this->target_hours * $years;
 	}
 
