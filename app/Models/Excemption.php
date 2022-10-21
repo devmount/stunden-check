@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Excemption extends Model
 {
+	use HasFactory;
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -22,14 +25,14 @@ class Excemption extends Model
 	 * @var array<int, string>
 	 */
 	protected $hidden = [
-		'account_id',
+		'user_id',
 	];
 
 	/**
-	 * Get the user that owns the phone.
+	 * Get the user that owns the excemption.
 	 */
-	public function account()
+	public function user()
 	{
-		return $this->belongsTo('App\Models\Account');
+		return $this->belongsTo('App\Models\User');
 	}
 }

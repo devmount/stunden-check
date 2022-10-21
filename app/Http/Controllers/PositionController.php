@@ -97,7 +97,6 @@ class PositionController extends Controller
 		$position->category_id  = $request->input('category_id');
 		$position->description  = $request->input('description');
 		$position->save();
-		error_log(json_encode($position));
 
 		return redirect()
 			->route($request->has('go_back') ? 'dashboard' : 'positions-add')

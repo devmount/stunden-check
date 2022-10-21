@@ -61,7 +61,7 @@
 								{{ __('Eingestiegen am') }}
 							</th>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-								{{ __('Befreit am') }}
+								{{ __('Tage Befreit') }}
 							</th>
 							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 								{{ __('Status') }}
@@ -98,9 +98,7 @@
 								{{ hdate($account->start) }}
 							</td>
 							<td class="px-6 py-4 align-center whitespace-nowrap">
-								@foreach ($account->excemptions as $ex)
-									<div>{{ hdate($ex->start) }}&mdash;{{ hdate($ex->end) }}</div>
-								@endforeach
+								{{ $account->excemption_days }}
 							</td>
 							<td class="px-6 py-4 align-middle whitespace-nowrap">
 								@if ($account->separate_accounting)

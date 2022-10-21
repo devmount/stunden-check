@@ -53,30 +53,37 @@ class AccountController extends Controller
 			'target_hours'        => $request->input('target_hours'),
 		]);
 
-		$account->users()->create([
+		$user1 = $account->users()->create([
 			'firstname'           => $request->input('firstname1'),
 			'lastname'            => $request->input('lastname1'),
 			'email'               => $request->input('email1'),
 			'password'            => Hash::make('test'),
 			'is_admin'            => $request->has('is_admin1'),
 		]);
-		
+		if (count($request->ex_start1) > 0 && count($request->ex_start1) == count($request->ex_end1)) {
+			for ($i=0; $i < count($request->ex_start1); $i++) { 
+				$user1->excemptions()->create([
+					'start'           => $request->ex_start1[$i],
+					'end'             => $request->ex_end1[$i],
+				]);
+			}
+		}
+
 		if ($request->firstname2 && $request->lastname2 && $request->email2) {
-			$account->users()->create([
+			$user2 = $account->users()->create([
 				'firstname'         => $request->input('firstname2'),
 				'lastname'          => $request->input('lastname2'),
 				'email'             => $request->input('email2'),
 				'password'          => Hash::make('test'),
 				'is_admin'          => $request->has('is_admin2'),
 			]);
-		}
-
-		if (count($request->ex_start) > 0 && count($request->ex_start) == count($request->ex_end)) {
-			for ($i=0; $i < count($request->ex_start); $i++) { 
-				$account->excemptions()->create([
-					'start'            => $request->ex_start[$i],
-					'end'              => $request->ex_end[$i],
-				]);
+			if (count($request->ex_start2) > 0 && count($request->ex_start2) == count($request->ex_end2)) {
+				for ($i=0; $i < count($request->ex_start2); $i++) { 
+					$user2->excemptions()->create([
+						'start'         => $request->ex_start2[$i],
+						'end'           => $request->ex_end2[$i],
+					]);
+				}
 			}
 		}
 
@@ -126,6 +133,20 @@ class AccountController extends Controller
 		$account->users[0]->email     = $request->input('email1');
 		$account->users[0]->is_admin  = $request->has('is_admin1');
 
+		// handle excemptions for first person
+		if (!empty($request->ex_delete1)) {
+			$ids = array_map('intval', explode(',', $request->ex_delete1));
+			Excemption::destroy($ids);
+		}
+		if ($request->ex_start1 && count($request->ex_start1) > 0 && count($request->ex_start1) == count($request->ex_end1)) {
+			for ($i=0; $i < count($request->ex_start1); $i++) { 
+				$account->users[0]->excemptions()->create([
+					'start' => $request->ex_start1[$i],
+					'end'   => $request->ex_end1[$i],
+				]);
+			}
+		}
+
 		// handle second person
 		if ($request->firstname2 && $request->lastname2 && $request->email2) {
 			if (isset($account->users[1])) {
@@ -142,19 +163,19 @@ class AccountController extends Controller
 					'is_admin'  => $request->has('is_admin2'),
 				]);
 			}
-		}
 
-		// handle excemptions
-		if (!empty($request->ex_delete)) {
-			$ids = array_map('intval', explode(',', $request->ex_delete));
-			Excemption::destroy($ids);
-		}
-		if ($request->ex_start && count($request->ex_start) > 0 && count($request->ex_start) == count($request->ex_end)) {
-			for ($i=0; $i < count($request->ex_start); $i++) { 
-				$account->excemptions()->create([
-					'start' => $request->ex_start[$i],
-					'end'   => $request->ex_end[$i],
-				]);
+			// handle excemptions for second person
+			if (!empty($request->ex_delete2)) {
+				$ids = array_map('intval', explode(',', $request->ex_delete2));
+				Excemption::destroy($ids);
+			}
+			if ($request->ex_start2 && count($request->ex_start2) > 0 && count($request->ex_start2) == count($request->ex_end2)) {
+				for ($i=0; $i < count($request->ex_start2); $i++) { 
+					$account->users[1]->excemptions()->create([
+						'start' => $request->ex_start2[$i],
+						'end'   => $request->ex_end2[$i],
+					]);
+				}
 			}
 		}
 

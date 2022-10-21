@@ -22,19 +22,19 @@ return new class extends Migration
 			$table->date('archived_at')->nullable();
 			$table->timestamps();
 		});
-
-		Schema::create('excemptions', function (Blueprint $table) {
-			$table->id();
-			$table->unsignedBigInteger('account_id')->nullable();
-			$table->date('start');
-			$table->date('end');
-			$table->timestamps();
-			$table->foreign('account_id')->references('id')->on('accounts');
-		});
-
+		
 		Schema::table('users', function($table) {
 			$table->unsignedBigInteger('account_id')->nullable();
 			$table->foreign('account_id')->references('id')->on('accounts');
+		});
+
+		Schema::create('excemptions', function (Blueprint $table) {
+			$table->id();
+			$table->unsignedBigInteger('user_id')->nullable();
+			$table->date('start');
+			$table->date('end');
+			$table->timestamps();
+			$table->foreign('user_id')->references('id')->on('users');
 		});
 	}
 

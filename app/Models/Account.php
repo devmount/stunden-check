@@ -31,14 +31,6 @@ class Account extends Model
 	}
 
 	/**
-	 * get all excemptions assigned to this account
-	 */
-	public function excemptions()
-	{
-		return $this->hasMany('App\Models\Excemption','account_id','id');
-	}
-
-	/**
 	 * Scope a query to only include active accounts.
 	 *
 	 * @return \Illuminate\Database\Eloquent\Builder
@@ -71,12 +63,24 @@ class Account extends Model
 	}
 
 	/**
+	 * get total number of days of all excemptions of all users
+	 */
+	public function getExcemptionDaysAttribute()
+	{
+		$days = 0;
+		foreach ($this->users as $u) {
+			$days += $u->excemption_days;
+		}
+		return $days;
+	}
+
+	/**
 	 * get total target number of hours
 	 */
 	public function getTotalHoursAttribute()
 	{
 		$hours = $this->users[0]->total_hours;
-		if ($this->sesparate_accounting) {
+		if ($this->separate_accounting) {
 			$hours += $this->users[1]->total_hours;
 		}
 		return $hours;

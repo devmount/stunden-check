@@ -64,6 +64,14 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * get all excemptions assigned to this account
+	 */
+	public function excemptions()
+	{
+		return $this->hasMany('App\Models\Excemption','user_id','id');
+	}
+
+	/**
 	 * get number of hours to work for a single user
 	 */
 	public function getTargetHoursAttribute()
@@ -87,6 +95,22 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * get total number of days of all excemptions
+	 */
+	public function getExcemptionDaysAttribute()
+	{
+		$days = 0;
+		foreach ($this->excemptions as $e) {
+			$start = new DateTime($e->start);
+			$end = new DateTime($e->end);
+			$diff = $start->diff($end)->days;
+			if ($diff < 0) continue;
+			$days += $diff > 0 ? $diff : 1;
+		}
+		return $days;
+	}
+
+	/**
 	 * get total target number of hours
 	 */
 	public function getTotalHoursAttribute()
@@ -96,11 +120,14 @@ class User extends Authenticatable
 		$start = new DateTime($this->account->start);
 		$diff = $start->diff($end);
 		$years = $diff->y;
+		// reduce by excemption days
+		$exclude = $this->excemption_days;
+		$years -= $exclude/365;
 		// calculate fraction if account start differs from cycle start
 		if ($diff->m > 0 or $diff->d > 0) {
-			$years += $diff->days / (($years+1)*365);
+			$total = ($years+1)*365;
+			if ($total > 0)	$years += $diff->days / $total;
 		}
-		// TODO reduce by excemptions
 		return $this->target_hours * $years;
 	}
 

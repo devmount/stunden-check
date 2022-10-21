@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Account;
 use App\Models\User;
 use App\Models\Position;
+use App\Models\Excemption;
 
 class TestAccountsSeeder extends Seeder
 {
@@ -24,6 +25,7 @@ class TestAccountsSeeder extends Seeder
 				User::factory()
 					->count(2)
 					->has(Position::factory()->count(8))
+					->has(Excemption::factory()->count(2))
 			)
 			->create();
 
@@ -34,6 +36,7 @@ class TestAccountsSeeder extends Seeder
 				User::factory()
 					->count(2)
 					->has(Position::factory()->count(8))
+					->has(Excemption::factory()->count(2))
 			)
 			->archived()
 			->create();

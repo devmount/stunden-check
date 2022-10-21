@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Account;
+use App\Models\Excemption;
 use App\Models\User;
 use App\Models\Position;
 
@@ -46,6 +47,12 @@ class AdminSeeder extends Seeder
 		// create positions for admin user
 		Position::factory()
 			->count(8)
+			->for($user)
+			->create();
+
+		// create excemptions for admin user
+		Excemption::factory()
+			->count(2)
 			->for($user)
 			->create();
 	}
