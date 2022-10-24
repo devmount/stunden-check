@@ -55,5 +55,25 @@ class AdminSeeder extends Seeder
 			->count(2)
 			->for($user)
 			->create();
+
+		// create corresponding admin user
+		$partner = User::factory()
+			->state([
+				'firstname' => 'Beta',
+				'lastname' => 'Tester',
+				'email' => 'test@example.com',
+				'password' => Hash::make('ewr98723hjkh'),
+				'is_admin' => false,
+				'created_at' => now()
+			])
+			->for($account)
+			->create();
+	
+		// create positions for admin user
+		Position::factory()
+			->count(3)
+			->for($partner)
+			->create();
 	}
+
 }
