@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Account;
 use App\Models\Excemption;
@@ -42,7 +40,7 @@ class AdminSeeder extends Seeder
 				'created_at' => now()
 			])
 			->for($account)
-			->create();;
+			->create();
 
 		// create positions for admin user
 		Position::factory()

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parameter;
+use App\Mail\TestMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ParameterController extends Controller
 {
@@ -27,10 +29,9 @@ class ParameterController extends Controller
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\Parameter  $parameter
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Parameter $parameter)
+	public function update(Request $request)
 	{
 		$request->validate($this->rules());
 
@@ -44,6 +45,24 @@ class ParameterController extends Controller
 		], ['key'], ['value']);
 
 		return redirect()->route('settings')->with('status', 'Die Einstellungen wurden gespeichert.');
+	}
+
+	/**
+	 * Test sending emails
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function send(Request $request)
+	{
+		$request->validate([
+			'testmail' => 'required|string|email'
+		]);
+
+		// send test mail
+		Mail::to($request->input('testmail'))->send(new TestMail());
+
+		return redirect()->route('settings')->with('status', 'Die Test-E-Mail wurde versandt.');
 	}
 
 	/**

@@ -12,9 +12,9 @@
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-b border-gray-200">
 
-				<div class="mb-4">
-					{{ isset($accounts)
-						? __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.')
+				<div class="mb-8">
+					{{ !isset($accounts)
+						? __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen. Beim Klick auf Speichern wird diesen per E-Mail ein initiales Password geschickt.')
 						: __('Passe hier die Daten des Kontos und der zugehörigen Personen an.') }}
 				</div>
 
@@ -31,7 +31,6 @@
 						</x-primary-button>
 					</div>
 				</form>
-
 
 			</div>
 		</div>

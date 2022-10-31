@@ -52,4 +52,5 @@ Route::middleware('admin')->group(function () {
 	Route::post('/accounts/delete/{id}', [AccountController::class, 'delete'])->name('accounts-delete');
 	Route::get('/settings', [ParameterController::class, 'edit'])->name('settings');
 	Route::post('/settings', [ParameterController::class, 'update']);
+	Route::post('/test/mail', [ParameterController::class, 'send'])->name('testmail');
 });
