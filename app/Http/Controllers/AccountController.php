@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Excemption;
+use App\Mail\InitAccountMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AccountController extends Controller
@@ -61,8 +63,7 @@ class AccountController extends Controller
 			'password'            => Hash::make($pass1),
 			'is_admin'            => $request->has('is_admin1'),
 		]);
-		// TODO send mail with initial password
-		if (count($request->ex_start1) > 0 && count($request->ex_start1) == count($request->ex_end1)) {
+		if ($request->ex_start1 && count($request->ex_start1) > 0 && count($request->ex_start1) == count($request->ex_end1)) {
 			for ($i=0; $i < count($request->ex_start1); $i++) { 
 				$user1->excemptions()->create([
 					'start'           => $request->ex_start1[$i],
@@ -70,6 +71,8 @@ class AccountController extends Controller
 				]);
 			}
 		}
+		// send mail with initial password to user1
+		Mail::to($request->input('email1'))->send(new InitAccountMail($user1, $pass1));
 
 		if ($request->firstname2 && $request->lastname2 && $request->email2) {
 			$pass2 = Str::random(12);
@@ -80,8 +83,7 @@ class AccountController extends Controller
 				'password'          => Hash::make($pass2),
 				'is_admin'          => $request->has('is_admin2'),
 			]);
-			// TODO send mail with initial password
-			if (count($request->ex_start2) > 0 && count($request->ex_start2) == count($request->ex_end2)) {
+			if ($request->ex_start2 && count($request->ex_start2) > 0 && count($request->ex_start2) == count($request->ex_end2)) {
 				for ($i=0; $i < count($request->ex_start2); $i++) { 
 					$user2->excemptions()->create([
 						'start'         => $request->ex_start2[$i],
@@ -89,6 +91,8 @@ class AccountController extends Controller
 					]);
 				}
 			}
+			// send mail with initial password to user2
+			Mail::to($request->input('email2'))->send(new InitAccountMail($user2, $pass2));
 		}
 
 		return redirect()

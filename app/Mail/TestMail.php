@@ -28,6 +28,6 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.test-email');
+        return $this->subject('StundenCheck E-Mail Test')->view('mail.test-email');
     }
 }
