@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Parameter;
 use App\Models\Excemption;
 use App\Mail\InitAccountMail;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class AccountController extends Controller
 	 */
 	public function create()
 	{
-		return view('accounts-form');
+		return view('accounts-form')
+			->with('default_hours', Parameter::key('target_hours'))
+			->with('default_start', date(date('Y') . '-m-d', strtotime(Parameter::key('start_accounting'))));
 	}
 
 	/**

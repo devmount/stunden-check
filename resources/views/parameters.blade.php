@@ -38,7 +38,6 @@
 						{{ __('Passe hier die allgemeinen Einstellungen der Anwendung an.') }}
 					</div>
 					<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
-						<div class="font-bold">{{ __('Achtung!') }}</div>
 						{{ __('Änderungen wirken sich auf die Stundenberechnung aller bestehender Konten aus.') }}
 					</div>
 

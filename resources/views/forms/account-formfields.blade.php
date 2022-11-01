@@ -5,7 +5,7 @@
 			name="active"
 			:label="__('Aktiv')"
 			:info="__('Aktive Konten werden ausgewertet, inaktive Konten sind im Archiv gelistet.')"
-			:checked="old('active', isset($account) ? $account->active : false)"
+			:checked="old('active', isset($account) ? $account->active : true)"
 		/>
 	</div>
 	<div class="w-1/2">
@@ -25,7 +25,7 @@
 		<x-text-input
 			type="date"
 			name="start"
-			:value="old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : null)"
+			:value="old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : $default_start)"
 			:label="__('Datum Einstieg')"
 			:info="__('Ist der Einstieg nicht zum Start der Abrechnungsperiode, so sind Stunden nur anteilig zu erbringen.')"
 			required
@@ -36,7 +36,7 @@
 		<x-text-input
 			type="number"
 			name="target_hours"
-			:value="old('target_hours', isset($account) ? $account->target_hours : null)"
+			:value="old('target_hours', isset($account) ? $account->target_hours : $default_hours)"
 			:label="__('Mindestanzahl Pflichtstunden')"
 			:info="__('Gilt immer für das gesamte Konto. Bei getrennter Abrechnung ist von jeder Person die Hälfte zu erbringen.')"
 			step="0.25"
