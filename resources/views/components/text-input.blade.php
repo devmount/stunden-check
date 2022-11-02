@@ -27,7 +27,7 @@
 	<div class="text-sm text-red-600">{{ $message }}</div>
 @enderror
 @if ($attributes['info'])
-	<div class="text-sm mt-2 py-1 px-2 text-slate-500 border-l-4 border-slate-400 bg-slate-50">
+	<div class="text-sm mt-1 text-slate-400">
 		{{ $attributes['info'] }}
 	</div>
 @endif
