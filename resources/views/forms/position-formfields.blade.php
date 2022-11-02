@@ -6,7 +6,7 @@
 			type="date"
 			name="completed_at"
 			:label="__('Datum')"
-			:value="old('completed_at', isset($position) ? date('Y-m-d', strtotime($position->completed_at)) : null)"
+			:value="old('completed_at', isset($position) ? date('Y-m-d', strtotime($position->completed_at)) : date('Y-m-d'))"
 			required
 			autofocus
 		/>
