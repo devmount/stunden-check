@@ -13,6 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/profile',  fn () => view('profile')  )->middleware(['auth'])->name('profile');
-
 require __DIR__.'/auth.php';

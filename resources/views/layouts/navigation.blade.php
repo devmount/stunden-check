@@ -45,6 +45,9 @@
 						<x-dropdown-link :href="route('profile')">
 							{{ __('Profil') }}
 						</x-dropdown-link>
+						<x-dropdown-link :href="route('password.change')">
+							{{ __('Passwort ändern') }}
+						</x-dropdown-link>
 
 						<!-- Authentication -->
 						<form method="POST" action="{{ route('logout') }}">
@@ -88,6 +91,9 @@
 			<x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')" class="px-4">
 				<div class="font-medium text-base text-gray-800">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</div>
 				<div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+			</x-responsive-nav-link>
+			<x-responsive-nav-link :href="route('password.change')">
+				{{ __('Passwort ändern') }}
 			</x-responsive-nav-link>
 
 			<div class="mt-3 space-y-1">

@@ -166,6 +166,8 @@ return [
 	|
 	*/
 
-	'attributes' => [],
-
+	'attributes' => [
+		'pass'    => 'Password',
+		'newpass' => 'New Password'
+	],
 ];

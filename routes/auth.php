@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -38,6 +39,9 @@ Route::middleware('auth')->group(function () {
 		->middleware('throttle:6,1')->name('verification.send');
 	Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
 	Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
+	Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+	Route::get('/profile/password', [ProfileController::class, 'password'])->name('password.change');
+	Route::post('/profile/password', [ProfileController::class, 'update']);
 	Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
