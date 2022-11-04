@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Exports\AccountsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AccountController extends Controller
 {
@@ -255,6 +257,14 @@ class AccountController extends Controller
 		return redirect()
 			->route('accounts')
 			->with('status', 'Das Konto wurde erfolgreich gelöscht.');
+	}
+
+	/**
+	* @return \Illuminate\Support\Collection
+	*/
+	public function export($ext) 
+	{
+		return Excel::download(new AccountsExport, 'accounts.' . $ext);
 	}
 
 	/**

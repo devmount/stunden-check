@@ -37,15 +37,46 @@
 							@endif
 						</button>
 					</div>
-					{{-- dialog to add new account --}}
-					<x-primary-button onclick="window.location='{{ route('accounts-add') }}'" class="transition duration-150 ease-in-out">
-						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
-							<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-							<line x1="12" y1="5" x2="12" y2="19" />
-							<line x1="5" y1="12" x2="19" y2="12" />
-						</svg>
-						{{ __('Neues Konto') }}
-					</x-primary-button>
+					<div class="flex gap-6 items-center">
+						{{-- dialog to add new account --}}
+						<x-primary-button onclick="window.location='{{ route('accounts-add') }}'" class="transition duration-150 ease-in-out">
+							<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+								<line x1="12" y1="5" x2="12" y2="19" />
+								<line x1="5" y1="12" x2="19" y2="12" />
+							</svg>
+							{{ __('Neues Konto') }}
+						</x-primary-button>
+						<x-dropdown align="right">
+							<x-slot name="trigger">
+								<button class="group flex justify-center items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-current stroke-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 24 24">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+										<line x1="4" y1="6" x2="20" y2="6" />
+										<line x1="4" y1="12" x2="20" y2="12" />
+										<line x1="4" y1="18" x2="20" y2="18" />
+									</svg>
+								</button>
+							</x-slot>
+							<x-slot name="content">
+								<x-dropdown-link :href="url('accounts/export/xlsx')" class="flex items-center gap-2">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-gray-500" viewBox="0 0 24 24">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+										<path d="M11.5 20h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v7.5m-16 -3.5h16m-10 -6v16m4 -1h7m-3 -3l3 3l-3 3" />
+									</svg>
+									{{ __('Export Excel') }}
+								</x-dropdown-link>
+								<x-dropdown-link :href="url('accounts/export/csv')" class="flex items-center gap-2">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-gray-500" viewBox="0 0 24 24">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+										<path d="M14 3v4a1 1 0 0 0 1 1h4" />
+										<path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v5m-5 6h7m-3 -3l3 3l-3 3" />
+									</svg>
+									{{ __('Export CSV') }}
+								</x-dropdown-link>
+							</x-slot>
+						</x-dropdown>
+					</div>
 				</div>
 				{{-- active accounts table --}}
 				<table x-show="active === 'active'" class="items-center bg-transparent w-full border-collapse">

@@ -57,4 +57,6 @@ Route::middleware('admin')->group(function () {
 	Route::get('/settings', [ParameterController::class, 'edit'])->name('settings');
 	Route::post('/settings', [ParameterController::class, 'update']);
 	Route::post('/test/mail', [ParameterController::class, 'send'])->name('testmail');
+	Route::get('/accounts/export/{ext}', [AccountController::class, 'export'])->name('accounts-export');
+
 });
