@@ -75,6 +75,14 @@ class PositionController extends Controller
 	public function edit($id)
 	{
 		$position = Position::find($id);
+
+		// check if user is allowed to edit the position
+		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
+			return redirect()
+				->route('dashboard')
+				->with('status', 'Dieser Eintrag gehört dir nicht.');
+		}
+		// go to edit the position
 		return view('positions-form', compact('position'))
 			->with('categories', Category::get());
 	}
@@ -89,6 +97,13 @@ class PositionController extends Controller
 	public function update(Request $request, $id)
 	{
 		$position = Position::find($id);
+
+		// check if user is allowed to update the position
+		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
+			return redirect()
+				->route('dashboard')
+				->with('status', 'Dieser Eintrag gehört dir nicht.');
+		}
 
 		$request->validate($this->rules());
 
@@ -112,6 +127,14 @@ class PositionController extends Controller
 	public function delete($id)
 	{
 		$position = Position::find($id);
+
+		// check if user is allowed to edit the position
+		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
+			return redirect()
+				->route('dashboard')
+				->with('status', 'Dieser Eintrag gehört dir nicht.');
+		}
+
 		$position->delete();
 
 		return redirect()
