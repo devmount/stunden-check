@@ -1,5 +1,5 @@
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		<!-- date (no time needed) -->
 		<x-text-input
 			class="block w-full"
@@ -11,7 +11,7 @@
 			autofocus
 		/>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<!-- hours -->
 		<x-text-input
 			class="block w-full"
@@ -25,8 +25,8 @@
 		/>
 	</div>
 </div>
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		<!-- hours -->
 		<x-select-input
 			class="block w-full"
@@ -44,7 +44,7 @@
 			@endforeach
 		</x-select-input>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<!-- description -->
 		<x-text-input
 			class="block w-full"

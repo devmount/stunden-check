@@ -20,7 +20,7 @@
 					@csrf
 					@include('forms.position-formfields')
 
-					<div class="flex justify-end gap-2 mt-4">
+					<div class="flex flex-col-reverse sm:flex-row items-end justify-end gap-2 mt-4">
 						<x-secondary-button onclick="event.preventDefault();window.location='{{ route('dashboard') }}'">
 							{{ __('Abbrechen') }}
 						</x-secondary-button>
