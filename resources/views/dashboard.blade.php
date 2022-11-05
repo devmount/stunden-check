@@ -6,31 +6,31 @@
 	</x-slot>
 
 	<div class="py-12">
-		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid gap-4 grid-cols-3 justify-between">
-			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-slate-600 border-4 border-white">
+		<div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 grid gap-4 grid-cols-1 md:grid-cols-3 justify-between">
+			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-slate-600 md:border-4 border-white">
 				Insgesamt
-				<div class="text-6xl font-medium">
+				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $sum_hours }}
-				</div>
+				</span>
 				Stunden geleistet
 			</div>
 			<div class="
-				overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white border-4 border-white
+				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white md:border-4 border-white
 				@if ($missing_hours > 0) bg-amber-600 @else bg-slate-600 @endif
 			">
 				Insgesamt
-				<div class="text-6xl font-medium">
+				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $missing_hours }}
-				</div>
+				</span>
 				Stunden ausstehend
 			</div>
-			<div class="overflow-hidden shadow-md sm:rounded-lg p-6 text-center text-white bg-teal-600 border-4 border-white">
+			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-teal-600 md:border-4 border-white">
 				Aktuelle Abrechnungsperiode
-				<div class="text-6xl font-medium">
+				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $cycle_hours }}
 					/
 					{{ $total_hours }}
-				</div>
+				</span>
 				Stunden geleistet
 			</div>
 		</div>
@@ -55,29 +55,31 @@
 				<table class="items-center bg-transparent w-full border-collapse">
 					<thead>
 						<tr>
-							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+							<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 								Beschreibung
 							</th>
-							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+							<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 								Datum
 							</th>
-							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-								Anzahl Stunden
+							<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
+								<span class="lg:hidden">Std.</span>
+								<span class="hidden lg:inline">Anzahl Stunden</span>
 							</th>
-							<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+							<th class="w-20 px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 					@forelse ($user->positions as $i => $position)
 						<tr>
-							<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
+							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 								{{ $position->description }}
 							</td>
-							<td class="px-6 py-4 align-middle whitespace-nowrap">
-								{{ hdate($position->completed_at) }}
+							<td class="px-3 md:px-6 py-3 md:py-4 align-middle">
+								<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
+								<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
 							</td>
-							<td class="px-6 py-4 align-center whitespace-nowrap">
+							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
 								{{ $position->hours }}
 							</td>
 							<td>
@@ -145,28 +147,30 @@
 					<table class="items-center bg-transparent w-full border-collapse">
 						<thead>
 							<tr>
-								<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									Beschreibung
 								</th>
-								<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+								<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									Datum
 								</th>
-								<th class="px-6 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 py-3 uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-									Anzahl Stunden
+								<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
+									<span class="lg:hidden">Std.</span>
+									<span class="hidden lg:inline">Anzahl Stunden</span>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 						@forelse ($partner->positions as $i => $position)
 							<tr>
-								<td class="px-6 py-4 align-middle whitespace-nowrap text-left">
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 									{{ $position->description }}
 								</td>
-								<td class="px-6 py-4 align-middle whitespace-nowrap">
-									{{ hdate($position->completed_at) }}
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle">
+									<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
+									<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
 								</td>
-								<td class="px-6 py-4 align-center whitespace-nowrap">
-									{{ $position->hours }}
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
+										{{ $position->hours }}
 								</td>
 							</tr>
 						@empty

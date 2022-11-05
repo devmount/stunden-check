@@ -6,3 +6,10 @@ if (! function_exists('hdate')) {
 		return date('j. F Y', strtotime($str)); 
 	}
 }
+
+// converts given date string to short date format
+if (! function_exists('shortdate')) {
+	function shortdate($str) {
+		return date('d.m.y', strtotime($str)); 
+	}
+}
