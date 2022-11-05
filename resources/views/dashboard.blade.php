@@ -70,7 +70,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					@forelse ($user->positions as $i => $position)
+					@forelse ($user->positions->sortByDesc('completed_at') as $i => $position)
 						<tr>
 							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 								{{ $position->description }}
@@ -160,7 +160,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						@forelse ($partner->positions as $i => $position)
+						@forelse ($partner->positions->sortByDesc('completed_at') as $i => $position)
 							<tr>
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 									{{ $position->description }}
