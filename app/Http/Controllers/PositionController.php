@@ -128,7 +128,7 @@ class PositionController extends Controller
 	{
 		$position = Position::find($id);
 
-		// check if user is allowed to edit the position
+		// check if user is allowed to delete the position
 		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
 			return redirect()
 				->route('dashboard')
