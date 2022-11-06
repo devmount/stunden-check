@@ -1,5 +1,5 @@
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		<!-- new password first -->
 		<x-text-input
 			class="block w-full"
@@ -11,7 +11,7 @@
 			autofocus
 		/>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<!-- new password second -->
 		<x-text-input
 			class="block w-full"
@@ -23,8 +23,8 @@
 		/>
 	</div>
 </div>
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		<!-- old password -->
 		<x-text-input
 			class="block w-full"
@@ -36,6 +36,6 @@
 			autofocus
 		/>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 	</div>
 </div>
