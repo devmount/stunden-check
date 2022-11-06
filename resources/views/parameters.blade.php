@@ -63,14 +63,18 @@
 					<form method="POST" action="{{ route('testmail') }}">
 						@csrf
 						
-						<div class="mt-8">
-							<x-text-input
-								class="mt-4 block w-1/3"
-								type="email"
-								name="testmail"
-								:label="__('Test E-Mail-Adresse')"
-								required
-							/>
+						<div class="flex flex-col sm:flex-row gap-4 mt-8">
+							<div class="sm:w-1/2">
+								<x-text-input
+									class="mt-4 block"
+									type="email"
+									name="testmail"
+									:label="__('Test E-Mail-Adresse')"
+									required
+								/>
+							</div>
+							<div class="sm:w-1/2">
+							</div>
 						</div>
 						<div class="mt-4">
 							<x-primary-button>

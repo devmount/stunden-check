@@ -1,5 +1,5 @@
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		{{-- accounting cycle --}}
 		<x-select-input
 			class="mt-4 block w-full"
@@ -13,7 +13,7 @@
 			</option>
 		</x-select-input>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		{{-- accounting start date --}}
 		<x-text-input
 			class="mt-4 block w-full"
@@ -26,8 +26,8 @@
 		/>
 	</div>
 </div>
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		{{-- number of target hours --}}
 		<x-text-input
 			class="mt-4 block w-full"
@@ -41,11 +41,11 @@
 			required
 		/>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 	</div>
 </div>
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		{{-- cycle of email reminder --}}
 		<x-select-input
 			class="mt-4 block w-full"
@@ -59,7 +59,7 @@
 			</option>
 		</x-select-input>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		{{-- start day of email reminder --}}
 		<x-select-input
 			class="mt-4 block w-full"
