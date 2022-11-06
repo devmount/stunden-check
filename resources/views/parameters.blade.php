@@ -11,7 +11,7 @@
 				class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-6 border-b border-gray-200"
 				x-data="{
 					tabs: ['param', 'email'],
-					active: 'param',
+					active: '{{ $view ?? 'param' }}',
 				}"
 			>
 				<div class="px-6 pb-4 flex justify-between items-center">
@@ -21,14 +21,14 @@
 							:class="[active === 'param' && 'bg-white text-black shadow', active !== 'param' && 'text-slate-600']"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
 						>
-							Anwendungs-Parameter
+							{{ __('Anwendungs-Parameter') }}
 						</button>
 						<button
 							@click="active = 'email'"
 							:class="[active === 'email' && 'bg-white text-black shadow', active !== 'email' && 'text-slate-600']"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
 						>
-							E-Mail Konfiguration
+							{{ __('E-Mail Konfiguration') }}
 						</button>
 					</div>
 				</div>

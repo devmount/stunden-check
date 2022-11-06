@@ -12,17 +12,18 @@ class ParameterController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  \App\Models\Parameter  $parameter
+	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Parameter $parameter)
+	public function edit(Request $request)
 	{
 		$parameters = [];
 		// build key value pairs
 		foreach (Parameter::all() as $p) {
 			$parameters[$p->key] = $p->value;
 		}
-		return view('parameters', compact('parameters'));
+		return view('parameters', compact('parameters'))
+			->with('view', $request->query('view'));
 	}
 
 	/**
@@ -62,7 +63,8 @@ class ParameterController extends Controller
 		// send test mail
 		Mail::to($request->input('testmail'))->send(new TestMail());
 
-		return redirect()->route('settings')->with('status', 'Die Test-E-Mail wurde versandt.');
+		return redirect()->route('settings', ['view' => 'email'])
+			->with('status', 'Die Test-E-Mail wurde versandt.');
 	}
 
 	/**
