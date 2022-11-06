@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
 			ParametersSeeder::class,
 			CategorySeeder::class,
 			AdminSeeder::class,
-			TestAccountsSeeder::class,
 		]);
 	}
 }

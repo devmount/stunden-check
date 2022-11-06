@@ -5,9 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Account;
-use App\Models\Excemption;
 use App\Models\User;
-use App\Models\Position;
 
 class AdminSeeder extends Seeder
 {
@@ -30,7 +28,7 @@ class AdminSeeder extends Seeder
 			->create();
 
 		// create corresponding admin user
-		$user = User::factory()
+		User::factory()
 			->state([
 				'firstname' => 'App',
 				'lastname' => 'Admin',
@@ -41,37 +39,5 @@ class AdminSeeder extends Seeder
 			])
 			->for($account)
 			->create();
-
-		// create positions for admin user
-		Position::factory()
-			->count(8)
-			->for($user)
-			->create();
-
-		// create excemptions for admin user
-		Excemption::factory()
-			->count(2)
-			->for($user)
-			->create();
-
-		// create corresponding admin user
-		$partner = User::factory()
-			->state([
-				'firstname' => 'Beta',
-				'lastname' => 'Tester',
-				'email' => 'test@example.com',
-				'password' => Hash::make('ewr98723hjkh'),
-				'is_admin' => false,
-				'created_at' => now()
-			])
-			->for($account)
-			->create();
-	
-		// create positions for admin user
-		Position::factory()
-			->count(3)
-			->for($partner)
-			->create();
 	}
-
 }
