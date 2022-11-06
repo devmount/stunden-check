@@ -1,5 +1,5 @@
-<div class="flex gap-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4">
+	<div class="sm:w-1/2">
 		<!-- active -->
 		<x-checkbox-input
 			name="active"
@@ -8,7 +8,7 @@
 			:checked="old('active', isset($account) ? $account->active : true)"
 		/>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<!-- separate_accounting -->
 		<x-checkbox-input
 			name="separate_accounting"
@@ -19,8 +19,8 @@
 	</div>
 </div>
 
-<div class="flex gap-4 mt-4">
-	<div class="w-1/2">
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
 		<!-- date (no time needed) -->
 		<x-text-input
 			type="date"
@@ -31,7 +31,7 @@
 			required
 		/>
 	</div>
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<!-- hours -->
 		<x-text-input
 			type="number"
@@ -46,9 +46,9 @@
 	</div>
 </div>
 
-<div class="mt-8 flex gap-4">
+<div class="mt-8 flex flex-col sm:flex-row gap-4">
 	<!-- first person -->
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<h3 class="text-xl">1. Person</h3>
 		<!-- 1. firstname -->
 		<x-text-input
@@ -80,14 +80,69 @@
 		<!-- 1. is_admin -->
 		<x-checkbox-input
 			name="is_admin1"
-			class="block mt-4"
+			class="block mt-4 mb-4"
 			:label="__('Administrator')"
 			:checked="old('is_admin1', isset($account) ? $account->users[0]->is_admin : false)"
 		/>
+		<!-- excemptions for user1 -->
+		<div x-data="{ list: {{ isset($account) && isset($account->users[0]) ? collect($account->users[0]->excemptions) : '[]' }}, add: 0, remove: []}">
+			<div class="text-sm">Befreiung von der Stundenpflicht</div>
+			<template x-for="ex in list">
+				<template x-if="! remove.includes(ex.id)">
+					<div class="flex gap-4 mt-2 items-center">
+						<div class="hidden lg:inline" x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
+						<div class="lg:hidden" x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: '2-digit', month: 'numeric', day: 'numeric' })"></div>
+						&mdash;
+						<div class="hidden lg:inline" x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
+						<div class="lg:hidden" x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: '2-digit', month: 'numeric', day: 'numeric' })"></div>
+						<button
+							class="transition duration-150 ease-in-out"
+							@click="event.preventDefault();remove.push(ex.id);"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+								<line x1="18" y1="6" x2="6" y2="18" />
+								<line x1="6" y1="6" x2="18" y2="18" />
+							</svg>
+						</button>
+					</div>
+				</template>
+			</template>
+			<input type="hidden" name="ex_delete1" x-bind:value="remove">
+			<template x-for="i in add">
+				<div class="flex gap-4 mt-2 items-center">
+					<!-- start date -->
+					<input
+						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						type="date"
+						name="ex_start1[]"
+						required
+					/>
+					<!-- end date -->
+					bis
+					<input
+						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						type="date"
+						name="ex_end1[]"
+						required
+					/>
+				</div>
+			</template>
+			<button
+			class="transition duration-150 ease-in-out mt-2"
+			@click="event.preventDefault();add++;"
+			>
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+				<line x1="12" y1="5" x2="12" y2="19" />
+				<line x1="5" y1="12" x2="19" y2="12" />
+			</svg>
+			</button>
+		</div>
 	</div>
 
 	<!-- second person -->
-	<div class="w-1/2">
+	<div class="sm:w-1/2">
 		<h3 class="text-xl">2. Person (optional)</h3>
 		<!-- 2. firstname -->
 		<x-text-input
@@ -116,124 +171,64 @@
 		<!-- 2. is_admin -->
 		<x-checkbox-input
 			name="is_admin2"
-			class="block mt-4"
+			class="block mt-4 mb-4"
 			:label="__('Administrator')"
 			:checked="old('is_admin2', isset($account) && isset($account->users[1]) ? $account->users[1]->is_admin : false)"
 		/>
-	</div>
-</div>
-
-<div class="mt-8 flex gap-4">
-	<!-- excemptions for user1 -->
-	<div
-		class="w-1/2"
-		x-data="{ list: {{ isset($account) && isset($account->users[0]) ? collect($account->users[0]->excemptions) : '[]' }}, add: 0, remove: []}"
-	>
-		<div class="text-sm">Befreiung von der Stundenpflicht</div>
-		<template x-for="ex in list">
-			<template x-if="! remove.includes(ex.id)">
+		<!-- excemptions for user2 -->
+		<div x-data="{ list: {{ isset($account) && isset($account->users[1]) ? collect($account->users[1]->excemptions) : '[]' }}, add: 0, remove: []}">
+			<div class="text-sm">Befreiung von der Stundenpflicht</div>
+			<template x-for="ex in list">
+				<template x-if="! remove.includes(ex.id)">
+					<div class="flex gap-4 mt-2 items-center">
+						<div class="hidden lg:inline" x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
+						<div class="lg:hidden" x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: '2-digit', month: 'numeric', day: 'numeric' })"></div>
+						&mdash;
+						<div class="hidden lg:inline" x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
+						<div class="lg:hidden" x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: '2-digit', month: 'numeric', day: 'numeric' })"></div>
+						<button
+							class="transition duration-150 ease-in-out"
+							@click="event.preventDefault();remove.push(ex.id);"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+								<line x1="18" y1="6" x2="6" y2="18" />
+								<line x1="6" y1="6" x2="18" y2="18" />
+							</svg>
+						</button>
+					</div>
+				</template>
+			</template>
+			<input type="hidden" name="ex_delete2" x-bind:value="remove">
+			<template x-for="i in add">
 				<div class="flex gap-4 mt-2 items-center">
-				<div x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
-				&mdash;
-				<div x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
-				<button
-					class="transition duration-150 ease-in-out"
-					@click="event.preventDefault();remove.push(ex.id);"
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-						<line x1="18" y1="6" x2="6" y2="18" />
-						<line x1="6" y1="6" x2="18" y2="18" />
-					</svg>
-				</button>
+					<!-- start date -->
+					<input
+						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						type="date"
+						name="ex_start2[]"
+						required
+					/>
+					<!-- end date -->
+					bis
+					<input
+						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						type="date"
+						name="ex_end2[]"
+						required
+					/>
 				</div>
 			</template>
-		</template>
-		<input type="hidden" name="ex_delete1" x-bind:value="remove">
-		<template x-for="i in add">
-			<div class="flex gap-4 mt-2 items-center">
-				<!-- start date -->
-				<input
-					class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
-					type="date"
-					name="ex_start1[]"
-					required
-				/>
-				<!-- end date -->
-				bis
-				<input
-					class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
-					type="date"
-					name="ex_end1[]"
-					required
-				/>
-			</div>
-		</template>
-		<button
-		class="transition duration-150 ease-in-out mt-2"
-		@click="event.preventDefault();add++;"
-		>
-		<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
-			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-			<line x1="12" y1="5" x2="12" y2="19" />
-			<line x1="5" y1="12" x2="19" y2="12" />
-		</svg>
-		</button>
-	</div>
-	<!-- excemptions for user2 -->
-	<div
-		class="w-1/2"
-		x-data="{ list: {{ isset($account) && isset($account->users[1]) ? collect($account->users[1]->excemptions) : '[]' }}, add: 0, remove: []}"
-	>
-		<div class="text-sm">Befreiung von der Stundenpflicht</div>
-		<template x-for="ex in list">
-			<template x-if="! remove.includes(ex.id)">
-				<div class="flex gap-4 mt-2 items-center">
-				<div x-text="new Date(ex.start).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
-				&mdash;
-				<div x-text="new Date(ex.end).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })"></div>
-				<button
-					class="transition duration-150 ease-in-out"
-					@click="event.preventDefault();remove.push(ex.id);"
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-						<line x1="18" y1="6" x2="6" y2="18" />
-						<line x1="6" y1="6" x2="18" y2="18" />
-					</svg>
-				</button>
-				</div>
-			</template>
-		</template>
-		<input type="hidden" name="ex_delete2" x-bind:value="remove">
-		<template x-for="i in add">
-			<div class="flex gap-4 mt-2 items-center">
-				<!-- start date -->
-				<input
-					class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
-					type="date"
-					name="ex_start2[]"
-					required
-				/>
-				<!-- end date -->
-				bis
-				<input
-					class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
-					type="date"
-					name="ex_end2[]"
-					required
-				/>
-			</div>
-		</template>
-		<button
-		class="transition duration-150 ease-in-out mt-2"
-		@click="event.preventDefault();add++;"
-		>
-		<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
-			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-			<line x1="12" y1="5" x2="12" y2="19" />
-			<line x1="5" y1="12" x2="19" y2="12" />
-		</svg>
-		</button>
+			<button
+			class="transition duration-150 ease-in-out mt-2"
+			@click="event.preventDefault();add++;"
+			>
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+				<line x1="12" y1="5" x2="12" y2="19" />
+				<line x1="5" y1="12" x2="19" y2="12" />
+			</svg>
+			</button>
+		</div>
 	</div>
 </div>
