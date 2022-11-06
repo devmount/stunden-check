@@ -71,7 +71,7 @@
 					</thead>
 					<tbody>
 					@forelse ($user->positions->sortByDesc('completed_at') as $i => $position)
-						<tr>
+						<tr class="even:bg-slate-50 hover:bg-slate-200">
 							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 								{{ $position->description }}
 							</td>
@@ -161,7 +161,7 @@
 						</thead>
 						<tbody>
 						@forelse ($partner->positions->sortByDesc('completed_at') as $i => $position)
-							<tr>
+							<tr class="even:bg-slate-50 hover:bg-slate-200">
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 									{{ $position->description }}
 								</td>
