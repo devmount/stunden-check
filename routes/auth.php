@@ -10,7 +10,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,9 +55,13 @@ Route::middleware('admin')->group(function () {
 	Route::post('/accounts/archive/{id}', [AccountController::class, 'archive'])->name('accounts-archive');
 	Route::post('/accounts/recycle/{id}', [AccountController::class, 'recycle'])->name('accounts-recycle');
 	Route::post('/accounts/delete/{id}', [AccountController::class, 'delete'])->name('accounts-delete');
-	Route::get('/settings', [ParameterController::class, 'edit'])->name('settings');
-	Route::post('/settings', [ParameterController::class, 'update']);
-	Route::post('/test/mail', [ParameterController::class, 'send'])->name('testmail');
 	Route::get('/accounts/export/{ext}', [AccountController::class, 'export'])->name('accounts-export');
-
+	Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+	Route::post('/settings', [SettingsController::class, 'update']);
+	Route::post('/test/mail', [SettingsController::class, 'send'])->name('testmail');
+	Route::get('/settings/cat/add', [CategoryController::class, 'create'])->name('categories-add');
+	Route::post('/settings/cat/add', [CategoryController::class, 'store']);
+	Route::get('/settings/cat/edit/{id}', [CategoryController::class, 'edit'])->name('categories-edit');
+	Route::post('/settings/cat/edit/{id}', [CategoryController::class, 'update']);
+	Route::post('/settings/cat/delete/{id}', [CategoryController::class, 'delete'])->name('categories-delete');
 });

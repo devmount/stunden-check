@@ -61,6 +61,9 @@
 							<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 								Datum
 							</th>
+							<th class="hidden xl:table-cell px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
+								Tätigkeitsbereich
+							</th>
 							<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
 								<span class="lg:hidden">Std.</span>
 								<span class="hidden lg:inline">Anzahl Stunden</span>
@@ -78,6 +81,9 @@
 							<td class="px-3 md:px-6 py-3 md:py-4 align-middle">
 								<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
 								<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
+							</td>
+							<td class="hidden xl:table-cell px-3 md:px-6 py-3 md:py-4 align-middle text-left">
+								{{ $position->category->title }}
 							</td>
 							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
 								{{ $position->hours }}
@@ -153,6 +159,9 @@
 								<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									Datum
 								</th>
+								<th class="hidden xl:table-cell px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
+									Tätigkeitsbereich
+								</th>	
 								<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
 									<span class="lg:hidden">Std.</span>
 									<span class="hidden lg:inline">Anzahl Stunden</span>
@@ -169,8 +178,11 @@
 									<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
 									<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
 								</td>
+								<td class="hidden xl:table-cell px-3 md:px-6 py-3 md:py-4 align-middle text-left">
+									{{ $position->category->title }}
+								</td>	
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
-										{{ $position->hours }}
+									{{ $position->hours }}
 								</td>
 							</tr>
 						@empty

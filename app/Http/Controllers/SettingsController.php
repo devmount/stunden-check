@@ -3,26 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parameter;
+use App\Models\Category;
 use App\Mail\TestMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class ParameterController extends Controller
+class SettingsController extends Controller
 {
 	/**
-	 * Show the form for editing the specified resource.
+	 * Show settings.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Request $request)
+	public function index(Request $request)
 	{
 		$parameters = [];
 		// build key value pairs
 		foreach (Parameter::all() as $p) {
 			$parameters[$p->key] = $p->value;
 		}
-		return view('parameters', compact('parameters'))
+		return view('settings', compact('parameters'))
+			->with('categories', Category::all())
 			->with('view', $request->query('view'));
 	}
 

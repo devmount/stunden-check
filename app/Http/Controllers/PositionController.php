@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Position;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class PositionController extends Controller
 			->with('missing_hours', $missing >= 0 ? round($missing, 1) : 0)
 			->with('cycle_hours', round($cycle, 1))
 			->with('total_hours', round($total, 1))
-			->with('categories', Category::get());
+			->with('categories', Category::all());
 	}
 
 	/**
@@ -42,7 +43,7 @@ class PositionController extends Controller
 	public function create()
 	{
 		return view('positions-form')
-			->with('categories', Category::get());
+			->with('categories', Category::all());
 	}
 
 	/**
@@ -55,7 +56,7 @@ class PositionController extends Controller
 	{
 		$request->validate($this->rules());
 
-		auth()->user()->positions()->create([
+		User::find(auth()->user()->id)->positions()->create([
 			'completed_at' => $request->input('completed_at'),
 			'hours'        => $request->input('hours'),
 			'category_id'  => $request->input('category_id'),
@@ -84,7 +85,7 @@ class PositionController extends Controller
 		}
 		// go to edit the position
 		return view('positions-form', compact('position'))
-			->with('categories', Category::get());
+			->with('categories', Category::all());
 	}
 
 	/**

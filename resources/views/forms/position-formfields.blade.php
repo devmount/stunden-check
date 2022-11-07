@@ -27,14 +27,14 @@
 </div>
 <div class="flex flex-col sm:flex-row gap-4 mt-4">
 	<div class="sm:w-1/2">
-		<!-- hours -->
+		<!-- categoriy -->
 		<x-select-input
 			class="block w-full"
 			name="category_id"
 			:label="__('Tätigkeitsbereich')"
 			required
 		>
-			@foreach ($categories as $c)
+			@foreach ($categories->sortBy('title') as $c)
 				<option
 					{{ old('category_id', $position['category_id'] ?? null) == $c->id ? 'selected' : '' }}
 					value="{{ $c->id}}"
