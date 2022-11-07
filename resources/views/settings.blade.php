@@ -14,7 +14,7 @@
 					active: '{{ $view ?? 'param' }}',
 				}"
 			>
-				<div class="px-6 pb-4 flex justify-between items-center">
+				<div class="px-6 pb-4 flex flex-col lg:flex-row gap-4 justify-between items-center">
 					<div class="inline-flex flex-col sm:flex-row bg-slate-100 rounded-lg gap-1 p-2">
 						<button
 							@click="active = 'param'"
@@ -38,7 +38,7 @@
 							{{ __('E-Mail Konfiguration') }}
 						</button>
 					</div>
-					<div x-show="active === 'cat'" class="flex gap-6 items-center">
+					<div x-show="active === 'cat'" class="flex gap-6 items-center self-end lg:self-center">
 						{{-- dialog to add new category --}}
 						<x-primary-button onclick="window.location='{{ route('categories-add') }}'" class="transition duration-150 ease-in-out">
 							<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
@@ -81,10 +81,10 @@
 					<table class="items-center bg-transparent w-full border-collapse">
 						<thead>
 							<tr>
-								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
+								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									{{ __('Titel') }}
 								</th>
-								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
+								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[200px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									{{ __('Beschreibung') }}
 								</th>
 								<th class="w-20 px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
@@ -94,10 +94,10 @@
 						<tbody>
 						@forelse ($categories->sortBy('title') as $category)
 							<tr class="even:bg-slate-50 hover:bg-slate-200">
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left">
 									{{ $category->title }}
 								</td>
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[200px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 									{{ $category->description }}
 								</td>
 								<td>
