@@ -8,30 +8,28 @@
 	<div class="py-12">
 		<div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 grid gap-4 grid-cols-1 md:grid-cols-3 justify-between">
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-slate-600 md:border-4 border-white">
-				Insgesamt
+				{{ __('Insgesamt') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $sum_hours }}
 				</span>
-				Stunden geleistet
+				{{ __('Stunden geleistet') }}
 			</div>
 			<div class="
 				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white md:border-4 border-white
 				@if ($missing_hours > 0) bg-amber-600 @else bg-slate-600 @endif
 			">
-				Insgesamt
+				{{ __('Insgesamt') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $missing_hours }}
 				</span>
-				Stunden ausstehend
+				{{ __('Stunden ausstehend') }}
 			</div>
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-teal-600 md:border-4 border-white">
-				Aktuelle Abrechnungsperiode
+				{{ __('Aktuelle Abrechnungsperiode') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $cycle_hours }}
-					/
-					{{ $total_hours }}
+					{{ $cycle_hours }} / {{ $total_hours }}
 				</span>
-				Stunden geleistet
+				{{ __('Stunden geleistet') }}
 			</div>
 		</div>
 	</div>
@@ -42,7 +40,12 @@
 
 				{{-- me --}}
 				<div class="px-6 pb-4 flex justify-between items-center">
-					<div>Meine Stunden</div>
+					<div class="flex flex-col sm:flex-row sm:gap-4">
+						<span class="font-semibold">{{ __('Meine Stunden') }}</span>
+						@if ($user->positions->count() > 1)
+							<span class="text-gray-600">{{ $user->positions->count() }} {{ __('Einträge') }}</span>
+						@endif
+					</div>
 					<x-primary-button onclick="window.location='{{ route('positions-add') }}'" class="transition duration-150 ease-in-out">
 						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-white" viewBox="0 0 24 24">
 							<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -56,24 +59,24 @@
 					<thead>
 						<tr>
 							<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
-								Beschreibung
+								{{ __('Beschreibung') }}
 							</th>
 							<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
-								Datum
+								{{ __('Datum') }}
 							</th>
 							<th class="hidden xl:table-cell px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
-								Tätigkeitsbereich
+								{{ __('Tätigkeitsbereich') }}
 							</th>
 							<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
-								<span class="lg:hidden">Std.</span>
-								<span class="hidden lg:inline">Anzahl Stunden</span>
+								<span class="lg:hidden">{{ __('Std.') }}</span>
+								<span class="hidden lg:inline">{{ __('Anzahl Stunden') }}</span>
 							</th>
 							<th class="w-20 px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-					@forelse ($user->positions->sortByDesc('completed_at') as $i => $position)
+					@forelse ($user->positions->sortByDesc('completed_at') as $position)
 						<tr class="even:bg-slate-50 hover:bg-slate-200">
 							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 								{{ $position->description }}
@@ -116,10 +119,10 @@
 										</x-slot>
 
 										<x-slot name="title">
-											Eintrag Löschen
+											{{ __('Eintrag Löschen') }}
 										</x-slot>
 
-										<div class="mb-4">Möchtest du diesen Eintrag wirklich löschen?</div>
+										<div class="mb-4">{{ __('Möchtest du diesen Eintrag wirklich löschen?') }}</div>
 
 										<x-slot name="action">
 											<form method="POST" action="{{ route('positions-delete', $position->id) }}">
@@ -148,28 +151,33 @@
 				{{-- partner --}}
 				@if ($partner)
 					<div class="px-6 pb-4 mt-12 flex justify-between items-center">
-						<div>{{ $partner->firstname }}'s Stunden</div>
+						<div class="flex flex-col sm:flex-row sm:gap-4">
+							<span class="font-semibold">{{ $partner->firstname }}'s {{ __('Stunden') }}</span>
+							@if ($partner->positions->count() > 1)
+								<span class="text-gray-600">{{ $partner->positions->count() }} {{ __('Einträge') }}</span>
+							@endif
+						</div>
 					</div>
 					<table class="items-center bg-transparent w-full border-collapse">
 						<thead>
 							<tr>
 								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
-									Beschreibung
+									{{ __('Beschreibung') }}
 								</th>
 								<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
-									Datum
+									{{ __('Datum') }}
 								</th>
 								<th class="hidden xl:table-cell px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
-									Tätigkeitsbereich
+									{{ __('Tätigkeitsbereich') }}
 								</th>	
 								<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
-									<span class="lg:hidden">Std.</span>
-									<span class="hidden lg:inline">Anzahl Stunden</span>
+									<span class="lg:hidden">{{ __('Std.') }}</span>
+									<span class="hidden lg:inline">{{ __('Anzahl Stunden') }}</span>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-						@forelse ($partner->positions->sortByDesc('completed_at') as $i => $position)
+						@forelse ($partner->positions->sortByDesc('completed_at') as $position)
 							<tr class="even:bg-slate-50 hover:bg-slate-200">
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
 									{{ $position->description }}
