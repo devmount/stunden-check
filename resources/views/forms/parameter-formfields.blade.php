@@ -1,8 +1,32 @@
-<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<div class="font-semibold">
+	{{ __('Allgemeinen Einstellungen') }}
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mb-8">
+	<div class="sm:w-1/2">
+		{{-- branding title --}}
+		<x-text-input
+			class="mt-4 block w-full"
+			type="text"
+			name="branding_title"
+			:value="old('branding_title', $parameters['branding_title'])"
+			:label="__('Branding Titel')"
+			:info="__('Name oder Titel deines Vereins oder Gruppe.')"
+		/>
+	</div>
+	<div class="sm:w-1/2">
+	</div>
+</div>
+<div class="mb-4 font-semibold">
+	{{ __('Berechnung Soll-Stunden') }}
+</div>
+<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
+	{{ __('Änderungen wirken sich auf die Abrechnung aller bestehender Konten (auch in der Vergangenheit) aus.') }}
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mb-4">
 	<div class="sm:w-1/2">
 		{{-- accounting cycle --}}
 		<x-select-input
-			class="mt-4 block w-full"
+			class="block w-full"
 			name="cycle_accounting"
 			:label="__('Abrechnungsperiode')"
 			:info="__('Regelmäßigkeit, in der sich der Zeitraum der Abrechnung wiederholt.')"
@@ -16,7 +40,7 @@
 	<div class="sm:w-1/2">
 		{{-- accounting start date --}}
 		<x-text-input
-			class="mt-4 block w-full"
+			class="block w-full"
 			type="date"
 			name="start_accounting"
 			:value="old('start_accounting', $parameters['start_accounting'])"
@@ -26,11 +50,11 @@
 		/>
 	</div>
 </div>
-<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<div class="flex flex-col sm:flex-row gap-4 mb-8">
 	<div class="sm:w-1/2">
 		{{-- number of target hours --}}
 		<x-text-input
-			class="mt-4 block w-full"
+			class="block w-full"
 			type="number"
 			name="target_hours"
 			:value="old('target_hours', $parameters['target_hours'])"
@@ -44,11 +68,14 @@
 	<div class="sm:w-1/2">
 	</div>
 </div>
+<div class="mb-4 font-semibold">
+	{{ __('E-Mail Erinnerung') }}
+</div>
 <div class="flex flex-col sm:flex-row gap-4 mt-4">
 	<div class="sm:w-1/2">
 		{{-- cycle of email reminder --}}
 		<x-select-input
-			class="mt-4 block w-full"
+			class="block w-full"
 			name="cycle_reminder"
 			:label="__('Turnus Erinnerungs-E-Mails')"
 			:info="__('Regelmäßigkeit, in der E-Mails zur Erinnerung versendet werden.')"
@@ -62,7 +89,7 @@
 	<div class="sm:w-1/2">
 		{{-- start day of email reminder --}}
 		<x-select-input
-			class="mt-4 block w-full"
+			class="block w-full"
 			name="start_reminder"
 			:label="__('Tag Erinnerungs-E-Mails')"
 			:info="__('Tag an dem E-Mails zur Erinnerung versendet werden.')"

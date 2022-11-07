@@ -40,6 +40,7 @@ class SettingsController extends Controller
 
 		// update each parameter
 		Parameter::upsert([
+			['key' => 'branding_title',   'value' => $request->input('branding_title')  ],
 			['key' => 'cycle_accounting', 'value' => $request->input('cycle_accounting')],
 			['key' => 'start_accounting', 'value' => $request->input('start_accounting')],
 			['key' => 'target_hours',     'value' => $request->input('target_hours')    ],
@@ -77,6 +78,7 @@ class SettingsController extends Controller
 	private function rules()
 	{
 		return [
+			'branding_title'   => 'string',
 			'cycle_accounting' => 'required|string',
 			'start_accounting' => 'required|date',
 			'target_hours'     => 'required|numeric',

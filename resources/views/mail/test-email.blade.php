@@ -1,3 +1,3 @@
 <p>Herzlichen Glückwunsch,</p>
-<p>die Test-E-Mail wurde erfolgreich versandt.</p>
-<p>Dein StundenCheck Team</p>
+<p>die {{ config('app.name', 'StundenCheck') }} Test-E-Mail wurde erfolgreich versandt.</p>
+<p>Dein {{ config('app.name', 'StundenCheck') }} Team<br>{{ $title }}</p>

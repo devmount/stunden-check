@@ -2,7 +2,7 @@
 	<div class="sm:w-1/2">
 		{{-- test email --}}
 		<x-text-input
-			class="mt-4 block"
+			class="block"
 			type="email"
 			name="testmail"
 			:label="__('Test E-Mail-Adresse')"

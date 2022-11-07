@@ -52,13 +52,6 @@
 				</div>
 				{{-- app parameter --}}
 				<div x-show="active === 'param'" class="px-6">
-					<div class="mb-4">
-						{{ __('Passe hier die allgemeinen Einstellungen der Anwendung an.') }}
-					</div>
-					<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
-						{{ __('Änderungen wirken sich auf die Stundenberechnung aller bestehender Konten aus.') }}
-					</div>
-
 					<form method="POST" action="{{ route('settings') }}">
 						@csrf
 						@include('forms.parameter-formfields')

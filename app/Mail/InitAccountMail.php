@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Parameter;
 
 class InitAccountMail extends Mailable
 {
@@ -32,10 +33,13 @@ class InitAccountMail extends Mailable
 	 */
 	public function build()
 	{
-		return $this->subject('Dein Waldläufer StundenCheck Benutzerkonto')
-								->view('mail.init-account-email', [
-									'user' => $this->user,
-									'pass' => $this->pass
-								]);
+		$title = Parameter::key('branding_title');
+		return $this->subject(
+			'[' . config('app.name', 'StundenCheck') . ' - ' . $title . '] Dein Benutzerkonto'
+		)->view('mail.init-account-email', [
+			'user' => $this->user,
+			'pass' => $this->pass,
+			'title' => $title
+		]);
 	}
 }
