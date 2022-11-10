@@ -5,7 +5,7 @@
 		</h2>
 	</x-slot>
 
-	<div class="py-12">
+	<div class="pt-12">
 		<div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 grid gap-4 grid-cols-1 md:grid-cols-3 justify-between">
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-slate-600 md:border-4 border-white">
 				{{ __('Insgesamt') }}
@@ -34,7 +34,7 @@
 		</div>
 	</div>
 
-	<div class="pb-12">
+	<div class="pt-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-6 border-b border-gray-200">
 
