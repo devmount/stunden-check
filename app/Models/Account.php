@@ -97,11 +97,11 @@ class Account extends Model
 	/**
 	 * get sum of hours in current cycle
 	 */
-	public function getCycleHoursAttribute()
+	public function getSumHoursCycleAttribute()
 	{
 		$hours = 0;
 		foreach ($this->users as $u) {
-			$hours += $u->cycle_hours;
+			$hours += $u->sum_hours_cycle;
 		}
 		return $hours;
 	}

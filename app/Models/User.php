@@ -121,8 +121,7 @@ class User extends Authenticatable
 		$diff = $start->diff($end);
 		$years = $diff->y;
 		// reduce by excemption days
-		$exclude = $this->excemption_days;
-		$years -= $exclude/365;
+		$years -= $this->excemption_days/365;
 		// calculate fraction if account start differs from cycle start
 		if ($diff->m > 0 or $diff->d > 0) {
 			$total = ($years+1)*365;
@@ -142,7 +141,7 @@ class User extends Authenticatable
 	/**
 	 * get sum of hours in current cycle
 	 */
-	public function getCycleHoursAttribute()
+	public function getSumHoursCycleAttribute()
 	{
 		$cycle = Parameter::startAccounting();
 		$start = $cycle < now() ? $cycle : $cycle->modify('-1 year');
