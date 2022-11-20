@@ -10,24 +10,24 @@
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-slate-600 md:border-4 border-white">
 				{{ __('Insgesamt') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $sum_hours }}
+					{{ $sum }}
 				</span>
 				{{ __('Stunden geleistet') }}
 			</div>
 			<div class="
 				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white md:border-4 border-white
-				@if ($missing_hours > 0) bg-amber-600 @else bg-slate-600 @endif
+				@if ($missing > 0) bg-amber-600 @else bg-slate-600 @endif
 			">
 				{{ __('Insgesamt') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $missing_hours }}
+					{{ $missing }}
 				</span>
 				{{ __('Stunden ausstehend') }}
 			</div>
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-teal-600 md:border-4 border-white">
 				{{ __('Aktuelle Abrechnungsperiode') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $cycle_hours }} / {{ $total_hours }}
+					{{ $cycle }} / {{ $total }}
 				</span>
 				{{ __('Stunden geleistet') }}
 			</div>

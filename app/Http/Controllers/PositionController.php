@@ -28,10 +28,10 @@ class PositionController extends Controller
 		return view('dashboard')
 			->with('user', $u)
 			->with('partner', $p)
-			->with('sum_hours', $sum)
-			->with('missing_hours', $missing >= 0 ? round($missing, 1) : 0)
-			->with('cycle_hours', round($cycle, 1))
-			->with('total_hours', round($total, 1))
+			->with('sum', $sum)
+			->with('missing', $missing >= 0 ? round($missing, 1) : 0)
+			->with('cycle', round($cycle, 1))
+			->with('total', round($total, 1))
 			->with('categories', Category::all());
 	}
 

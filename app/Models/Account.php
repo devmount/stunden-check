@@ -19,7 +19,7 @@ class Account extends Model
 		'start',
 		'target_hours',
 		'separate_accounting',
-		'archcived_at',
+		'archived_at',
 	];
 
 	/**
@@ -91,11 +91,7 @@ class Account extends Model
 	 */
 	public function getMissingHoursAttribute()
 	{
-		$hours = 0;
-		foreach ($this->users as $u) {
-			$hours += $u->missing_hours;
-		}
-		return $hours;
+		return $this->total_hours - $this->sum_hours;
 	}
 
 	/**
