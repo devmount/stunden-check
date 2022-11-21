@@ -16,22 +16,24 @@ class PositionController extends Controller
 	 */
 	public function index()
 	{
-		$u        = auth()->user();
-		$a        = $u->account;
-		$separate = $a->separate_accounting;
-		$p        = count($a->users) > 1 && !$separate ? $a->users[1] : null;
-		$sum      = $separate ? $u->sum_hours       : $a->sum_hours;
-		$missing  = $separate ? $u->missing_hours   : $a->missing_hours;
-		$cycle    = $separate ? $u->sum_hours_cycle : $a->sum_hours_cycle;
-		$total    = $separate ? $u->total_hours     : $a->total_hours;
+		$u            = auth()->user();
+		$a            = $u->account;
+		$separate     = $a->separate_accounting;
+		$p            = count($a->users) > 1 && !$separate ? $a->users[1] : null;
+		$total_sum    = $separate ? $u->sum_hours         : $a->sum_hours;
+		$total_target = $separate ? $u->total_hours       : $a->total_hours;
+		$missing      = $separate ? $u->missing_hours     : $a->missing_hours;
+		$cycle_sum    = $separate ? $u->sum_hours_cycle   : $a->sum_hours_cycle;
+		$cycle_target = $separate ? $u->total_hours_cycle : $a->total_hours_cycle;
 
 		return view('dashboard')
 			->with('user', $u)
 			->with('partner', $p)
-			->with('sum', $sum)
+			->with('total_sum', $total_sum)
+			->with('total_target', round($total_target, 1))
 			->with('missing', $missing >= 0 ? round($missing, 1) : 0)
-			->with('cycle', round($cycle, 1))
-			->with('total', round($total, 1))
+			->with('cycle_sum', round($cycle_sum, 1))
+			->with('cycle_target', round($cycle_target, 1))
 			->with('categories', Category::all());
 	}
 

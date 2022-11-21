@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Parameter;
+use \DateTime;
 
 class Account extends Model
 {
@@ -79,6 +81,7 @@ class Account extends Model
 	 */
 	public function getTotalHoursAttribute()
 	{
+		// TODO
 		$hours = $this->users[0]->total_hours;
 		if ($this->separate_accounting) {
 			$hours += $this->users[1]->total_hours;
@@ -104,6 +107,38 @@ class Account extends Model
 			$hours += $u->sum_hours_cycle;
 		}
 		return $hours;
+	}
+
+	/**
+	 * get total number of days of all excemptions of all users
+	 */
+	public function getExcemptionDaysCycleAttribute()
+	{
+		$days = 0;
+		foreach ($this->users as $u) {
+			$days += $u->excemption_days_cycle;
+		}
+		return $days;
+	}
+
+	/**
+	 * get total target number of hours for current cycle
+	 */
+	public function getTotalHoursCycleAttribute()
+	{
+		$hours = $this->users[0]->total_hours_cycle;
+		if ($this->separate_accounting) {
+			$hours += $this->users[1]->total_hours_cycle;
+		}
+		return $hours;
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of current cycle
+	 */
+	public function getMissingHoursCycleAttribute()
+	{
+		return $this->total_hours_cycle - $this->sum_hours_cycle;
 	}
 
 	/**

@@ -72,7 +72,7 @@ class User extends Authenticatable
 	}
 
 	/**
-	 * get number of hours to work for a single user
+	 * get number of hours to work for a single user in one cycle
 	 */
 	public function getTargetHoursAttribute()
 	{
@@ -150,6 +150,53 @@ class User extends Authenticatable
 			$hours += $p->hours;
 		}
 		return $hours;
+	}
+
+	/**
+	 * get total number of days of all excemptions in current cycle
+	 */
+	public function getExcemptionDaysCycleAttribute()
+	{
+		$cycle = Parameter::startAccounting();
+		$start = $cycle < now() ? $cycle : $cycle->modify('-1 year');
+		$days = 0;
+		foreach ($this->excemptions->where('start', '>', $start->format('Y-m-d')) as $e) {
+			$begin = new DateTime($e->start);
+			$end = new DateTime($e->end);
+			$diff = $begin->diff($end)->days;
+			if ($diff < 0) continue;
+			$days += $diff > 0 ? $diff : 1;
+		}
+		return $days;
+	}
+
+	/**
+	 * get total target number of hours for current cycle
+	 */
+	public function getTotalHoursCycleAttribute()
+	{
+		$cycle = Parameter::startAccounting();
+		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
+		$accountStart = new DateTime($this->account->start);
+		$start = $accountStart >= $end->modify('-1 year') ? $accountStart : $end->modify('-1 year');
+		$diff = $start->diff($end);
+		$years = 1;
+		// reduce by excemption days
+		$years -= $this->excemption_days_cycle/365;
+		// calculate fraction if account start differs from cycle start
+		if ($diff->m > 0 or $diff->d > 0) {
+			$total = ($years+1)*365;
+			if ($total > 0)	$years += $diff->days / $total;
+		}
+		return $this->target_hours * $years;
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of current cycle
+	 */
+	public function getMissingHoursCycleAttribute()
+	{
+		return $this->total_hours_cycle - $this->sum_hours_cycle;
 	}
 
 	/**

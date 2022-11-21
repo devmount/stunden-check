@@ -10,7 +10,7 @@
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-slate-600 md:border-4 border-white">
 				{{ __('Insgesamt') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $sum }}
+					{{ $total_sum }} / {{ $total_target}}
 				</span>
 				{{ __('Stunden geleistet') }}
 			</div>
@@ -27,7 +27,7 @@
 			<div class="md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center text-white bg-teal-600 md:border-4 border-white">
 				{{ __('Aktuelle Abrechnungsperiode') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $cycle }} / {{ $total }}
+					{{ $cycle_sum }} / {{ $cycle_target }}
 				</span>
 				{{ __('Stunden geleistet') }}
 			</div>
