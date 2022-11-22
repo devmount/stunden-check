@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Parameter;
 use App\Models\Excemption;
 use App\Mail\InitAccountMail;
+use App\Mail\ReminderMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -260,8 +261,45 @@ class AccountController extends Controller
 	}
 
 	/**
-	* @return \Illuminate\Support\Collection
-	*/
+	 * Show email reminder view with information about reminding
+	 * 
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function reminder() 
+	{
+		// get last execution date and calculated all users that need to be reminded
+		return view('accounts-reminder')
+			->with('executed', Parameter::key('reminder_executed'))
+			->with('users', $this->reminderCandidates());
+	}
+
+	/**
+	 * Send reminder emails to corresponding users
+	 * 
+	 * @return \Illuminate\Http\RedirectResponse
+	 * 
+	 * @throws \Illuminate\Validation\ValidationException
+	 */
+	public function remind() 
+	{
+		foreach ($this->reminderCandidates() as $user) {
+			Mail::to($user->email)->send(new ReminderMail($user));
+		}
+		// update last execution date
+		Parameter::upsert([
+			['key' => 'reminder_executed', 'value' => now()],
+		], ['key'], ['value']);
+
+		return redirect()
+			->route('accounts')
+			->with('status', 'Die Erinnerungsmails wurden erfolgreich versendet.');
+	}
+
+	/**
+	 * Download accounts as xlsx or csv
+	 * 
+	 * @return \Illuminate\Support\Collection
+	 */
 	public function export($ext) 
 	{
 		return Excel::download(new AccountsExport, 'accounts.' . $ext);
@@ -293,5 +331,24 @@ class AccountController extends Controller
 			'ex_end'              => 'nullable|array',
 			'ex_delete'           => 'nullable|string',
 		];
+	}
+
+	/**
+	 * Get all users with an account that currently misses hours to reach quota
+	 *
+	 * @return Array
+	 */
+	private function reminderCandidates()
+	{
+		$accounts = Account::all();
+		$users = [];
+		foreach ($accounts as $account) {
+			if ($account->active && $account->sum_hours < $account->total_hours) {
+				foreach ($account->users as $user) {
+					$users[] = $user;
+				}
+			}
+		}
+		return $users;
 	}
 }

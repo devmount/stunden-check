@@ -5,7 +5,7 @@
 		</h2>
 	</x-slot>
 
-	<div class="py-12">
+	<div class="pt-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 			<div
 				class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-6 border-b border-gray-200"
@@ -47,6 +47,7 @@
 							</svg>
 							{{ __('Neues Konto') }}
 						</x-primary-button>
+						{{-- dropdown with addition functions --}}
 						<x-dropdown align="right">
 							<x-slot name="trigger">
 								<button class="group flex justify-center items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -59,6 +60,19 @@
 								</button>
 							</x-slot>
 							<x-slot name="content">
+								{{-- email reminder --}}
+								<x-dropdown-link :href="url('accounts/reminder')" class="flex items-center gap-2">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-gray-500" viewBox="0 0 24 24">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+										<path d="M12 18h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
+										<path d="M3 6l9 6l9 -6" />
+										<path d="M15 18h6" />
+										<path d="M18 15l3 3l-3 3" />
+									</svg>
+									{{ __('E-Mail-Erinnerung') }}
+								</x-dropdown-link>
+								<hr class="my-1" />
+								{{-- export accounts as xlsx --}}
 								<x-dropdown-link :href="url('accounts/export/xlsx')" class="flex items-center gap-2">
 									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-gray-500" viewBox="0 0 24 24">
 										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -66,6 +80,7 @@
 									</svg>
 									{{ __('Export Excel') }}
 								</x-dropdown-link>
+								{{-- export accounts as csv --}}
 								<x-dropdown-link :href="url('accounts/export/csv')" class="flex items-center gap-2">
 									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2 text-gray-500" viewBox="0 0 24 24">
 										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
