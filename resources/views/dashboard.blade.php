@@ -138,7 +138,7 @@
 						</tr>
 					@empty
 						<tr>
-							<td colspan="4">
+							<td colspan="5">
 								<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
 									{{ __('Hier sind noch keine Einträge vorhanden.') }}
 								</div>
