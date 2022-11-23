@@ -43,9 +43,12 @@ composer install --optimize-autoloader --no-dev
 php artisan config:cache # combine all configuration files into a single, cached file
 php artisan route:cache  # reduce all route registrations into a single method call within a cached file
 php artisan view:cache   # precompile all blade views
+npm run build
 ```
 
 In `.env` set `APP_DEBUG` to false and `APP_URL` to your production url. Change more values if needed.
+
+The webserver should be configured to serve the `public/` directory as root.
 
 ## License
 
