@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Parameter;
 use \DateTime;
+use \DateTimeImmutable;
 
 class User extends Authenticatable
 {
@@ -118,16 +119,8 @@ class User extends Authenticatable
 		$cycle = Parameter::startAccounting();
 		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
 		$start = new DateTime($this->account->start);
-		$diff = $start->diff($end);
-		$years = $diff->y;
-		// reduce by excemption days
-		$years -= $this->excemption_days/365;
-		// calculate fraction if account start differs from cycle start
-		if ($diff->m > 0 or $diff->d > 0) {
-			$total = ($years+1)*365;
-			if ($total > 0)	$years += $diff->days / $total;
-		}
-		return $this->target_hours * $years;
+		$days = $start->diff($end)->days - $this->excemption_days;
+		return $this->target_hours * $days/365;
 	}
 
 	/**
@@ -177,18 +170,11 @@ class User extends Authenticatable
 	{
 		$cycle = Parameter::startAccounting();
 		$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
+		$end = new DateTimeImmutable($end->format('Y-m-d'));
 		$accountStart = new DateTime($this->account->start);
 		$start = $accountStart >= $end->modify('-1 year') ? $accountStart : $end->modify('-1 year');
-		$diff = $start->diff($end);
-		$years = 1;
-		// reduce by excemption days
-		$years -= $this->excemption_days_cycle/365;
-		// calculate fraction if account start differs from cycle start
-		if ($diff->m > 0 or $diff->d > 0) {
-			$total = ($years+1)*365;
-			if ($total > 0)	$years += $diff->days / $total;
-		}
-		return $this->target_hours * $years;
+		$days = $start->diff($end)->days - $this->excemption_days_cycle;
+		return $this->target_hours * $days/365;
 	}
 
 	/**
