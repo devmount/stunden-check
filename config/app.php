@@ -6,7 +6,7 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Application Name
+	| Application Name and Version
 	|--------------------------------------------------------------------------
 	|
 	| This value is the name of your application. This value is used when the
@@ -16,6 +16,8 @@ return [
 	*/
 
 	'name' => env('APP_NAME', 'StundenCheck'),
+
+	'version' => env('APP_VERSION', '0.1.0'),
 
 	/*
 	|--------------------------------------------------------------------------

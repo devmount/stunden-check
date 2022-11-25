@@ -26,10 +26,14 @@
 	
 	<div>
 		@if (env('APP_DEBUG'))
-			<div class="text-sm text-gray-500">
-				Laravel v{{ Illuminate\Foundation\Application::VERSION }} |
-				PHP v{{ PHP_VERSION }} |
-				Page loaded in {{ round(microtime(true) - LARAVEL_START, 2) }}s
+			<div class="flex flex-col sm:flex-row sm:gap-2 text-sm text-gray-500">
+				<div>StundenCheck <code>v{{ config('app.version') }}</code></div>
+				<div class="hidden sm:block">&middot;</div>
+				<div>Laravel <code>v{{ Illuminate\Foundation\Application::VERSION }}</code></div>
+				<div class="hidden sm:block">&middot;</div>
+				<div>PHP <code>v{{ PHP_VERSION }}</code></div>
+				<div class="hidden sm:block">&middot;</div>
+				<div>Page loaded in <code>{{ round(microtime(true) - LARAVEL_START, 2) }}s</code></div>
 			</div>
 		@endif
 	</div>
