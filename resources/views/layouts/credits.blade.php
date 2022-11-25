@@ -25,7 +25,7 @@
 	</div>
 	
 	<div>
-		@if (env('APP_DEBUG'))
+		@if (auth()->user()->is_admin)
 			<div class="flex flex-col sm:flex-row sm:gap-2 text-sm text-gray-500">
 				<div>StundenCheck <code>v{{ config('app.version') }}</code></div>
 				<div class="hidden sm:block">&middot;</div>
