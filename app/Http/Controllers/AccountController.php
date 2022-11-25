@@ -169,13 +169,16 @@ class AccountController extends Controller
 				$account->users[1]->email     = $request->input('email2');
 				$account->users[1]->is_admin  = $request->has('is_admin2');
 			} else {
-				$account->users()->create([
+				$pass2 = Str::random(12);
+				$user2 = $account->users()->create([
 					'firstname' => $request->input('firstname2'),
 					'lastname'  => $request->input('lastname2'),
 					'email'     => $request->input('email2'),
-					'password'  => Hash::make('test'),
+					'password'  => Hash::make($pass2),
 					'is_admin'  => $request->has('is_admin2'),
 				]);
+				// send mail with initial password to user2
+				Mail::to($request->input('email2'))->send(new InitAccountMail($user2, $pass2));
 			}
 
 			// handle excemptions for second person
