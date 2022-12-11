@@ -65,7 +65,7 @@ class PositionController extends Controller
 			'description'  => $request->input('description'),
 		]);
 		return redirect()
-			->route('dashboard')
+			->route($request->has('go_back') ? 'dashboard' : 'positions-add')
 			->with('status', 'Der Eintrag wurde erfolgreich angelegt.');
 	}
 
