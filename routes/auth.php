@@ -50,6 +50,7 @@ Route::middleware('admin')->group(function () {
 	Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
 	Route::get('/accounts/add', [AccountController::class, 'create'])->name('accounts-add');
 	Route::post('/accounts/add', [AccountController::class, 'store']);
+	Route::get('/accounts/positions/{id}', [AccountController::class, 'positions'])->name('accounts-positions');
 	Route::get('/accounts/edit/{id}', [AccountController::class, 'edit'])->name('accounts-edit');
 	Route::post('/accounts/edit/{id}', [AccountController::class, 'update']);
 	Route::post('/accounts/archive/{id}', [AccountController::class, 'archive'])->name('accounts-archive');

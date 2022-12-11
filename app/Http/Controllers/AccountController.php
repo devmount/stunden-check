@@ -112,6 +112,18 @@ class AccountController extends Controller
 	 * @param Integer  $id
 	 * @return \Illuminate\View\View
 	 */
+	public function positions($id)
+	{
+		$account = Account::find($id);
+		return view('accounts-positions', compact('account'));
+	}
+
+	/**
+	 * Display the account modification view.
+	 *
+	 * @param Integer  $id
+	 * @return \Illuminate\View\View
+	 */
 	public function edit($id)
 	{
 		$account = Account::find($id);

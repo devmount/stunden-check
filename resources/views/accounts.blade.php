@@ -183,10 +183,23 @@
 									@endif
 								</td>
 								<td>
-									<div class="flex flex-row justify-end pr-2">
+									<div class="flex flex-row justify-end items-center gap-2 pr-2">
+										{{-- link to show positions of existing account --}}
+										<button onclick="window.location='{{ route('accounts-positions', $account->id) }}'" class="group p-1 transition duration-150 ease-in-out">
+											<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 group-hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+												<line x1="9" y1="6" x2="20" y2="6" />
+												<line x1="9" y1="12" x2="20" y2="12" />
+												<line x1="9" y1="18" x2="20" y2="18" />
+												<line x1="5" y1="6" x2="5" y2="6.01" />
+												<line x1="5" y1="12" x2="5" y2="12.01" />
+												<line x1="5" y1="18" x2="5" y2="18.01" />
+											</svg>
+										</button>
+	
 										{{-- link to edit existing account --}}
-										<button onclick="window.location='{{ route('accounts-edit', $account->id) }}'" class="transition duration-150 ease-in-out">
-											<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-teal-600 hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
+										<button onclick="window.location='{{ route('accounts-edit', $account->id) }}'" class="group p-1 transition duration-150 ease-in-out">
+											<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 group-hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
 												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 												<path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
 												<path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
@@ -197,8 +210,8 @@
 										{{-- dialog to archive existing account --}}
 										<x-modal class="max-w-lg">
 											<x-slot name="trigger">
-												<button class="transition duration-150 ease-in-out">
-													<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-red-600 hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
+												<button class="group p-1 transition duration-150 ease-in-out">
+													<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-red-600 group-hover:stroke-red-500 stroke-2" viewBox="0 0 24 24">
 														<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 														<rect x="3" y="4" width="18" height="4" rx="2" />
 														<path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
