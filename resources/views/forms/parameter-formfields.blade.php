@@ -8,12 +8,21 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="branding_title"
-			:value="old('branding_title', $parameters['branding_title'])"
+			:value="old('branding_title', isset($parameters['branding_title']) ? $parameters['branding_title'] : '')"
 			:label="__('Branding Titel')"
 			:info="__('Name oder Titel deines Vereins oder Gruppe.')"
 		/>
 	</div>
 	<div class="sm:w-1/2">
+		{{-- tasks url --}}
+		<x-text-input
+			class="mt-4 block w-full"
+			type="url"
+			name="tasks_url"
+			:value="old('tasks_url', isset($parameters['tasks_url']) ? $parameters['tasks_url'] : '')"
+			:label="__('Link zur Aufgabenübersicht')"
+			:info="__('URL unter der aktuelle Aufgaben zur Bearbeitung gefunden werden können.')"
+		/>
 	</div>
 </div>
 <div class="mb-4 font-semibold">
@@ -32,7 +41,7 @@
 			:info="__('Regelmäßigkeit, in der sich der Zeitraum der Abrechnung wiederholt.')"
 			required
 		>
-			<option {{ old('cycle_accounting', $parameters['cycle_accounting']) == 'annual' ? 'selected' : '' }}>
+			<option {{ old('cycle_accounting', isset($parameters['cycle_accounting']) ? $parameters['cycle_accounting'] : '') == 'annual' ? 'selected' : '' }}>
 				{{ __('Jährlich') }}
 			</option>
 		</x-select-input>
@@ -43,7 +52,7 @@
 			class="block w-full"
 			type="date"
 			name="start_accounting"
-			:value="old('start_accounting', $parameters['start_accounting'])"
+			:value="old('start_accounting', isset($parameters['start_accounting']) ? $parameters['start_accounting'] : '')"
 			:label="__('Start Abrechnungsperiode')"
 			:info="__('Beginn einer allgemeinen Abrechnungsperiode. Das Jahr dient nur als Referenz und hat keine Relevanz.')"
 			required
@@ -57,7 +66,7 @@
 			class="block w-full"
 			type="number"
 			name="target_hours"
-			:value="old('target_hours', $parameters['target_hours'])"
+			:value="old('target_hours', isset($parameters['target_hours']) ? $parameters['target_hours'] : '')"
 			:label="__('Mindestanzahl Pflichtstunden')"
 			:info="__('Anzahl zu erbringender Pflichtstunden pro Abrechnungsperiode.')"
 			step="0.25"
@@ -81,7 +90,7 @@
 			:info="__('Regelmäßigkeit, in der E-Mails zur Erinnerung versendet werden.')"
 			required
 		>
-			<option {{ old('cycle_reminder', $parameters['cycle_reminder']) == 'monthly' ? 'selected' : '' }}>
+			<option {{ old('cycle_reminder', isset($parameters['cycle_reminder']) ? $parameters['cycle_reminder'] : '') == 'monthly' ? 'selected' : '' }}>
 				{{ __('Monatlich') }}
 			</option>
 		</x-select-input>
@@ -98,7 +107,7 @@
 			@foreach ([1,14,28] as $d)
 				<option
 					value="{{ $d }}"
-					{{ old('start_reminder', $parameters['start_reminder']) == $d ? 'selected' : '' }}
+					{{ old('start_reminder', isset($parameters['start_reminder']) ? $parameters['start_reminder'] : '') == $d ? 'selected' : '' }}
 				>
 					{{ $d }}.
 				</option>

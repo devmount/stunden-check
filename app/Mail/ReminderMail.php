@@ -32,6 +32,7 @@ class ReminderMail extends Mailable implements ShouldQueue
 	public function build()
 	{
 		$title        = Parameter::key('branding_title');
+		$tasksurl     = Parameter::key('tasks_url');
 		$account      = $this->user->account;
 		$separate     = $account->separate_accounting;
 		$total_sum    = $separate ? $this->user->sum_hours         : $account->sum_hours;
@@ -43,6 +44,7 @@ class ReminderMail extends Mailable implements ShouldQueue
 			'[' . config('app.name', 'StundenCheck') . ' - ' . $title . '] Erinnerung Stunden eintragen'
 		)->view('mail.reminder-email', [
 			'title'        => $title,
+			'tasksurl'     => $tasksurl,
 			'user'         => $this->user,
 			'total_sum'    => $total_sum,
 			'total_target' => round($total_target, 1),

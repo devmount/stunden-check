@@ -17,6 +17,7 @@ class ParametersSeeder extends Seeder
 	{
 		// create app parameters
 		DB::table('parameters')->insert(['key' => 'branding_title',   'value' => 'Non-Profit'       ]);
+		DB::table('parameters')->insert(['key' => 'tasks_url',        'value' => ''                 ]);
 		DB::table('parameters')->insert(['key' => 'cycle_accounting', 'value' => DateCycle::Annual  ]);
 		DB::table('parameters')->insert(['key' => 'start_accounting', 'value' => '2022-08-01'       ]);
 		DB::table('parameters')->insert(['key' => 'target_hours',     'value' => 24                 ]);

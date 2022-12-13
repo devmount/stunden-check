@@ -16,6 +16,9 @@
 	Wenn du dein Passwort vergessen hast, kannst du es <a href="{{ url('password.request') }}">hier</a> zurücksetzen.
 </p>
 <p>
+	Du bist noch auf der Suche nach einer passenden Aufgabe? Die Liste aktueller Aufgaben findest du unter <a href="{{ $tasksurl }}">{{ $tasksurl }}</a>.
+</p>
+<p>
 	Falls du Fragen hast oder Probleme mit der Anwendung, kontaktiere uns gern unter {{ env('MAIL_FROM_ADDRESS') }}
 </p>
 <p>
