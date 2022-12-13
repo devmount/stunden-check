@@ -338,13 +338,16 @@ class AccountController extends Controller
 			'lastname1'           => 'required|string|max:255',
 			'email1'              => 'required|string|email|max:255|unique:users,email' . ($uid1 ? ',' . $uid1 : ''),
 			'is_admin1'           => 'nullable|boolean',
+			'ex_start1'           => 'nullable|array',
+			'ex_end1'             => 'nullable|array',
+			'ex_delete1'          => 'nullable|string',
 			'firstname2'          => 'nullable|string|max:255',
 			'lastname2'           => 'nullable|string|max:255',
 			'email2'              => 'nullable|string|email|max:255|unique:users,email' . ($uid2 ? ',' . $uid2 : ''),
 			'is_admin2'           => 'nullable|boolean',
-			'ex_start'            => 'nullable|array',
-			'ex_end'              => 'nullable|array',
-			'ex_delete'           => 'nullable|string',
+			'ex_start2'           => 'nullable|array',
+			'ex_end2'             => 'nullable|array',
+			'ex_delete2'          => 'nullable|string',
 		];
 	}
 
