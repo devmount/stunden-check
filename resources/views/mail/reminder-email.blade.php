@@ -3,10 +3,8 @@
 </p>
 <p>
 	bitte denk daran, deine Stunden einzutragen.
-	@if ($cycle_sum < $cycle_target)
-		Für den aktuellen Abrechnungszeitraum sind für dein Konto <b>{{ $cycle_sum }}</b> von <b>{{ $cycle_target }}</b> Stunden registriert.
-	@endif
-	Insgesamt sind für dein Konto <b>{{ $total_sum }}</b> von <b>{{ $total_target }}</b> Stunden registriert. Es stehen noch <b>{{ $missing }}</b> Stunden aus.
+	Für den aktuellen Abrechnungszeitraum sind für dein Konto <b>{{ $cycle_sum }}</b> von <b>{{ $cycle_target }}</b> Stunden registriert.
+	Es stehen noch <b>{{ $cycle_missing }}</b> Stunden aus.
 </p>
 <p>
 	Du erreichst die {{ config('app.name', 'StundenCheck') }} Webanwendung unter dieser Adresse:<br>

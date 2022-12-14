@@ -31,26 +31,22 @@ class ReminderMail extends Mailable implements ShouldQueue
 	 */
 	public function build()
 	{
-		$title        = Parameter::key('branding_title');
-		$tasksurl     = Parameter::key('tasks_url');
-		$account      = $this->user->account;
-		$separate     = $account->separate_accounting;
-		$total_sum    = $separate ? $this->user->sum_hours         : $account->sum_hours;
-		$total_target = $separate ? $this->user->total_hours       : $account->total_hours;
-		$missing      = $separate ? $this->user->missing_hours     : $account->missing_hours;
-		$cycle_sum    = $separate ? $this->user->sum_hours_cycle   : $account->sum_hours_cycle;
-		$cycle_target = $separate ? $this->user->total_hours_cycle : $account->total_hours_cycle;
+		$title         = Parameter::key('branding_title');
+		$tasksurl      = Parameter::key('tasks_url');
+		$account       = $this->user->account;
+		$separate      = $account->separate_accounting;
+		$cycle_missing = $separate ? $this->user->missing_hours_cycle : $account->missing_hours_cycle;
+		$cycle_sum     = $separate ? $this->user->sum_hours_cycle     : $account->sum_hours_cycle;
+		$cycle_target  = $separate ? $this->user->total_hours_cycle   : $account->total_hours_cycle;
 		return $this->subject(
 			'[' . config('app.name', 'StundenCheck') . ' - ' . $title . '] Erinnerung Stunden eintragen'
 		)->view('mail.reminder-email', [
-			'title'        => $title,
-			'tasksurl'     => $tasksurl,
-			'user'         => $this->user,
-			'total_sum'    => $total_sum,
-			'total_target' => round($total_target, 1),
-			'missing'      => $missing >= 0 ? round($missing, 1) : 0,
-			'cycle_sum'    => round($cycle_sum, 1),
-			'cycle_target' => round($cycle_target, 1),
+			'title'         => $title,
+			'tasksurl'      => $tasksurl,
+			'user'          => $this->user,
+			'cycle_missing' => $cycle_missing >= 0 ? round($cycle_missing, 1) : 0,
+			'cycle_sum'     => round($cycle_sum, 1),
+			'cycle_target'  => round($cycle_target, 1),
 		]);
 	}
 }

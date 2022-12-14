@@ -362,9 +362,18 @@ class AccountController extends Controller
 		$accounts = Account::all();
 		$users = [];
 		foreach ($accounts as $account) {
-			if ($account->active && $account->sum_hours < $account->total_hours) {
+			if (!$account->active) continue;
+			if ($account->separate_accounting) {
 				foreach ($account->users as $user) {
-					$users[] = $user;
+					if ($user->sum_hours_cycle < $user->total_hours_cycle) {
+						$users[] = $user;
+					}
+				}
+			} else {
+				if ($account->sum_hours_cycle < $account->total_hours_cycle) {
+					foreach ($account->users as $user) {
+						$users[] = $user;
+					}
 				}
 			}
 		}

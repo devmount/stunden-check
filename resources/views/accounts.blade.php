@@ -161,7 +161,7 @@
 														@endswitch
 														"></div>
 													<div>
-														{{ $user->sum_hours }} / {{ round($user->total_hours, 1) }}
+														{{ $user->sum_hours_cycle }} / {{ round($user->total_hours_cycle, 1) }}
 													</div>
 												</div>
 											@endforeach
@@ -177,7 +177,7 @@
 												@endswitch
 											"></div>
 											<div>
-												{{ $account->sum_hours }} / {{ round($account->total_hours, 1) }}
+												{{ $account->sum_hours_cycle }} / {{ round($account->total_hours_cycle, 1) }}
 											</div>
 										</div>
 									@endif

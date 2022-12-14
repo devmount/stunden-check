@@ -190,8 +190,8 @@ class User extends Authenticatable
 	 */
 	public function getStatusAttribute()
 	{
-		if ($this->sum_hours < $this->total_hours/2) return 0;
-		if ($this->sum_hours < $this->total_hours) return 1;
-		if ($this->sum_hours >= $this->total_hours) return 2;
+		if ($this->sum_hours_cycle < $this->total_hours_cycle/2) return 0;
+		if ($this->sum_hours_cycle < $this->total_hours_cycle) return 1;
+		if ($this->sum_hours_cycle >= $this->total_hours_cycle) return 2;
 	}
 }
