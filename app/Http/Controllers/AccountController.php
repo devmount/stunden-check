@@ -317,7 +317,8 @@ class AccountController extends Controller
 	 */
 	public function export($ext) 
 	{
-		return Excel::download(new AccountsExport, 'accounts.' . $ext);
+		$prefix = now()->toDateString();
+		return Excel::download(new AccountsExport, $prefix . '_stundencheck_konten.' . $ext);
 	}
 
 	/**
