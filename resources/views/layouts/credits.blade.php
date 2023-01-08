@@ -11,7 +11,7 @@
 			</svg>
 	
 			<a href="https://github.com/devmount/stunden-check" class="ml-1 text-sm underline" target="_blank">
-				GitHub
+				Open Source auf GitHub
 			</a>
 	
 			<svg viewBox="0 0 24 24" class="stroke-current stroke-2 fill-transparent ml-4 -mt-px w-5 h-5 text-gray-400">
@@ -19,7 +19,7 @@
 			</svg>
 	
 			<a href="https://paypal.me/devmount" class="ml-1 text-sm underline" target="_blank">
-				Spende
+				Spende an den Entwickler
 			</a>
 		</div>
 	</div>

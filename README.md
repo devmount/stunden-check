@@ -12,7 +12,7 @@ git clone https://github.com/devmount/stunden-check # get files
 cd stunden-check               # switch to app directory
 composer install               # install dependencies
 cp .env.example .env           # init environment configuration
-touch database/database.sqlite # create database file
+touch database/database.sqlite # create database file (only when using SQlite)
 php artisan migrate            # create database structure
 php artisan key:generate       # build a secure key for the app
 php artisan db:seed            # create initial parameters, categories and admin user
@@ -24,6 +24,7 @@ To start a local development server, run:
 
 ```bash
 php artisan serve # start dev webserver
+npm run dev       # start dev frontend with hot reload
 ```
 
 Now you can log in on <http://localhost:8000> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
