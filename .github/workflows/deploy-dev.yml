@@ -34,7 +34,6 @@ jobs:
       uses: burnett01/rsync-deployments@5.2
       with:
         switches: -avzr --exclude={'.git*','node_modules','.editorconfig','.env.*'} --delete --delete-excluded
-        # rsh: uptime
         path: ./
         remote_path: ${{ secrets.DEPLOY_PATH_DEV }}
         remote_host: ${{ secrets.DEPLOY_HOST_DEV }}

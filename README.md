@@ -1,5 +1,9 @@
 # StundenCheck
 
+StundenCheck is an open source web application for managing participation in initiative institutions.
+
+![Screenshot Dashboard](https://user-images.githubusercontent.com/5441654/212422524-e5ce5ee9-7da0-4c6e-ac78-502c25abb097.png)
+
 ## Setup
 
 Prerequisites:
@@ -47,7 +51,7 @@ php artisan view:cache   # precompile all blade views
 npm run build
 ```
 
-In `.env` set `APP_DEBUG` to false and `APP_URL` to your production url. Change more values if needed.
+In `.env` set `APP_DEBUG` to false and `APP_URL` to your production url. Change more values here if needed.
 
 The webserver should be configured to serve the `public/` directory as root.
 
