@@ -39,7 +39,7 @@
 					{{ old('category_id', $position['category_id'] ?? null) == $c->id ? 'selected' : '' }}
 					value="{{ $c->id}}"
 				>
-					{{ $c->title }}
+					{{ $c->title }} ({{ $c->description }})
 				</option>
 			@endforeach
 		</x-select-input>
