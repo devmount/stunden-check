@@ -77,7 +77,7 @@
 								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									{{ __('Titel') }}
 								</th>
-								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[200px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
+								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[200px] md:max-w-none truncate border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									{{ __('Beschreibung') }}
 								</th>
 								<th class="w-20 px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
@@ -90,7 +90,7 @@
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left">
 									{{ $category->title }}
 								</td>
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[200px] md:max-w-none overflow-hidden text-ellipsis whitespace-nowrap">
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[200px] md:max-w-none truncate">
 									{{ $category->description }}
 								</td>
 								<td>
