@@ -139,6 +139,7 @@
 											{{ $user->firstname }} {{ $user->lastname }}
 										</div>
 									@endforeach
+									{{ $account->note ? '(' . $account->note . ')' : '' }}
 									</div>
 								</td>
 								<td class="px-6 py-4 align-middle whitespace-nowrap">

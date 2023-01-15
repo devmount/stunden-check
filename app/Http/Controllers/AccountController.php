@@ -59,6 +59,7 @@ class AccountController extends Controller
 			'separate_accounting' => $request->has('separate_accounting'),
 			'start'               => $request->input('start'),
 			'target_hours'        => $request->input('target_hours'),
+			'note'                => $request->input('note'),
 		]);
 
 		$pass1 = Str::random(12);
@@ -152,6 +153,7 @@ class AccountController extends Controller
 		$account->separate_accounting = $request->has('separate_accounting');
 		$account->start               = $request->input('start');
 		$account->target_hours        = $request->input('target_hours');
+		$account->note                = $request->input('note');
 
 		// handle first person
 		$account->users[0]->firstname = $request->input('firstname1');
@@ -335,6 +337,7 @@ class AccountController extends Controller
 			'separate_accounting' => 'nullable|boolean',
 			'start'               => 'required|date',
 			'target_hours'        => 'required|numeric',
+			'note'                => 'nullable|string',
 			'firstname1'          => 'required|string|max:255',
 			'lastname1'           => 'required|string|max:255',
 			'email1'              => 'required|string|email|max:255|unique:users,email' . ($uid1 ? ',' . $uid1 : ''),
