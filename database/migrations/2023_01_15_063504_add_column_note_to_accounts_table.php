@@ -17,16 +17,6 @@ return new class extends Migration
 		Schema::table('accounts', function (Blueprint $table) {
 			$table->string('note')->nullable();
 		});
-		// second try for adding ondelete in last migration
-		Schema::table('users', function($table) {
-			$table->foreign('account_id')->onDelete('cascade')->change();
-		});
-		Schema::table('excemptions', function($table) {
-			$table->foreign('user_id')->onDelete('cascade')->change();
-		});
-		Schema::table('positions', function($table) {
-			$table->foreign('user_id')->onDelete('cascade')->change();
-		});
 	}
 
 	/**
