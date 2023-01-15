@@ -139,7 +139,7 @@ class User extends Authenticatable
 		$cycle = Parameter::startAccounting();
 		$start = $cycle < now() ? $cycle : $cycle->modify('-1 year');
 		$hours = 0;
-		foreach ($this->positions->where('completed_at', '>', $start->format('Y-m-d')) as $p) {
+		foreach ($this->positions->where('completed_at', '>=', $start->format('Y-m-d')) as $p) {
 			$hours += $p->hours;
 		}
 		return $hours;
@@ -153,7 +153,7 @@ class User extends Authenticatable
 		$cycle = Parameter::startAccounting();
 		$start = $cycle < now() ? $cycle : $cycle->modify('-1 year');
 		$days = 0;
-		foreach ($this->excemptions->where('start', '>', $start->format('Y-m-d')) as $e) {
+		foreach ($this->excemptions->where('start', '>=', $start->format('Y-m-d')) as $e) {
 			$begin = new DateTime($e->start);
 			$end = new DateTime($e->end);
 			$diff = $begin->diff($end)->days;
