@@ -46,6 +46,21 @@
 	</div>
 </div>
 
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+	<div class="sm:w-1/2">
+		<!-- note -->
+		<x-text-input
+			type="text"
+			name="note"
+			:value="old('note', isset($account) ? $account->note : null)"
+			:label="__('Kontoinformation')"
+			:info="__('Zusätzliche interne Information zum Konto. Wird nur für Administratoren in der Kontoübersicht angezeigt.')"
+		/>
+	</div>
+	<div class="sm:w-1/2">
+	</div>
+</div>
+
 <div class="mt-8 flex flex-col sm:flex-row gap-4">
 	<!-- first person -->
 	<div class="sm:w-1/2">
