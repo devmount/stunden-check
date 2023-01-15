@@ -270,6 +270,7 @@ class AccountController extends Controller
 	public function delete(Request $request, $id)
 	{
 		$account = Account::find($id);
+		$account->users()->delete();
 		$account->delete();
 
 		return redirect()
