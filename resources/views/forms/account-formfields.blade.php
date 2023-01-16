@@ -52,7 +52,7 @@
 		<x-text-input
 			type="text"
 			name="note"
-			:value="old('note', isset($account) ? $account->note : null)"
+			value="{!! old('note', isset($account) ? $account->note : null) !!}"
 			:label="__('Kontoinformation')"
 			:info="__('Zusätzliche interne Information zum Konto. Wird nur für Administratoren in der Kontoübersicht angezeigt.')"
 		/>
