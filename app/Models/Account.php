@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Parameter;
 use \DateTime;
+use \DateTimeImmutable;
 
 class Account extends Model
 {
@@ -126,9 +127,19 @@ class Account extends Model
 	 */
 	public function getTotalHoursCycleAttribute()
 	{
-		$hours = $this->users[0]->total_hours_cycle;
+		$hours = 0;
 		if ($this->separate_accounting) {
-			$hours += $this->users[1]->total_hours_cycle;
+			foreach ($this->users as $u) {
+				$hours += $u->total_hours_cycle;
+			}
+		} else {
+			$cycle = Parameter::startAccounting();
+			$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
+			$end = new DateTimeImmutable($end->format('Y-m-d'));
+			$accountStart = new DateTime($this->start);
+			$start = $accountStart >= $end->modify('-1 year') ? $accountStart : $end->modify('-1 year');
+			$days = $start->diff($end)->days - $this->excemption_days_cycle;
+			$hours = $this->target_hours * $days/365;
 		}
 		return $hours;
 	}
