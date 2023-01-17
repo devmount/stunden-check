@@ -25,7 +25,7 @@
 					<table class="items-center bg-transparent w-full border-collapse">
 						<thead>
 							<tr>
-								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle max-w-[100px] md:max-w-none truncate border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
+								<th class="px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle truncate border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									{{ __('Beschreibung') }}
 								</th>
 								<th class="w-20 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
@@ -35,18 +35,18 @@
 									{{ __('Tätigkeitsbereich') }}
 								</th>	
 								<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
-									<span class="lg:hidden">{{ __('Std.') }}</span>
-									<span class="hidden lg:inline">{{ __('Anzahl Stunden') }}</span>
+									<span class="xl:hidden">{{ __('Std.') }}</span>
+									<span class="hidden xl:inline">{{ __('Anzahl Stunden') }}</span>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 						@forelse ($user->positions->sortByDesc('completed_at') as $position)
 							<tr class="even:bg-slate-50 hover:bg-slate-200">
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-none truncate">
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-md lg:max-w-xl truncate">
 									{{ $position->description }}
 								</td>
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle">
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle whitespace-nowrap">
 									<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
 									<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
 								</td>
@@ -61,7 +61,6 @@
 							<tr>
 								<td colspan="4">
 									<div class="mb-4 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
-										{{-- <div class="font-bold">{{ __('Achtung!') }}</div> --}}
 										{{ __('Hier sind noch keine Einträge vorhanden.') }}
 									</div>
 								</td>
