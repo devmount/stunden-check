@@ -73,6 +73,18 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * gets the partner user if existing
+	 */
+	public function getPartnerAttribute()
+	{
+		// half hours needed when separate accounting is active
+		$users = $this->account->users;
+		return count($users) > 1 && !$this->account->separate_accounting
+			? $users->first(fn ($u) => $u->id != $this->id)
+			: null;
+	}
+
+	/**
 	 * get number of hours to work for a single user in one cycle
 	 */
 	public function getTargetHoursAttribute()

@@ -197,7 +197,7 @@
 												<line x1="5" y1="18" x2="5" y2="18.01" />
 											</svg>
 										</button>
-	
+
 										{{-- link to edit existing account --}}
 										<button onclick="window.location='{{ route('accounts-edit', $account->id) }}'" class="group p-1 transition duration-150 ease-in-out">
 											<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-teal-600 group-hover:stroke-teal-500 stroke-2" viewBox="0 0 24 24">
@@ -207,7 +207,7 @@
 												<line x1="16" y1="5" x2="19" y2="8" />
 											</svg>
 										</button>
-	
+
 										{{-- dialog to archive existing account --}}
 										<x-modal class="max-w-lg">
 											<x-slot name="trigger">
@@ -220,15 +220,15 @@
 													</svg>
 												</button>
 											</x-slot>
-	
+
 											<x-slot name="title">
 												{{ __('Konto archivieren') }}
 											</x-slot>
-	
+
 											<div class="mb-4">
 												{{ __('Möchtest du dieses Konto wirklich deaktivieren? Es kann danach noch im Archiv eingesehen werden.') }}
 											</div>
-	
+
 											<x-slot name="action">
 												<form method="POST" action="{{ route('accounts-archive', $account->id) }}">
 													@csrf
@@ -308,7 +308,7 @@
 												</svg>
 											</button>
 										</form>
-	
+
 										{{-- dialog to archive existing account --}}
 										<x-modal class="max-w-lg">
 											<x-slot name="trigger">
@@ -323,15 +323,15 @@
 													</svg>
 												</button>
 											</x-slot>
-	
+
 											<x-slot name="title">
 												{{ __('Konto löschen') }}
 											</x-slot>
-	
+
 											<div class="mb-4">
 												{{ __('Möchtest du dieses Konto wirklich endgültig löschen? Das kann nicht rückgängig gemacht werden.') }}
 											</div>
-	
+
 											<x-slot name="action">
 												<form method="POST" action="{{ route('accounts-delete', $account->id) }}">
 													@csrf
