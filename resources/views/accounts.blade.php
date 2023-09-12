@@ -146,7 +146,21 @@
 									{{ hdate($account->start) }}
 								</td>
 								<td class="px-6 py-4 align-center whitespace-nowrap">
-									{{ $account->excemption_days }}
+									@if ($account->separate_accounting)
+										<div class="flex gap-4 items-center">
+											@foreach ($account->users as $user)
+												<div class="flex gap-2 items-center">
+													<div class="w-2 h-2 rounded-full bg-gray-300"></div>
+													<div>{{ $user->excemption_days }}</div>
+												</div>
+											@endforeach
+										</div>
+									@else
+										<div class="flex gap-2 items-center">
+											<div class="w-2 h-2 rounded-full bg-gray-300"></div>
+											<div>{{ $account->excemption_days }}</div>
+										</div>
+									@endif
 								</td>
 								<td class="px-6 py-4 align-middle whitespace-nowrap">
 									@if ($account->separate_accounting)
