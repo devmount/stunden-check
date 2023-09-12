@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \DateTime;
+use Carbon\Carbon;
 
 class Parameter extends Model
 {
@@ -36,11 +36,10 @@ class Parameter extends Model
 	/**
 	 * Get start_accounting parameter.
 	 *
-	 * @return DateTime
+	 * @return Carbon
 	 */
 	public static function startAccounting()
 	{
-		$start = new DateTime(self::key('start_accounting'));
-		return date_date_set($start, date('Y'), $start->format('m'), $start->format('d'));
+		return Carbon::parse(self::key('start_accounting'))->setYear(date('Y'));
 	}
 }

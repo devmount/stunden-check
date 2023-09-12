@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Parameter;
-use \DateTime;
-use \DateTimeImmutable;
+use Carbon\Carbon;
 
 class Account extends Model
 {
@@ -134,11 +133,10 @@ class Account extends Model
 			}
 		} else {
 			$cycle = Parameter::startAccounting();
-			$end = $cycle >= now() ? $cycle : $cycle->modify('+1 year');
-			$end = new DateTimeImmutable($end->format('Y-m-d'));
-			$accountStart = new DateTime($this->start);
-			$start = $accountStart >= $end->modify('-1 year') ? $accountStart : $end->modify('-1 year');
-			$days = $start->diff($end)->days - $this->excemption_days_cycle;
+			$end = $cycle >= now() ? $cycle : $cycle->addYear();
+			$accountStart = Carbon::parse($this->start);
+			$start = $accountStart >= $end->subYear() ? $accountStart : $end->subYear();
+			$days = $start->diffInDays($end, false) - $this->excemption_days_cycle;
 			$hours = $this->target_hours * $days/365;
 		}
 		return $hours;
