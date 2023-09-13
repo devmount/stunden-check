@@ -33,7 +33,7 @@
 								</th>
 								<th class="hidden xl:table-cell px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-left">
 									{{ __('Tätigkeitsbereich') }}
-								</th>	
+								</th>
 								<th class="w-16 md:w-auto px-3 md:px-6 py-3 bg-slate-50 text-slate-500 align-middle border border-solid border-slate-200 uppercase border-l-0 border-r-0 font-semibold text-center">
 									<span class="xl:hidden">{{ __('Std.') }}</span>
 									<span class="hidden xl:inline">{{ __('Anzahl Stunden') }}</span>
@@ -43,8 +43,8 @@
 						<tbody>
 						@forelse ($user->positions->sortByDesc('completed_at') as $position)
 							<tr class="even:bg-slate-50 hover:bg-slate-200">
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-[100px] md:max-w-md lg:max-w-xl truncate">
-									{{ $position->description }}
+								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-0 xs:max-w-md lg:max-w-xl">
+									<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
 								</td>
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle whitespace-nowrap">
 									<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
@@ -52,7 +52,7 @@
 								</td>
 								<td class="hidden xl:table-cell px-3 md:px-6 py-3 md:py-4 align-middle text-left">
 									{{ $position->category->title }}
-								</td>	
+								</td>
 								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
 									{{ $position->hours }}
 								</td>

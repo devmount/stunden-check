@@ -19,7 +19,7 @@ class PositionController extends Controller
 		$u            = auth()->user();
 		$a            = $u->account;
 		$separate     = $a->separate_accounting;
-		$p            = count($a->users) > 1 && !$separate ? $a->users[1] : null;
+		$p            = $u->partner;
 		$total_sum    = $separate ? $u->sum_hours           : $a->sum_hours;
 		$total_target = $separate ? $u->total_hours         : $a->total_hours;
 		$missing      = $separate ? $u->missing_hours_cycle : $a->missing_hours_cycle;
