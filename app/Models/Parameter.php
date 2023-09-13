@@ -42,4 +42,40 @@ class Parameter extends Model
 	{
 		return Carbon::parse(self::key('start_accounting'))->setYear(date('Y'));
 	}
+
+	/**
+	 * Calculate current cycle end.
+	 *
+	 * @return Carbon
+	 */
+	public static function cycleEnd()
+	{
+		$startAccounting = self::startAccounting();
+		return Carbon::parse($startAccounting >= now()
+			? $startAccounting
+			: $startAccounting->addYear()->subDay());
+	}
+
+	/**
+	 * Calculate current cycle start.
+	 *
+	 * @param  Carbon|null  $customStart
+	 * @return Carbon
+	 */
+	public static function cycleStart($customStart = null)
+	{
+		$start = self::cycleEnd()->subYear()->addDay();
+		return $customStart && $customStart >= $start ? $customStart : $start;
+	}
+
+	/**
+	 * Calculate number of days in current cycle.
+	 *
+	 * @param  Carbon|null  $customStart
+	 * @return Carbon
+	 */
+	public static function cycleDays($customStart = null)
+	{
+		return self::cycleStart($customStart)->diffInDays(self::cycleEnd());
+	}
 }

@@ -151,14 +151,14 @@
 											@foreach ($account->users as $user)
 												<div class="flex gap-2 items-center">
 													<div class="w-2 h-2 rounded-full bg-gray-300"></div>
-													<div>{{ $user->excemption_days }}</div>
+													<div>{{ $user->excemption_days_cycle }}</div>
 												</div>
 											@endforeach
 										</div>
 									@else
 										<div class="flex gap-2 items-center">
 											<div class="w-2 h-2 rounded-full bg-gray-300"></div>
-											<div>{{ $account->excemption_days }}</div>
+											<div>{{ $account->excemption_days_cycle }}</div>
 										</div>
 									@endif
 								</td>

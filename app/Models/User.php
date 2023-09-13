@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Parameter;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class User extends Authenticatable
 {
@@ -113,11 +114,7 @@ class User extends Authenticatable
 	{
 		$days = 0;
 		foreach ($this->excemptions as $e) {
-			$start = Carbon::parse($e->start);
-			$end = Carbon::parse($e->end);
-			$diff = $start->diffInDays($end, false);
-			if ($diff < 0) continue;
-			$days += $diff > 0 ? $diff : 1;
+			$days += count(CarbonPeriod::create($e->start, '1 day', $e->end))-1;
 		}
 		return $days;
 	}
@@ -127,10 +124,8 @@ class User extends Authenticatable
 	 */
 	public function getTotalHoursAttribute()
 	{
-		$cycle = Parameter::startAccounting();
-		$end = $cycle >= now() ? $cycle : $cycle->addYear();
 		$start = Carbon::parse($this->account->start);
-		$days = $start->diffInDays($end, false) - $this->excemption_days;
+		$days = $start->diffInDays(Parameter::cycleEnd()) - $this->excemption_days;
 		return $this->target_hours * $days/365;
 	}
 
@@ -147,8 +142,7 @@ class User extends Authenticatable
 	 */
 	public function getSumHoursCycleAttribute()
 	{
-		$cycle = Parameter::startAccounting();
-		$start = $cycle < now() ? $cycle : $cycle->subYear();
+		$start = Parameter::cycleStart();
 		$hours = 0;
 		foreach ($this->positions->where('completed_at', '>=', $start) as $p) {
 			$hours += $p->hours;
@@ -161,15 +155,16 @@ class User extends Authenticatable
 	 */
 	public function getExcemptionDaysCycleAttribute()
 	{
-		$cycle = Parameter::startAccounting();
-		$start = $cycle < now() ? $cycle : $cycle->subYear();
+		$start = Parameter::cycleStart($this->account->start);
+		$end = Parameter::cycleEnd();
+		$period = CarbonPeriod::create($start, $end);
+		// assumption that at least start or end of excemptions lie within a cycle
+		$excemptions = $this->excemptions->filter(
+			fn ($e) => $period->contains($e->start) || $period->contains($e->end)
+		);
 		$days = 0;
-		foreach ($this->excemptions->where('start', '>=', $start) as $e) {
-			$begin = Carbon::parse($e->start);
-			$end = Carbon::parse($e->end);
-			$diff = $begin->diffInDays($end, false);
-			if ($diff < 0) continue;
-			$days += $diff > 0 ? $diff : 1;
+		foreach ($excemptions as $e) {
+			$days += count(CarbonPeriod::create(max($start, $e->start), '1 day', min($end, $e->end)))-1;
 		}
 		return $days;
 	}
@@ -179,13 +174,8 @@ class User extends Authenticatable
 	 */
 	public function getTotalHoursCycleAttribute()
 	{
-		$cycle = Parameter::startAccounting();
-		$end = $cycle >= now() ? $cycle : $cycle->addYear();
-		// $end = new DateTimeImmutable($end->format('Y-m-d'));
-		$accountStart = Carbon::parse($this->account->start);
-		$start = $accountStart >= $end->subYear() ? $accountStart : $end->subYear();
-		$days = $start->diffInDays($end, false) - $this->excemption_days_cycle;
-		return $this->target_hours * $days/365;
+		$days = Parameter::cycleDays($this->account->start) - $this->excemption_days_cycle;
+		return $this->target_hours * $days/Parameter::cycleDays();
 	}
 
 	/**
