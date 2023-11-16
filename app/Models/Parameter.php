@@ -65,7 +65,7 @@ class Parameter extends Model
 	public static function cycleStart($customStart = null)
 	{
 		$start = self::cycleEnd()->subYear()->addDay();
-		return $customStart && $customStart >= $start ? $customStart : $start;
+		return Carbon::parse($customStart && $customStart >= $start ? $customStart : $start);
 	}
 
 	/**
@@ -76,6 +76,6 @@ class Parameter extends Model
 	 */
 	public static function cycleDays($customStart = null)
 	{
-		return self::cycleStart($customStart)->diffInDays(self::cycleEnd());
+		return Carbon::parse(self::cycleStart($customStart))->diffInDays(self::cycleEnd());
 	}
 }
