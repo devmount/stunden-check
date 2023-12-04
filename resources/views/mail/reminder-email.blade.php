@@ -8,7 +8,7 @@
 </p>
 <p>
 	Du erreichst die {{ config('app.name', 'StundenCheck') }} Webanwendung unter dieser Adresse:<br>
-	{{ config('app.url') }}
+	<a href="{{ config('app.url') }}">{{ config('app.url') }}</a>
 </p>
 <p>
 	Wenn du dein Passwort vergessen hast, kannst du es <a href="{{ url('password.request') }}">hier</a> zurücksetzen.
@@ -17,7 +17,7 @@
 	Du bist noch auf der Suche nach einer passenden Aufgabe? Die Liste aktueller Aufgaben findest du unter <a href="{{ $tasksurl }}">{{ $tasksurl }}</a>.
 </p>
 <p>
-	Falls du Fragen hast oder Probleme mit der Anwendung, kontaktiere uns gern unter {{ config('mail.from.address') }}
+	Falls du Fragen hast oder Probleme mit der Anwendung, kontaktiere uns gern unter <a href="mailto:{{ config('mail.from.address') }}">{{ config('mail.from.address') }}</a>
 </p>
 <p>
 	Dein {{ config('app.name', 'StundenCheck') }} Team<br>
