@@ -15,6 +15,16 @@
 		stroke-linecap: round;
 		stroke-linejoin: round;
 	}
+
+	table {
+		@apply items-center bg-transparent w-full border-collapse;
+	}
+	th {
+		@apply px-3 md:px-6 py-3 align-middle border border-solid uppercase border-l-0 border-r-0 font-semibold bg-gray-50 dark:bg-gray-800/80 text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700;
+	}
+	tbody>tr {
+		@apply even:bg-gray-50 even:dark:bg-gray-800/50 hover:bg-gray-200 hover:dark:bg-gray-700
+	}
 }
 
 [type='checkbox'] {

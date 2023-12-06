@@ -1,6 +1,6 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
+		<h2>
 			{{ __('Einstellungen') }}
 		</h2>
 	</x-slot>
@@ -55,7 +55,7 @@
 					<form method="POST" action="{{ route('settings') }}">
 						@csrf
 						@include('forms.parameter-formfields')
-						
+
 						<div class="flex justify-end gap-2 mt-8">
 							<x-secondary-button onclick="event.preventDefault();window.location='{{ route('settings') }}'">
 								{{ __('Abbrechen') }}

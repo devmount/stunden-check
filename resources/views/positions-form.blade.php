@@ -1,6 +1,6 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
+		<h2>
 			<a href="{{ route('dashboard') }}" class="transition text-teal-600 hover:text-teal-400">
 				{{ __('Übersicht Stunden') }}
 			</a>
