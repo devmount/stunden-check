@@ -2,12 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-svg {
-  stroke-linecap: round;
-  stroke-linejoin: round;
+@layer base {
+	a {
+		@apply text-gray-600 dark:text-gray-300 hover:text-gray-900 hover:dark:text-white;
+	}
+
+	input, select, textarea {
+		@apply transition-colors !rounded !shadow-sm focus:!ring focus:!ring-opacity-50 !bg-white dark:!bg-gray-800 !border-gray-300 dark:!border-gray-500 focus:!border-teal-300 focus:!ring-teal-200;
+	}
+
+	hr {
+		@apply my-1 border-gray-200 dark:border-gray-900;
+	}
+
+	svg {
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	table {
+		@apply items-center bg-transparent w-full border-collapse;
+	}
+	th {
+		@apply px-3 md:px-6 py-3 align-middle border border-solid uppercase border-l-0 border-r-0 font-semibold whitespace-nowrap bg-gray-50 dark:bg-gray-800/80 text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700;
+	}
+	tbody>tr {
+		@apply even:bg-gray-50 even:dark:bg-gray-800/50 hover:bg-gray-200 hover:dark:bg-gray-700;
+	}
+	tbody>tr>td {
+		@apply px-3 md:px-6 py-3 md:py-4 align-middle;
+	}
 }
 
 [type='checkbox'] {
-  width: 1.5rem;
-  height: 1.5rem;
+	@apply w-6 h-6;
 }

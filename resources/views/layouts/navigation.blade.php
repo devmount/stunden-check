@@ -1,11 +1,11 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
 	<!-- Primary Navigation Menu -->
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between h-16">
 			<div class="flex">
 				<!-- Logo -->
 				<div class="shrink-0 flex items-center">
-					<a href="{{ route('dashboard') }}" class="transition text-teal-600 hover:text-teal-400">
+					<a href="{{ route('dashboard') }}" class="transition-colors text-teal-600 hover:text-teal-400">
 						<x-application-logo class="w-12 h-12 fill-transparent stroke-current stroke-1" />
 					</a>
 				</div>
@@ -30,7 +30,7 @@
 			<div class="hidden sm:flex sm:items-center sm:ml-6">
 				<x-dropdown align="right" width="48">
 					<x-slot name="trigger">
-						<button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+						<button class="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 hover:dark:text-white hover:border-gray-300 hover:dark:border-gray-500 focus:text-gray-700 focus:dark:text-white focus:border-gray-300 focus:dark:border-gray-500 transition-colors">
 							<div>{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</div>
 
 							<div class="ml-1">
@@ -62,7 +62,13 @@
 
 			<!-- Hamburger -->
 			<div class="-mr-2 flex items-center sm:hidden">
-				<button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+				<button
+					@click="open = !open"
+					class="
+						inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition
+						text-gray-400 hover:text-gray-500 hover:dark:text-white hover:bg-gray-100 hover:dark:bg-gray-600 focus:text-gray-500 focus:dark:text-white focus:bg-gray-100 focus:dark:bg-gray-600
+					"
+				>
 					<svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
 						<path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 						<path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -87,9 +93,9 @@
 		</div>
 
 		<!-- Responsive Settings Options -->
-		<div class="pt-4 pb-1 border-t border-gray-200">
+		<div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-700">
 			<x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')" class="px-4">
-				<div class="font-medium text-base text-gray-800">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</div>
+				<div class="font-medium text-base">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</div>
 				<div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
 			</x-responsive-nav-link>
 			<x-responsive-nav-link :href="route('password.change')">

@@ -1,6 +1,6 @@
 <div class="max-w-7xl mx-auto px-2 sm:px-8 lg:px-10 pb-12 mt-8 flex flex-col justify-between gap-4">
 	<div>
-		<div class="max-w-xs text-xs text-gray-500">
+		<div class="max-w-xs text-xs text-gray-500 dark:text-gray-400">
 			{{ config('app.name', 'StundenCheck') }} ist ein Open-Source-Projekt zur Verwaltung der Beteiligung in Initiativeinrichtungen.
 			Erstellt von <a href="https://devmount.de" class="underline" target="_blank">devmount</a>.
 		</div>
@@ -20,10 +20,10 @@
 			</a>
 		</div>
 	</div>
-	
+
 	<div>
 		@if (auth()->user()?->is_admin)
-			<div class="flex flex-col sm:flex-row sm:gap-2 text-sm text-gray-500">
+			<div class="flex flex-col sm:flex-row sm:gap-2 text-sm text-gray-500 dark:text-gray-400">
 				<div>{{ config('app.name', 'StundenCheck') }} <code>v{{ config('app.version') }}</code></div>
 				<div class="hidden sm:block">&middot;</div>
 				<div>Laravel <code>v{{ Illuminate\Foundation\Application::VERSION }}</code></div>

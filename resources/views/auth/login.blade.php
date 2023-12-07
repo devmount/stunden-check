@@ -3,9 +3,13 @@
 		<x-slot name="logo">
 			<a href="/" class="flex items-center">
 				<x-application-logo class="w-14 h-14 sm:w-20 sm:h-20 fill-transparent stroke-current stroke-1 text-teal-600" />
-				<span class="text-teal-600 text-3xl sm:text-5xl">{{ config('app.name', 'StundenCheck') }}</span>
+				<span class="text-teal-600 text-3xl sm:text-5xl">
+					{{ config('app.name', 'StundenCheck') }}
+				</span>
 			</a>
-			<div class="text-right sm:text-xl text-slate-500 -mt-4">{{ $title }}</div>
+			<div class="text-right sm:text-xl text-gray-500 dark:text-gray-400 -mt-4">
+				{{ $title }}
+			</div>
 		</x-slot>
 
 		<!-- Session Status -->
@@ -43,7 +47,7 @@
 
 			<div class="flex items-center justify-end mt-4">
 				@if (Route::has('password.request'))
-					<a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+					<a class="underline text-sm" href="{{ route('password.request') }}">
 						{{ __('Passwort vergessen?') }}
 					</a>
 				@endif

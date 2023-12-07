@@ -5,13 +5,15 @@
 	'autofocus' => false
 ])
 
-<label class="{{ $attributes['class'] }}">
-	<span class="mb-1 text-sm text-gray-700">
+<label class="flex flex-col gap-2 {{ $attributes['class'] }}">
+	{{-- label --}}
+	<span class="text-sm text-gray-700 dark:text-gray-300">
 		{{ $label }}
 		@if ($required) <span class="text-red-400">*</span> @endif
 	</span>
+	{{-- input --}}
 	<select
-		class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50 @error($attributes['name']) border-red-400 @enderror"
+		class="block w-ful @error($attributes['name']) border-red-400 dark:!border-red-500 @enderror"
 		name="{{ $attributes['name'] }}"
 		{{ $disabled ? 'disabled' : '' }}
 		{{ $required ? 'required' : '' }}
@@ -20,11 +22,15 @@
 		{{ $slot }}
 	</select>
 </label>
+{{-- error message --}}
 @error($attributes['name'])
-	<div class="text-sm text-red-600">{{ $message }}</div>
+	<div class="text-sm text-red-600 dark:!border-red-500">
+		{{ $message }}
+	</div>
 @enderror
+{{-- info message --}}
 @if ($attributes['info'])
-	<div class="text-sm mt-1 text-slate-400">
+	<div class="text-sm mt-1 text-gray-400 dark:text-gray-500">
 		{{ $attributes['info'] }}
 	</div>
 @endif
