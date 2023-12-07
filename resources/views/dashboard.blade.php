@@ -81,32 +81,33 @@
 					<tbody>
 						@forelse ($user->positions->sortByDesc('completed_at') as $position)
 						<tr>
-							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-0 xs:max-w-md lg:max-w-xl">
+							<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 								<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
 							</td>
-							<td class="px-3 md:px-6 py-3 md:py-4 align-middle whitespace-nowrap">
+							<td class="whitespace-nowrap">
 								<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
 								<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
 							</td>
-							<td class="hidden xl:table-cell px-3 md:px-6 py-3 md:py-4 align-middle text-left">
+							<td class="hidden xl:table-cell text-left">
 								{{ $position->category->title }}
 							</td>
-							<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
+							<td class="text-center">
 								{{ $position->hours }}
 							</td>
 							<td>
-								<div class="flex flex-row">
+								<div class="flex gap-2">
 									{{-- page to edit existing position --}}
 									<x-text-button
 										onclick="window.location='{{ route('positions-edit', $position->id) }}'"
 										class="text-teal-600 hover:text-teal-500"
+										title="{{ __('Bearbeiten') }}"
 										edit
 									/>
 
 									{{-- dialog to delete existing position --}}
 									<x-modal class="max-w-lg">
 										<x-slot name="trigger">
-											<x-text-button class="text-red-600 hover:text-red-500" delete />
+											<x-text-button class="text-red-600 hover:text-red-500" title="{{ __('Löschen') }}" delete />
 										</x-slot>
 
 										<x-slot name="title">
@@ -172,17 +173,17 @@
 						<tbody>
 						@forelse ($partner->positions->sortByDesc('completed_at') as $position)
 							<tr>
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-left max-w-0 xs:max-w-md lg:max-w-xl">
+								<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 									<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
 								</td>
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle whitespace-nowrap">
+								<td class="whitespace-nowrap">
 									<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
 									<span class="hidden lg:inline">{{ hdate($position->completed_at) }}</span>
 								</td>
-								<td class="hidden xl:table-cell px-3 md:px-6 py-3 md:py-4 align-middle text-left">
+								<td class="hidden xl:table-cell text-left">
 									{{ $position->category->title }}
 								</td>
-								<td class="px-3 md:px-6 py-3 md:py-4 align-middle text-center">
+								<td class="text-center">
 									{{ $position->hours }}
 								</td>
 							</tr>
