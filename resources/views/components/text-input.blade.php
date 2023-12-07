@@ -5,9 +5,9 @@
 	'autofocus' => false,
 ])
 
-<label class="{{ $attributes['class'] }}">
+<label class="flex flex-col gap-2 {{ $attributes['class'] }}">
 	{{-- label --}}
-	<span class="mb-1 text-sm text-gray-700 dark:text-gray-300">
+	<span class="text-sm text-gray-700 dark:text-gray-300">
 		{{ $label ?? $slot }}
 		@if ($required) <span class="text-red-400">*</span> @endif
 	</span>
