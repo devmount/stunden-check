@@ -10,7 +10,7 @@
 
 	<div class="pt-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-b border-gray-200">
+			<x-content-card class="p-6">
 
 				<div class="mb-4">
 					{{ __('Bennene hier den Tätigkeitsbereich. Eine kurze, aussagekräftige Beschreibung ist sinnvoll.') }}
@@ -31,7 +31,7 @@
 				</form>
 
 
-			</div>
+			</x-content-card>
 		</div>
 	</div>
 </x-app-layout>

@@ -17,7 +17,10 @@
 					<div class="inline-flex bg-gray-100 dark:bg-gray-700 rounded-lg self-start sm:self-center gap-1 p-2">
 						<button
 							@click="active = 'active'"
-							:class="[active === 'active' && 'bg-white text-black shadow', active !== 'active' && 'text-gray-600 dark:text-gray-400']"
+							:class="[
+								active === 'active' && 'bg-white text-black shadow',
+								active !== 'active' && 'text-gray-600 dark:text-gray-400'
+							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
 						>
 							Aktive Konten
@@ -27,7 +30,10 @@
 						</button>
 						<button
 							@click="active = 'archived'"
-							:class="[active === 'archived' && 'bg-white text-black shadow', active !== 'archived' && 'text-gray-600 dark:text-gray-400']"
+							:class="[
+								active === 'archived' && 'bg-white text-black shadow',
+								active !== 'archived' && 'text-gray-600 dark:text-gray-400'
+							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
 						>
 							Archiv
@@ -274,7 +280,7 @@
 											/>
 										</form>
 
-										{{-- dialog to archive existing account --}}
+										{{-- dialog to delete existing account --}}
 										<x-modal class="max-w-lg">
 											<x-slot name="trigger">
 												<x-text-button

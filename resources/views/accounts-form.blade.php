@@ -10,7 +10,7 @@
 
 	<div class="pt-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-b border-gray-200">
+			<x-content-card class="p-6">
 
 				@if (isset($account))
 					<div class="mb-8">
@@ -20,7 +20,7 @@
 					<div class="mb-2">
 						{{ __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.') }}
 					</div>
-					<div class="mb-8 border-l-4 p-4 text-amber-900 bg-amber-50 border-amber-200">
+					<div class="mb-8 border-l-4 p-4 text-amber-900 dark:text-amber-100 bg-amber-50 dark:bg-amber-900 border-amber-200 dark:border-amber-500">
 						{{ __('Beim Klick auf Speichern wird den angegebenen Personen per E-Mail ein initiales Password geschickt.') }}
 					</div>
 				@endif
@@ -39,7 +39,7 @@
 					</div>
 				</form>
 
-			</div>
+			</x-content-card>
 		</div>
 	</div>
 </x-app-layout>

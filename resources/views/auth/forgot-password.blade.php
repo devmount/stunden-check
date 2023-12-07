@@ -9,7 +9,7 @@
 			</a>
 		</x-slot>
 
-		<div class="mb-4 text-sm text-gray-600">
+		<div class="mb-4 text-sm">
 			{{ __('Du hast dein Passwort vergessen? Kein Problem. Gib deine registrierte E-Mail-Adresse an und du bekommst eine E-Mail die einen Link zum zurücksetzen deines Passwortes enthält.') }}
 		</div>
 
