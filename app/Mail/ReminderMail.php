@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Parameter;
+use App\Models\User;
 
 class ReminderMail extends Mailable implements ShouldQueue
 {
@@ -32,7 +33,6 @@ class ReminderMail extends Mailable implements ShouldQueue
 	public function build()
 	{
 		$title         = Parameter::key('branding_title');
-		$tasksurl      = Parameter::key('tasks_url');
 		$account       = $this->user->account;
 		$separate      = $account->separate_accounting;
 		$cycle_missing = $separate ? $this->user->missing_hours_cycle : $account->missing_hours_cycle;
@@ -42,11 +42,25 @@ class ReminderMail extends Mailable implements ShouldQueue
 			'[' . config('app.name', 'StundenCheck') . ' - ' . $title . '] Erinnerung Stunden eintragen'
 		)->view('mail.reminder-email', [
 			'title'         => $title,
-			'tasksurl'      => $tasksurl,
+			'tasksurl'      => Parameter::key('tasks_url'),
 			'user'          => $this->user,
 			'cycle_missing' => $cycle_missing >= 0 ? round($cycle_missing, 1) : 0,
 			'cycle_sum'     => round($cycle_sum, 1),
 			'cycle_target'  => round($cycle_target, 1),
+			'cycle_end'     => Parameter::cycleEnd()->isoFormat('LL'),
 		]);
+	}
+
+	public static function demoData()
+	{
+		return [
+			'title'         => Parameter::key('branding_title'),
+			'tasksurl'      => Parameter::key('tasks_url'),
+			'user'          => User::factory()->state(['firstname' => fake()->firstName(), 'lastname' => fake()->lastName()])->make(),
+			'cycle_missing' => 8,
+			'cycle_sum'     => 16,
+			'cycle_target'  => 24,
+			'cycle_end'     => Parameter::cycleEnd()->isoFormat('LL'),
+		];
 	}
 }
