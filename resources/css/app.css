@@ -37,3 +37,10 @@
 [type='checkbox'] {
 	@apply w-6 h-6;
 }
+
+.mail-preview p:not(:last-child) {
+	@apply mb-4;
+}
+.mail-preview a {
+	@apply underline;
+}
