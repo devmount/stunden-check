@@ -20,7 +20,7 @@
 					<div class="mb-2">
 						{{ __('Erstelle hier ein neues Konto mit einem oder zwei zugehörigen Personen.') }}
 					</div>
-					<div class="mb-8 border-l-4 p-4 text-amber-900 dark:text-amber-100 bg-amber-50 dark:bg-amber-900 border-amber-200 dark:border-amber-500">
+					<div class="mb-8 border-l-4 p-4 text-amber-900 dark:text-amber-100 bg-amber-50 dark:bg-amber-900/25 border-amber-200 dark:border-amber-800">
 						{{ __('Beim Klick auf Speichern wird den angegebenen Personen per E-Mail ein initiales Password geschickt.') }}
 					</div>
 				@endif

@@ -28,7 +28,7 @@
 <div class="mb-4 font-semibold">
 	{{ __('Berechnung Soll-Stunden') }}
 </div>
-<div class="mb-4 border-l-4 p-4 text-amber-900 dark:text-amber-100 bg-amber-50 dark:bg-amber-900 border-amber-200 dark:border-amber-500">
+<div class="mb-4 border-l-4 p-4 text-amber-900 dark:text-amber-100 bg-amber-50 dark:bg-amber-900/25 border-amber-200 dark:border-amber-800">
 	{{ __('Änderungen wirken sich auf die Abrechnung aller bestehender Konten (auch in der Vergangenheit) aus.') }}
 </div>
 <div class="flex flex-col sm:flex-row gap-4 mb-4">
