@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class Parameter extends Model
 {
@@ -77,5 +78,21 @@ class Parameter extends Model
 	public static function cycleDays($customStart = null)
 	{
 		return Carbon::parse(self::cycleStart($customStart))->diffInDays(self::cycleEnd());
+	}
+
+	/**
+	 * Calculate all cycles since beginning of accounting.
+	 *
+	 * @param Boolean|null  $reverse
+	 * @return CarbonPeriod
+	 */
+	public static function cycles($reverse = false)
+	{
+		$period = CarbonPeriod::create(self::key('start_accounting'), '1 year', self::cycleEnd());
+		if ($reverse) {
+			return array_reverse($period->toArray());
+		} else {
+			return $period;
+		}
 	}
 }

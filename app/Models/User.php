@@ -195,4 +195,13 @@ class User extends Authenticatable
 		if ($this->sum_hours_cycle < $this->total_hours_cycle) return 1;
 		if ($this->sum_hours_cycle >= $this->total_hours_cycle) return 2;
 	}
+
+	/**
+	 * get positions in given cycle
+	 * @param Carbon  $start
+	 */
+	public function positionsByCycle($start)
+	{
+		return $this->positions->where('completed_at', '>=', $start);
+	}
 }

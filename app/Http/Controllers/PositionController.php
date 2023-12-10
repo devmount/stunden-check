@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Position;
+use App\Models\Parameter;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -12,10 +13,12 @@ class PositionController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 *
+	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
+		$start = $request->has('start') ? $request->date('start') : Parameter::cycleStart();
 		$u            = auth()->user();
 		$a            = $u->account;
 		$separate     = $a->separate_accounting;
@@ -28,7 +31,9 @@ class PositionController extends Controller
 
 		return view('dashboard')
 			->with('user', $u)
+			->with('user_positions', $u->positionsByCycle($start))
 			->with('partner', $p)
+			->with('partner_positions', $p->positionsByCycle($start))
 			->with('total_sum', $total_sum)
 			->with('total_target', round($total_target, 1))
 			->with('missing', $missing >= 0 ? round($missing, 1) : 0)

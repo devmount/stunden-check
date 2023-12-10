@@ -1,7 +1,14 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2>
-			{{ __('Übersicht Stunden') }}
+		<h2 class="flex justify-between items-center">
+			<div>{{ __('Übersicht Stunden') }}</div>
+			<x-select-input :label="false" class="-my-2">
+				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
+					<option value="{{ $key }}" @selected(!$key)>
+						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
+					</option>
+				@endforeach
+			</x-select-input>
 		</h2>
 	</x-slot>
 
@@ -13,7 +20,7 @@
 			">
 				{{ __('Insgesamt') }}
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $total_sum }} / {{ $total_target}}
+					{{ $total_sum }} / {{ $total_target }}
 				</span>
 				{{ __('Stunden geleistet') }}
 			</div>
@@ -48,9 +55,9 @@
 				<div class="px-6 pb-4 flex justify-between items-center">
 					<div class="flex flex-col sm:flex-row sm:gap-4">
 						<span class="font-semibold">{{ __('Meine Stunden') }}</span>
-						@if ($user->positions->count() > 1)
+						@if ($user_positions->count() > 1)
 							<span class="text-gray-600 dark:text-gray-400">
-								{{ $user->positions->count() }} {{ __('Einträge') }}
+								{{ $user_positions->count() }} {{ __('Einträge') }}
 							</span>
 						@endif
 					</div>
@@ -79,7 +86,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@forelse ($user->positions->sortByDesc('completed_at') as $position)
+						@forelse ($user_positions->sortByDesc('completed_at') as $position)
 						<tr>
 							<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 								<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
@@ -145,9 +152,9 @@
 					<div class="px-6 pb-4 mt-12 flex justify-between items-center">
 						<div class="flex flex-col sm:flex-row sm:gap-4">
 							<span class="font-semibold">{{ $partner->firstname }}'s {{ __('Stunden') }}</span>
-							@if ($partner->positions->count() > 1)
+							@if ($partner_positions->count() > 1)
 								<span class="text-gray-600 dark:text-gray-400">
-									{{ $partner->positions->count() }} {{ __('Einträge') }}
+									{{ $partner_positions->count() }} {{ __('Einträge') }}
 								</span>
 							@endif
 						</div>
@@ -171,7 +178,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						@forelse ($partner->positions->sortByDesc('completed_at') as $position)
+						@forelse ($partner_positions->sortByDesc('completed_at') as $position)
 							<tr>
 								<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 									<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
