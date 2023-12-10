@@ -6,6 +6,7 @@ use App\Models\Position;
 use App\Models\Parameter;
 use App\Models\User;
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PositionController extends Controller
@@ -18,18 +19,20 @@ class PositionController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$start = $request->has('start') ? $request->date('start') : Parameter::cycleStart();
-		$u            = auth()->user();
+		$start        = $request->has('start') ? $request->date('start') : Parameter::cycleStart();
+		$u            = User::find(auth()->user()->id);
 		$a            = $u->account;
 		$separate     = $a->separate_accounting;
 		$p            = $u->partner;
-		$total_sum    = $separate ? $u->sum_hours           : $a->sum_hours;
-		$total_target = $separate ? $u->total_hours         : $a->total_hours;
-		$missing      = $separate ? $u->missing_hours_cycle : $a->missing_hours_cycle;
-		$cycle_sum    = $separate ? $u->sum_hours_cycle     : $a->sum_hours_cycle;
-		$cycle_target = $separate ? $u->total_hours_cycle   : $a->total_hours_cycle;
+		$total_sum    = $separate ? $u->sum_hours                   : $a->sum_hours;
+		$total_target = $separate ? $u->total_hours                 : $a->total_hours;
+		$missing      = $separate ? $u->missingHoursByCycle($start) : $a->missingHoursByCycle($start);
+		$cycle_sum    = $separate ? $u->sumHoursByCycle($start)     : $a->sumHoursByCycle($start);
+		$cycle_target = $separate ? $u->totalHoursByCycle($start)   : $a->totalHoursByCycle($start);
 
 		return view('dashboard')
+			->with('selectedStart', $start)
+			->with('selectedEnd', Carbon::create($start)->addYear()->subDay())
 			->with('user', $u)
 			->with('user_positions', $u->positionsByCycle($start))
 			->with('partner', $p)

@@ -204,4 +204,62 @@ class User extends Authenticatable
 	{
 		return $this->positions->where('completed_at', '>=', $start);
 	}
+
+	/**
+	 * get sum of hours in given cycle
+	 */
+	public function sumHoursByCycle($start)
+	{
+		$hours = 0;
+		foreach ($this->positionsByCycle($start) as $p) {
+			$hours += $p->hours;
+		}
+		return $hours;
+	}
+
+	/**
+	 * get total number of days of all excemptions in given cycle
+	 */
+	public function excemptionDaysByCycle($start)
+	{
+		$end = Carbon::create($start)->addYear()->subDay(); // TODO: handle account start
+		$period = CarbonPeriod::create($start, $end);
+		// assumption that at least start or end of excemptions lie within a cycle
+		$excemptions = $this->excemptions->filter(
+			fn ($e) => $period->contains($e->start) || $period->contains($e->end)
+		);
+		$days = 0;
+		foreach ($excemptions as $e) {
+			$days += count(CarbonPeriod::create(max($start, $e->start), '1 day', min($end, $e->end)))-1;
+		}
+		return $days;
+	}
+
+	/**
+	 * get total target number of hours for given cycle
+	 */
+	public function totalHoursByCycle($start)
+	{
+		$end = Carbon::create($start)->addYear()->subDay(); // TODO: handle account start
+		$days = Carbon::parse($start)->diffInDays($end) - $this->excemptionDaysByCycle($start);
+		return $this->target_hours * $days/Parameter::cycleDays(); // TODO: handle given cycle days
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of given cycle
+	 */
+	public function missingHoursByCycle($start)
+	{
+		return $this->totalHoursByCycle($start) - $this->sumHoursByCycle($start);
+	}
+
+	/**
+	 * get status depending on number of hours worked in given cycle
+	 */
+	public function statusByCycle($start)
+	{
+		if ($this->sumHoursByCycle($start) < $this->totalHoursByCycle($start)/2) return 0;
+		if ($this->sumHoursByCycle($start) < $this->totalHoursByCycle($start)) return 1;
+		if ($this->sumHoursByCycle($start) >= $this->totalHoursByCycle($start)) return 2;
+	}
 }

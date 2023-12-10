@@ -2,7 +2,8 @@
 	'label' => 'Bitte auswählen',
 	'disabled' => false,
 	'required' => false,
-	'autofocus' => false
+	'autofocus' => false,
+	'getNav' => false,
 ])
 
 <label class="flex flex-col gap-2 {{ $attributes['class'] }}">
@@ -20,6 +21,10 @@
 		{{ $disabled ? 'disabled' : '' }}
 		{{ $required ? 'required' : '' }}
 		{{ $autofocus ? 'autofocus' : '' }}
+		@if ($getNav)
+			x-data
+			@change="window.location.search = '?start=' + $event.target.value;"
+		@endif
 	>
 		{{ $slot }}
 	</select>

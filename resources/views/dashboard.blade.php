@@ -1,10 +1,10 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2 class="flex justify-between items-center">
+		<h2 class="flex flex-col sm:flex-row gap-6 justify-between items-center">
 			<div>{{ __('Übersicht Stunden') }}</div>
-			<x-select-input :label="false" class="-my-2">
+			<x-select-input :label="false" class="-my-2" get-nav>
 				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
-					<option value="{{ $key }}" @selected(!$key)>
+					<option value="{{ $date->format('Y-m-d') }}" @selected($date == $selectedStart)>
 						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
 					</option>
 				@endforeach
@@ -19,6 +19,7 @@
 				text-white bg-slate-600 md:border-4 border-white dark:border-slate-500
 			">
 				{{ __('Insgesamt') }}
+				<br class="md:hidden" />
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $total_sum }} / {{ $total_target }}
 				</span>
@@ -28,7 +29,8 @@
 				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
 				text-white bg-teal-600 md:border-4 border-white dark:border-teal-500
 			">
-				{{ __('Aktuelle Abrechnungsperiode') }}
+				{{ $selectedStart->isoFormat('ll') }} &mdash; {{ $selectedEnd->isoFormat('ll') }}
+				<br class="md:hidden" />
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $cycle_sum }} / {{ $cycle_target }}
 				</span>
@@ -37,9 +39,10 @@
 			<div class="
 				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
 				text-white md:border-4 border-white dark:border-slate-500
-				@if ($missing <= 0) bg-amber-600 dark:border-amber-500 @else bg-slate-600 @endif
+				@if ($missing > 0) bg-amber-600 dark:border-amber-500 @else bg-slate-600 @endif
 			">
-				{{ __('Aktuelle Abrechnungsperiode') }}
+				{{ $selectedStart->isoFormat('ll') }} &mdash; {{ $selectedEnd->isoFormat('ll') }}
+				<br class="md:hidden" />
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $missing }}
 				</span>
