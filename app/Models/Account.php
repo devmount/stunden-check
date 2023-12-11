@@ -160,11 +160,11 @@ class Account extends Model
 	/**
 	 * get sum of hours in given cycle
 	 */
-	public function sumHoursByCycle($start)
+	public function sumHoursByCycle($cycleStart)
 	{
 		$hours = 0;
 		foreach ($this->users as $u) {
-			$hours += $u->sumHoursByCycle($start);
+			$hours += $u->sumHoursByCycle($cycleStart);
 		}
 		return $hours;
 	}
@@ -172,11 +172,11 @@ class Account extends Model
 	/**
 	 * get total number of days of all excemptions of all users in given cycle
 	 */
-	public function excemptionDaysByCycle($start)
+	public function excemptionDaysByCycle($cycleStart)
 	{
 		$days = 0;
 		foreach ($this->users as $u) {
-			$days += $u->excemptionDaysByCycle($start);
+			$days += $u->excemptionDaysByCycle($cycleStart);
 		}
 		return $days;
 	}
@@ -184,16 +184,18 @@ class Account extends Model
 	/**
 	 * get total target number of hours for given cycle
 	 */
-	public function totalHoursByCycle($start)
+	public function totalHoursByCycle($cycleStart)
 	{
+		$start = max($this->start, $cycleStart);
 		$hours = 0;
 		if ($this->separate_accounting) {
 			foreach ($this->users as $u) {
 				$hours += $u->totalHoursByCycle($start);
 			}
 		} else {
-			$days = Parameter::cycleDays($this->start) - $this->excemptionDaysByCycle($start); // TODO: start
-			$hours = $this->target_hours * $days/Parameter::cycleDays();
+			$cycleDays = Carbon::create($start)->diffInDays(Carbon::create($cycleStart)->addYear()->subDay());
+			$days = $cycleDays - $this->excemptionDaysByCycle($start);
+			$hours = $this->target_hours * $days/Parameter::cycleDays(); // TODO: handle given cycle days
 		}
 		return $hours;
 	}
@@ -201,18 +203,18 @@ class Account extends Model
 	/**
 	 * get hours still to work to reach quota until end of given cycle
 	 */
-	public function missingHoursByCycle($start)
+	public function missingHoursByCycle($cycleStart)
 	{
-		return $this->totalHoursByCycle($start) - $this->sumHoursByCycle($start);
+		return $this->totalHoursByCycle($cycleStart) - $this->sumHoursByCycle($cycleStart);
 	}
 
 	/**
 	 * get status color depending on number of hours worked in given cycle
 	 */
-	public function statusByCycle($start)
+	public function statusByCycle($cycleStart)
 	{
-		if ($this->sumHoursByCycle($start) < $this->totalHoursByCycle($start)/2) return 0;
-		if ($this->sumHoursByCycle($start) < $this->totalHoursByCycle($start)) return 1;
-		if ($this->sumHoursByCycle($start) >= $this->totalHoursByCycle($start)) return 2;
+		if ($this->sumHoursByCycle($cycleStart) < $this->totalHoursByCycle($cycleStart)/2) return 0;
+		if ($this->sumHoursByCycle($cycleStart) < $this->totalHoursByCycle($cycleStart)) return 1;
+		if ($this->sumHoursByCycle($cycleStart) >= $this->totalHoursByCycle($cycleStart)) return 2;
 	}
 }
