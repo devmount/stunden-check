@@ -82,10 +82,15 @@ class Account extends Model
 	 */
 	public function getTotalHoursAttribute()
 	{
-		// TODO
-		$hours = $this->users[0]->total_hours;
+		$hours = 0;
 		if ($this->separate_accounting) {
-			$hours += $this->users[1]->total_hours;
+			foreach ($this->users as $u) {
+				$hours += $u->total_hours;
+			}
+		} else {
+			$start = Carbon::parse($this->start);
+			$days = $start->diffInDays(Parameter::cycleEnd()) - $this->excemption_days;
+			$hours = $this->target_hours * round($days/365, 1);
 		}
 		return $hours;
 	}
@@ -134,7 +139,7 @@ class Account extends Model
 			}
 		} else {
 			$days = Parameter::cycleDays($this->start) - $this->excemption_days_cycle;
-			$hours = $this->target_hours * $days/Parameter::cycleDays();
+			$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1);
 		}
 		return $hours;
 	}
@@ -193,9 +198,9 @@ class Account extends Model
 				$hours += $u->totalHoursByCycle($start);
 			}
 		} else {
-			$cycleDays = Carbon::create($start)->diffInDays(Carbon::create($cycleStart)->addYear()->subDay());
-			$days = $cycleDays - $this->excemptionDaysByCycle($start);
-			$hours = $this->target_hours * $days/Parameter::cycleDays(); // TODO: handle given cycle days
+			$end = Carbon::create($cycleStart)->addYear()->subDay();
+			$days = Carbon::create($start)->diffInDays($end) - $this->excemptionDaysByCycle($start);
+			$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1); // TODO: handle given cycle days
 		}
 		return $hours;
 	}

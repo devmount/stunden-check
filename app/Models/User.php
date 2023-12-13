@@ -126,7 +126,7 @@ class User extends Authenticatable
 	{
 		$start = Carbon::parse($this->account->start);
 		$days = $start->diffInDays(Parameter::cycleEnd()) - $this->excemption_days;
-		return $this->target_hours * $days/365;
+		return $this->target_hours * round($days/365, 1);
 	}
 
 	/**
@@ -202,7 +202,8 @@ class User extends Authenticatable
 	 */
 	public function positionsByCycle($cycleStart)
 	{
-		return $this->positions->where('completed_at', '>=', $cycleStart);
+		$start = max($this->account->start, $cycleStart);
+		return $this->positions->where('completed_at', '>=', $start);
 	}
 
 	/**
@@ -211,8 +212,9 @@ class User extends Authenticatable
 	 */
 	public function sumHoursByCycle($cycleStart)
 	{
+		$start = max($this->account->start, $cycleStart);
 		$hours = 0;
-		foreach ($this->positionsByCycle($cycleStart) as $p) {
+		foreach ($this->positionsByCycle($start) as $p) {
 			$hours += $p->hours;
 		}
 		return $hours;
@@ -246,8 +248,9 @@ class User extends Authenticatable
 	{
 		$start = max($this->account->start, $cycleStart);
 		$end = Carbon::create($cycleStart)->addYear()->subDay();
-		$days = Carbon::parse($start)->diffInDays($end) - $this->excemptionDaysByCycle($start);
-		return $this->target_hours * $days/Parameter::cycleDays(); // TODO: handle given cycle days
+		$days = Carbon::create($start)->diffInDays($end) - $this->excemptionDaysByCycle($start);
+		$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1);
+		return $hours; // TODO: handle given cycle days
 	}
 
 	/**
