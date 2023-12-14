@@ -82,10 +82,15 @@ class Account extends Model
 	 */
 	public function getTotalHoursAttribute()
 	{
-		// TODO
-		$hours = $this->users[0]->total_hours;
+		$hours = 0;
 		if ($this->separate_accounting) {
-			$hours += $this->users[1]->total_hours;
+			foreach ($this->users as $u) {
+				$hours += $u->total_hours;
+			}
+		} else {
+			$start = Carbon::parse($this->start);
+			$days = $start->diffInDays(Parameter::cycleEnd()) - $this->excemption_days;
+			$hours = $this->target_hours * round($days/365, 1);
 		}
 		return $hours;
 	}
@@ -134,7 +139,7 @@ class Account extends Model
 			}
 		} else {
 			$days = Parameter::cycleDays($this->start) - $this->excemption_days_cycle;
-			$hours = $this->target_hours * $days/Parameter::cycleDays();
+			$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1);
 		}
 		return $hours;
 	}
@@ -155,5 +160,66 @@ class Account extends Model
 		if ($this->sum_hours_cycle < $this->total_hours_cycle/2) return 0;
 		if ($this->sum_hours_cycle < $this->total_hours_cycle) return 1;
 		if ($this->sum_hours_cycle >= $this->total_hours_cycle) return 2;
+	}
+
+	/**
+	 * get sum of hours in given cycle
+	 */
+	public function sumHoursByCycle($cycleStart)
+	{
+		$hours = 0;
+		foreach ($this->users as $u) {
+			$hours += $u->sumHoursByCycle($cycleStart);
+		}
+		return $hours;
+	}
+
+	/**
+	 * get total number of days of all excemptions of all users in given cycle
+	 */
+	public function excemptionDaysByCycle($cycleStart)
+	{
+		$days = 0;
+		foreach ($this->users as $u) {
+			$days += $u->excemptionDaysByCycle($cycleStart);
+		}
+		return $days;
+	}
+
+	/**
+	 * get total target number of hours for given cycle
+	 */
+	public function totalHoursByCycle($cycleStart)
+	{
+		$start = max($this->start, $cycleStart);
+		$hours = 0;
+		if ($this->separate_accounting) {
+			foreach ($this->users as $u) {
+				$hours += $u->totalHoursByCycle($start);
+			}
+		} else {
+			$end = Carbon::create($cycleStart)->addYear()->subDay();
+			$days = Carbon::create($start)->diffInDays($end) - $this->excemptionDaysByCycle($start);
+			$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1); // TODO: handle given cycle days
+		}
+		return $hours;
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of given cycle
+	 */
+	public function missingHoursByCycle($cycleStart)
+	{
+		return $this->totalHoursByCycle($cycleStart) - $this->sumHoursByCycle($cycleStart);
+	}
+
+	/**
+	 * get status color depending on number of hours worked in given cycle
+	 */
+	public function statusByCycle($cycleStart)
+	{
+		if ($this->sumHoursByCycle($cycleStart) < $this->totalHoursByCycle($cycleStart)/2) return 0;
+		if ($this->sumHoursByCycle($cycleStart) < $this->totalHoursByCycle($cycleStart)) return 1;
+		if ($this->sumHoursByCycle($cycleStart) >= $this->totalHoursByCycle($cycleStart)) return 2;
 	}
 }

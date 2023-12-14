@@ -2,15 +2,18 @@
 	'label' => 'Bitte auswählen',
 	'disabled' => false,
 	'required' => false,
-	'autofocus' => false
+	'autofocus' => false,
+	'getNav' => false,
 ])
 
 <label class="flex flex-col gap-2 {{ $attributes['class'] }}">
 	{{-- label --}}
-	<span class="text-sm text-gray-700 dark:text-gray-300">
-		{{ $label }}
-		@if ($required) <span class="text-red-400">*</span> @endif
-	</span>
+	@if ($label)
+		<span class="text-sm text-gray-700 dark:text-gray-300">
+			{{ $label }}
+			@if ($required) <span class="text-red-400">*</span> @endif
+		</span>
+	@endif
 	{{-- input --}}
 	<select
 		class="block w-ful @error($attributes['name']) border-red-400 dark:!border-red-500 @enderror"
@@ -18,6 +21,10 @@
 		{{ $disabled ? 'disabled' : '' }}
 		{{ $required ? 'required' : '' }}
 		{{ $autofocus ? 'autofocus' : '' }}
+		@if ($getNav)
+			x-data
+			@change="window.location.search = '?start=' + $event.target.value;"
+		@endif
 	>
 		{{ $slot }}
 	</select>

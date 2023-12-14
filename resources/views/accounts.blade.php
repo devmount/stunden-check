@@ -1,7 +1,14 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2>
-			{{ __('Übersicht Konten') }}
+		<h2 class="flex flex-col sm:flex-row gap-6 justify-between items-center">
+			<div>{{ __('Übersicht Konten') }}</div>
+			<x-select-input :label="false" class="-my-2" get-nav>
+				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
+					<option value="{{ $date->format('Y-m-d') }}" @selected($date == $selectedStart)>
+						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
+					</option>
+				@endforeach
+			</x-select-input>
 		</h2>
 	</x-slot>
 
@@ -66,11 +73,11 @@
 								</x-dropdown-link>
 								<hr />
 								{{-- export accounts as xlsx --}}
-								<x-dropdown-link :href="url('accounts/export/xlsx')" xlsx>
+								<x-dropdown-link :href="url('accounts/export/xlsx/' . $selectedStart->format('Y-m-d'))" xlsx>
 									{{ __('Export Excel') }}
 								</x-dropdown-link>
 								{{-- export accounts as csv --}}
-								<x-dropdown-link :href="url('accounts/export/csv')" csv>
+								<x-dropdown-link :href="url('accounts/export/csv/' . $selectedStart->format('Y-m-d'))" csv>
 									{{ __('Export CSV') }}
 								</x-dropdown-link>
 							</x-slot>
@@ -127,14 +134,14 @@
 											@foreach ($account->users as $user)
 												<div class="flex gap-2 items-center">
 													<div class="w-2 h-2 rounded-full bg-gray-300"></div>
-													<div>{{ $user->excemption_days_cycle }}</div>
+													<div>{{ $user->excemptionDaysByCycle($selectedStart) }}</div>
 												</div>
 											@endforeach
 										</div>
 									@else
 										<div class="flex gap-2 items-center">
 											<div class="w-2 h-2 rounded-full bg-gray-300"></div>
-											<div>{{ $account->excemption_days_cycle }}</div>
+											<div>{{ $account->excemptionDaysByCycle($selectedStart) }}</div>
 										</div>
 									@endif
 								</td>
@@ -144,7 +151,7 @@
 											@foreach ($account->users as $user)
 												<div class="flex gap-2 items-center">
 													<div class="w-2 h-2 rounded-full
-														@switch($user->status)
+														@switch($user->statusByCycle($selectedStart))
 															@case(0) bg-red-500   @break
 															@case(1) bg-amber-500 @break
 															@case(2) bg-teal-500  @break
@@ -152,7 +159,7 @@
 														@endswitch
 														"></div>
 													<div>
-														{{ $user->sum_hours_cycle }} / {{ round($user->total_hours_cycle, 1) }}
+														{{ $user->sumHoursByCycle($selectedStart) }} / {{ round($user->totalHoursByCycle($selectedStart), 1) }}
 													</div>
 												</div>
 											@endforeach
@@ -160,7 +167,7 @@
 									@else
 										<div class="flex gap-2 items-center">
 											<div class="w-2 h-2 rounded-full
-												@switch($account->status)
+												@switch($account->statusByCycle($selectedStart))
 													@case(0) bg-red-500   @break
 													@case(1) bg-amber-500 @break
 													@case(2) bg-teal-500  @break
@@ -168,7 +175,7 @@
 												@endswitch
 											"></div>
 											<div>
-												{{ $account->sum_hours_cycle }} / {{ round($account->total_hours_cycle, 1) }}
+												{{ $account->sumHoursByCycle($selectedStart) }} / {{ round($account->totalHoursByCycle($selectedStart), 1) }}
 											</div>
 										</div>
 									@endif
@@ -225,7 +232,7 @@
 						</tbody>
 					</table>
 					{{-- archived accounts table --}}
-					<table x-show="active === 'archived'" class="items-center bg-transparent w-full border-collapse">
+					<table x-show="active === 'archived'">
 						<thead>
 							<tr>
 								<th class="text-left">&num;</th>
@@ -269,16 +276,14 @@
 									{{ hdate($account->archived_at) }}
 								</td>
 								<td>
-									<div class="flex gap-2 justify-end pr-2">
+									<div class="flex flex-row justify-end items-center gap-2 pr-2">
 										{{-- link to recycle archived account --}}
-										<form method="POST" action="{{ route('accounts-recycle', $account->id) }}">
-											@csrf
-											<x-text-button
-												class="text-teal-600 hover:text-teal-500"
-												title="{{ __('Konto wieder aktivieren') }}"
-												recycle
-											/>
-										</form>
+										<x-text-button
+											onclick="window.location='{{ route('accounts-recycle', $account->id) }}'"
+											class="text-teal-600 hover:text-teal-500"
+											title="{{ __('Konto wieder aktivieren') }}"
+											recycle
+										/>
 
 										{{-- dialog to delete existing account --}}
 										<x-modal class="max-w-lg">
@@ -312,8 +317,8 @@
 							</tr>
 						@endforeach
 						</tbody>
+					</table>
 				</div>
-				</table>
 			</x-content-card>
 		</div>
 	</div>

@@ -1,7 +1,14 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2>
-			{{ __('Übersicht Stunden') }}
+		<h2 class="flex flex-col sm:flex-row gap-6 justify-between items-center">
+			<div>{{ __('Übersicht Stunden') }}</div>
+			<x-select-input :label="false" class="-my-2" get-nav>
+				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
+					<option value="{{ $date->format('Y-m-d') }}" @selected($date == $selectedStart)>
+						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
+					</option>
+				@endforeach
+			</x-select-input>
 		</h2>
 	</x-slot>
 
@@ -12,8 +19,9 @@
 				text-white bg-slate-600 md:border-4 border-white dark:border-slate-500
 			">
 				{{ __('Insgesamt') }}
+				<br class="md:hidden" />
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
-					{{ $total_sum }} / {{ $total_target}}
+					{{ $total_sum }} / {{ $total_target }}
 				</span>
 				{{ __('Stunden geleistet') }}
 			</div>
@@ -21,7 +29,8 @@
 				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
 				text-white bg-teal-600 md:border-4 border-white dark:border-teal-500
 			">
-				{{ __('Aktuelle Abrechnungsperiode') }}
+				{{ $selectedStart->isoFormat('ll') }} &mdash; {{ $selectedEnd->isoFormat('ll') }}
+				<br class="md:hidden" />
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $cycle_sum }} / {{ $cycle_target }}
 				</span>
@@ -30,9 +39,10 @@
 			<div class="
 				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
 				text-white md:border-4 border-white dark:border-slate-500
-				@if ($missing <= 0) bg-amber-600 dark:border-amber-500 @else bg-slate-600 @endif
+				@if ($missing > 0) bg-amber-600 dark:border-amber-500 @else bg-slate-600 @endif
 			">
-				{{ __('Aktuelle Abrechnungsperiode') }}
+				{{ $selectedStart->isoFormat('ll') }} &mdash; {{ $selectedEnd->isoFormat('ll') }}
+				<br class="md:hidden" />
 				<span class="text-xl md:text-3xl lg:text-6xl font-bold md:font-medium">
 					{{ $missing }}
 				</span>
@@ -48,9 +58,9 @@
 				<div class="px-6 pb-4 flex justify-between items-center">
 					<div class="flex flex-col sm:flex-row sm:gap-4">
 						<span class="font-semibold">{{ __('Meine Stunden') }}</span>
-						@if ($user->positions->count() > 1)
+						@if ($user_positions->count() > 1)
 							<span class="text-gray-600 dark:text-gray-400">
-								{{ $user->positions->count() }} {{ __('Einträge') }}
+								{{ $user_positions->count() }} {{ __('Einträge') }}
 							</span>
 						@endif
 					</div>
@@ -79,7 +89,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@forelse ($user->positions->sortByDesc('completed_at') as $position)
+						@forelse ($user_positions->sortByDesc('completed_at') as $position)
 						<tr>
 							<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 								<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
@@ -145,9 +155,9 @@
 					<div class="px-6 pb-4 mt-12 flex justify-between items-center">
 						<div class="flex flex-col sm:flex-row sm:gap-4">
 							<span class="font-semibold">{{ $partner->firstname }}'s {{ __('Stunden') }}</span>
-							@if ($partner->positions->count() > 1)
+							@if ($partner_positions->count() > 1)
 								<span class="text-gray-600 dark:text-gray-400">
-									{{ $partner->positions->count() }} {{ __('Einträge') }}
+									{{ $partner_positions->count() }} {{ __('Einträge') }}
 								</span>
 							@endif
 						</div>
@@ -171,7 +181,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						@forelse ($partner->positions->sortByDesc('completed_at') as $position)
+						@forelse ($partner_positions->sortByDesc('completed_at') as $position)
 							<tr>
 								<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 									<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>

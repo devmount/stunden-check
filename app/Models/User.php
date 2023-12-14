@@ -126,7 +126,7 @@ class User extends Authenticatable
 	{
 		$start = Carbon::parse($this->account->start);
 		$days = $start->diffInDays(Parameter::cycleEnd()) - $this->excemption_days;
-		return $this->target_hours * $days/365;
+		return $this->target_hours * round($days/365, 1);
 	}
 
 	/**
@@ -194,5 +194,80 @@ class User extends Authenticatable
 		if ($this->sum_hours_cycle < $this->total_hours_cycle/2) return 0;
 		if ($this->sum_hours_cycle < $this->total_hours_cycle) return 1;
 		if ($this->sum_hours_cycle >= $this->total_hours_cycle) return 2;
+	}
+
+	/**
+	 * get positions in given cycle
+	 * @param Carbon  $cycleStart
+	 */
+	public function positionsByCycle($cycleStart)
+	{
+		$start = max($this->account->start, $cycleStart);
+		return $this->positions->where('completed_at', '>=', $start);
+	}
+
+	/**
+	 * get sum of hours in given cycle
+	 * @param Carbon  $cycleStart
+	 */
+	public function sumHoursByCycle($cycleStart)
+	{
+		$start = max($this->account->start, $cycleStart);
+		$hours = 0;
+		foreach ($this->positionsByCycle($start) as $p) {
+			$hours += $p->hours;
+		}
+		return $hours;
+	}
+
+	/**
+	 * get total number of days of all excemptions in given cycle
+	 * @param Carbon  $cycleStart
+	 */
+	public function excemptionDaysByCycle($cycleStart)
+	{
+		$start = max($this->account->start, $cycleStart);
+		$end = Carbon::create($cycleStart)->addYear()->subDay();
+		$period = CarbonPeriod::create($start, $end);
+		// assumption that at least start or end of excemptions lie within a cycle
+		$excemptions = $this->excemptions->filter(
+			fn ($e) => $period->contains($e->start) || $period->contains($e->end)
+		);
+		$days = 0;
+		foreach ($excemptions as $e) {
+			// TODO: only count days that are inside the valid working period of the user
+			$days += count(CarbonPeriod::create(max($start, $e->start), '1 day', min($end, $e->end)))-1;
+		}
+		return $days;
+	}
+
+	/**
+	 * get total target number of hours for given cycle
+	 */
+	public function totalHoursByCycle($cycleStart)
+	{
+		$start = max($this->account->start, $cycleStart);
+		$end = Carbon::create($cycleStart)->addYear()->subDay();
+		$days = Carbon::create($start)->diffInDays($end) - $this->excemptionDaysByCycle($start);
+		$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1);
+		return $hours; // TODO: handle given cycle days
+	}
+
+	/**
+	 * get hours still to work to reach quota until end of given cycle
+	 */
+	public function missingHoursByCycle($cycleStart)
+	{
+		return $this->totalHoursByCycle($cycleStart) - $this->sumHoursByCycle($cycleStart);
+	}
+
+	/**
+	 * get status depending on number of hours worked in given cycle
+	 */
+	public function statusByCycle($cycleStart)
+	{
+		if ($this->sumHoursByCycle($cycleStart) < $this->totalHoursByCycle($cycleStart)/2) return 0;
+		if ($this->sumHoursByCycle($cycleStart) < $this->totalHoursByCycle($cycleStart)) return 1;
+		if ($this->sumHoursByCycle($cycleStart) >= $this->totalHoursByCycle($cycleStart)) return 2;
 	}
 }
