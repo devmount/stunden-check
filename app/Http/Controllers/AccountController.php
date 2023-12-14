@@ -19,15 +19,16 @@ class AccountController extends Controller
 	/**
 	 * Display a listing of accounts with assigned users.
 	 *
+	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$activeAccounts = Account::active()->with('users')->get();
-		$archivedAccounts = Account::archived()->with('users')->get();
+		$start = $request->has('start') ? $request->date('start') : Parameter::cycleStart();
 		return view('accounts')
-			->with('activeAccounts', $activeAccounts)
-			->with('archivedAccounts', $archivedAccounts);
+			->with('selectedStart', $start)
+			->with('activeAccounts', Account::active()->with('users')->get())
+			->with('archivedAccounts', Account::archived()->with('users')->get());
 	}
 
 	/**
@@ -71,7 +72,7 @@ class AccountController extends Controller
 			'is_admin'            => $request->has('is_admin1'),
 		]);
 		if ($request->ex_start1 && count($request->ex_start1) > 0 && count($request->ex_start1) == count($request->ex_end1)) {
-			for ($i=0; $i < count($request->ex_start1); $i++) { 
+			for ($i=0; $i < count($request->ex_start1); $i++) {
 				$user1->excemptions()->create([
 					'start'           => $request->ex_start1[$i],
 					'end'             => $request->ex_end1[$i],
@@ -91,7 +92,7 @@ class AccountController extends Controller
 				'is_admin'          => $request->has('is_admin2'),
 			]);
 			if ($request->ex_start2 && count($request->ex_start2) > 0 && count($request->ex_start2) == count($request->ex_end2)) {
-				for ($i=0; $i < count($request->ex_start2); $i++) { 
+				for ($i=0; $i < count($request->ex_start2); $i++) {
 					$user2->excemptions()->create([
 						'start'         => $request->ex_start2[$i],
 						'end'           => $request->ex_end2[$i],
@@ -167,7 +168,7 @@ class AccountController extends Controller
 			Excemption::destroy($ids);
 		}
 		if ($request->ex_start1 && count($request->ex_start1) > 0 && count($request->ex_start1) == count($request->ex_end1)) {
-			for ($i=0; $i < count($request->ex_start1); $i++) { 
+			for ($i=0; $i < count($request->ex_start1); $i++) {
 				$account->users[0]->excemptions()->create([
 					'start' => $request->ex_start1[$i],
 					'end'   => $request->ex_end1[$i],
@@ -201,7 +202,7 @@ class AccountController extends Controller
 				Excemption::destroy($ids);
 			}
 			if ($request->ex_start2 && count($request->ex_start2) > 0 && count($request->ex_start2) == count($request->ex_end2)) {
-				for ($i=0; $i < count($request->ex_start2); $i++) { 
+				for ($i=0; $i < count($request->ex_start2); $i++) {
 					$account->users[1]->excemptions()->create([
 						'start' => $request->ex_start2[$i],
 						'end'   => $request->ex_end2[$i],
@@ -241,13 +242,12 @@ class AccountController extends Controller
 	/**
 	 * Handle an incoming account recycling request.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
 	 * @param  Integer  $id
 	 * @return \Illuminate\Http\RedirectResponse
 	 *
 	 * @throws \Illuminate\Validation\ValidationException
 	 */
-	public function recycle(Request $request, $id)
+	public function recycle($id)
 	{
 		$account = Account::find($id);
 		$account->active = true;
@@ -284,10 +284,10 @@ class AccountController extends Controller
 
 	/**
 	 * Show email reminder view with information about reminding
-	 * 
+	 *
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function reminder() 
+	public function reminder()
 	{
 		// get last execution date and calculated all users that need to be reminded
 		return view('accounts-reminder')
@@ -297,12 +297,12 @@ class AccountController extends Controller
 
 	/**
 	 * Send reminder emails to corresponding users
-	 * 
+	 *
 	 * @return \Illuminate\Http\RedirectResponse
-	 * 
+	 *
 	 * @throws \Illuminate\Validation\ValidationException
 	 */
-	public function remind() 
+	public function remind()
 	{
 		foreach ($this->reminderCandidates() as $user) {
 			Mail::to($user->email)->send(new ReminderMail($user));
@@ -319,10 +319,10 @@ class AccountController extends Controller
 
 	/**
 	 * Download accounts as xlsx or csv
-	 * 
+	 *
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function export($ext) 
+	public function export($ext)
 	{
 		$prefix = now()->toDateString();
 		return Excel::download(new AccountsExport, $prefix . '_stundencheck_konten.' . $ext);
