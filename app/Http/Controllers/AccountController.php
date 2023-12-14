@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Exports\AccountsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class AccountController extends Controller
 {
@@ -320,12 +321,15 @@ class AccountController extends Controller
 	/**
 	 * Download accounts as xlsx or csv
 	 *
+	 * @param  String  $ext    fily type (xlsx or csv)
+	 * @param  String  $start  cycle start
 	 * @return \Illuminate\Support\Collection
 	 */
-	public function export($ext)
+	public function export($ext, $start)
 	{
 		$prefix = now()->toDateString();
-		return Excel::download(new AccountsExport, $prefix . '_stundencheck_konten.' . $ext);
+		$export = new AccountsExport(Carbon::create($start));
+		return Excel::download($export, $prefix . '_stundencheck_konten.' . $ext);
 	}
 
 	/**

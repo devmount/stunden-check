@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Account;
+use App\Models\Parameter;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -14,10 +15,17 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use \DateTime;
+use Carbon\Carbon;
 
 class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHeadings, WithColumnFormatting, WithStyles
 {
 	use Exportable;
+
+	protected $start = null;
+
+	function __construct($cycleStart = null) {
+		return $this->start = $cycleStart;
+	}
 
 	public function query()
 	{
@@ -26,11 +34,17 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 
 	public function headings(): array
 	{
+		$start = $this->start
+			? $this->start->isoFormat('LL')
+			: Carbon::create(Parameter::key('start_accounting'))->isoFormat('LL');
+		$end = $this->start
+			? Carbon::create($this->start)->addYear()->subDay()->isoFormat('LL')
+			: Parameter::cycleEnd()->isoFormat('LL');
 		return [
 			[
 				__('Konto'),
 				null,
-				null,
+				"$start - $end",
 				null,
 				null,
 				null,
@@ -79,10 +93,10 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 			$account->separate_accounting ? __('Ja') : __('Nein'),
 			Date::dateTimeToExcel(new DateTime(substr($account->start, 0, 10))),
 			$account->target_hours,
-			$account->total_hours,
-			$account->sum_hours,
-			$account->missing_hours,
-			$account->excemption_days,
+			$this->start ? $account->totalHoursByCycle($this->start) : $account->total_hours,
+			$this->start ? $account->sumHoursByCycle($this->start) : $account->sum_hours,
+			$this->start ? $account->missingHoursByCycle($this->start) : $account->missing_hours,
+			$this->start ? $account->excemptionDaysByCycle($this->start) : $account->excemption_days,
 			$account->users[0]->firstname,
 			$account->users[0]->lastname,
 			$account->users[0]->email,
@@ -101,13 +115,11 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 			'B' => NumberFormat::FORMAT_TEXT,
 			'C' => NumberFormat::FORMAT_TEXT,
 			'D' => NumberFormat::FORMAT_DATE_YYYYMMDD,
-			'E' => NumberFormat::FORMAT_NUMBER,
-			'F' => NumberFormat::FORMAT_NUMBER_0,
-			'F' => NumberFormat::FORMAT_NUMBER,
-			'F' => NumberFormat::FORMAT_NUMBER,
-			'G' => NumberFormat::FORMAT_NUMBER,
-			'H' => NumberFormat::FORMAT_TEXT,
-			'I' => NumberFormat::FORMAT_TEXT,
+			'E' => NumberFormat::FORMAT_NUMBER_00,
+			'F' => NumberFormat::FORMAT_NUMBER_00,
+			'G' => NumberFormat::FORMAT_NUMBER_00,
+			'H' => NumberFormat::FORMAT_NUMBER_00,
+			'I' => NumberFormat::FORMAT_NUMBER,
 			'J' => NumberFormat::FORMAT_TEXT,
 			'K' => NumberFormat::FORMAT_TEXT,
 			'L' => NumberFormat::FORMAT_TEXT,
@@ -120,7 +132,6 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 	public function styles(Worksheet $sheet)
 	{
 		return [
-			1 => ['font' => ['bold' => true]],
 			2 => ['font' => ['bold' => true]],
 		];
 	}

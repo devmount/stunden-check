@@ -58,7 +58,7 @@ Route::middleware('admin')->group(function () {
 	Route::post('/accounts/delete/{id}', [AccountController::class, 'delete'])->name('accounts-delete');
 	Route::get('/accounts/reminder', [AccountController::class, 'reminder'])->name('accounts-reminder');
 	Route::post('/accounts/reminder', [AccountController::class, 'remind']);
-	Route::get('/accounts/export/{ext}', [AccountController::class, 'export'])->name('accounts-export');
+	Route::get('/accounts/export/{ext}/{start}', [AccountController::class, 'export'])->name('accounts-export');
 	Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 	Route::post('/settings', [SettingsController::class, 'update']);
 	Route::post('/test/mail', [SettingsController::class, 'send'])->name('testmail');

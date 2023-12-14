@@ -73,11 +73,11 @@
 								</x-dropdown-link>
 								<hr />
 								{{-- export accounts as xlsx --}}
-								<x-dropdown-link :href="url('accounts/export/xlsx')" xlsx>
+								<x-dropdown-link :href="url('accounts/export/xlsx/' . $selectedStart->format('Y-m-d'))" xlsx>
 									{{ __('Export Excel') }}
 								</x-dropdown-link>
 								{{-- export accounts as csv --}}
-								<x-dropdown-link :href="url('accounts/export/csv')" csv>
+								<x-dropdown-link :href="url('accounts/export/csv/' . $selectedStart->format('Y-m-d'))" csv>
 									{{ __('Export CSV') }}
 								</x-dropdown-link>
 							</x-slot>
