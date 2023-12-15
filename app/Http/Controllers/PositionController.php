@@ -36,7 +36,7 @@ class PositionController extends Controller
 			->with('user', $u)
 			->with('user_positions', $u->positionsByCycle($start))
 			->with('partner', $p)
-			->with('partner_positions', $p->positionsByCycle($start))
+			->with('partner_positions', $p?->positionsByCycle($start))
 			->with('total_sum', $total_sum)
 			->with('total_target', round($total_target, 1))
 			->with('missing', $missing >= 0 ? round($missing, 1) : 0)
