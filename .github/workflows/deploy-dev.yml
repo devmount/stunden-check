@@ -33,7 +33,7 @@ jobs:
     - name: Push project files to testing environment
       uses: burnett01/rsync-deployments@5.2
       with:
-        switches: -avzr --exclude={'.git*','node_modules','.editorconfig','.env.*'} --delete --delete-excluded
+        switches: -avzr --exclude={'.git*','node_modules','.editorconfig','.env.*','vendor','storage'}
         path: ./
         remote_path: ${{ secrets.DEPLOY_PATH_DEV }}
         remote_host: ${{ secrets.DEPLOY_HOST_DEV }}
@@ -53,11 +53,11 @@ jobs:
           cd ${{ secrets.DEPLOY_PATH_DEV }}
           composer update -qn
           composer install -qno --no-ansi --no-scripts --no-progress
-          php8.1 artisan migrate --force
-          php8.1 artisan config:clear
-          php8.1 artisan config:cache
-          php8.1 artisan route:clear
-          php8.1 artisan route:cache
-          php8.1 artisan view:clear
-          php8.1 artisan view:cache
+          php8.2 artisan migrate --force
+          php8.2 artisan config:clear
+          php8.2 artisan config:cache
+          php8.2 artisan route:clear
+          php8.2 artisan route:cache
+          php8.2 artisan view:clear
+          php8.2 artisan view:cache
           rm -rf node_modules .git* .editorconfig .env.* *.config.js
