@@ -1,10 +1,19 @@
 <x-app-layout>
 	<x-slot name="header">
-		<h2>
-			<a href="{{ route('accounts') }}" class="transition text-teal-600 hover:text-teal-400">
-				{{ __('Übersicht Konten') }}
-			</a>
-			/ {{ __('Einträge ansehen') }}
+		<h2 class="flex flex-col sm:flex-row gap-6 justify-between items-center">
+			<div>
+				<a href="{{ route('accounts') }}?start={{ $selectedStart->format('Y-m-d') }}" class="transition text-teal-600 hover:text-teal-400">
+					{{ __('Übersicht Konten') }}
+				</a>
+				/ {{ __('Einträge ansehen') }}
+			</div>
+			<x-select-input :label="false" class="-my-2" get-nav>
+				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
+					<option value="{{ $date->format('Y-m-d') }}" @selected($date == $selectedStart)>
+						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
+					</option>
+				@endforeach
+			</x-select-input>
 		</h2>
 	</x-slot>
 
@@ -18,8 +27,8 @@
 						<div class="px-6 pb-4 flex justify-between items-center">
 							<div class="flex flex-col sm:flex-row sm:gap-4">
 								<span class="font-semibold">{{ $user->firstname }} {{ $user->lastname }}</span>
-								@if ($user->positions->count() > 1)
-									<span class="text-gray-600">{{ $user->positions->count() }} {{ __('Einträge') }}</span>
+								@if ($user->positionsByCycle($selectedStart)->count() > 1)
+									<span class="text-gray-600">{{ $user->positionsByCycle($selectedStart)->count() }} {{ __('Einträge') }}</span>
 								@endif
 							</div>
 						</div>
@@ -42,7 +51,7 @@
 								</tr>
 							</thead>
 							<tbody>
-							@forelse ($user->positions->sortByDesc('completed_at') as $position)
+							@forelse ($user->positionsByCycle($selectedStart)->sortByDesc('completed_at') as $position)
 								<tr>
 									<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 										<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>

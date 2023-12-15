@@ -110,15 +110,18 @@ class AccountController extends Controller
 	}
 
 	/**
-	 * Display the account modification view.
+	 * Display the account position list view.
 	 *
-	 * @param Integer  $id
+	 * @param  Integer  $id
+	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\View\View
 	 */
-	public function positions($id)
+	public function positions(Request $request, $id)
 	{
+		$start = $request->has('start') ? $request->date('start') : Parameter::cycleStart();
 		$account = Account::find($id);
-		return view('accounts-positions', compact('account'));
+		return view('accounts-positions', compact('account'))
+			->with('selectedStart', $start);
 	}
 
 	/**

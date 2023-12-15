@@ -184,7 +184,7 @@
 									<div class="flex flex-row justify-end items-center gap-2 pr-2">
 										{{-- link to show positions of existing account --}}
 										<x-text-button
-											onclick="window.location='{{ route('accounts-positions', $account->id) }}'"
+											onclick="window.location='{{ route('accounts-positions', $account->id) }}?start={{ $selectedStart->format('Y-m-d') }}'"
 											class="text-teal-600 hover:text-teal-500"
 											title="Einträge auflisten"
 											list
