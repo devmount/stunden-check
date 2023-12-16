@@ -203,7 +203,8 @@ class User extends Authenticatable
 	public function positionsByCycle($cycleStart)
 	{
 		$start = max($this->account->start, $cycleStart);
-		return $this->positions->where('completed_at', '>=', $start);
+		$end = Carbon::create($cycleStart)->addYear()->subDay();
+		return $this->positions->where('completed_at', '>=', $start)->where('completed_at', '<=', $end);
 	}
 
 	/**

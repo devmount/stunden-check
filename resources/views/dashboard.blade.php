@@ -58,9 +58,9 @@
 				<div class="px-6 pb-4 flex justify-between items-center">
 					<div class="flex flex-col sm:flex-row sm:gap-4">
 						<span class="font-semibold">{{ __('Meine Stunden') }}</span>
-						@if ($user_positions->count() > 1)
+						@if ($user->positions()->byCycle($selectedStart)->count() > 1)
 							<span class="text-gray-600 dark:text-gray-400">
-								{{ $user_positions->count() }} {{ __('Einträge') }}
+								{{ $user->positions()->byCycle($selectedStart)->count() }} {{ __('Einträge') }}
 							</span>
 						@endif
 					</div>
@@ -89,7 +89,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@forelse ($user_positions->sortByDesc('completed_at') as $position)
+						@forelse ($user->positions()->byCycle($selectedStart)->get()->sortByDesc('completed_at') as $position)
 						<tr>
 							<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 								<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
@@ -155,9 +155,9 @@
 					<div class="px-6 pb-4 mt-12 flex justify-between items-center">
 						<div class="flex flex-col sm:flex-row sm:gap-4">
 							<span class="font-semibold">{{ $partner->firstname }}'s {{ __('Stunden') }}</span>
-							@if ($partner_positions->count() > 1)
+							@if ($partner->positions()->byCycle($selectedStart)->count() > 1)
 								<span class="text-gray-600 dark:text-gray-400">
-									{{ $partner_positions->count() }} {{ __('Einträge') }}
+									{{ $partner->positions()->byCycle($selectedStart)->count() }} {{ __('Einträge') }}
 								</span>
 							@endif
 						</div>
@@ -181,7 +181,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						@forelse ($partner_positions->sortByDesc('completed_at') as $position)
+						@forelse ($partner->positions()->byCycle($selectedStart)->get()->sortByDesc('completed_at') as $position)
 							<tr>
 								<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 									<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
