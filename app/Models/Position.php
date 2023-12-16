@@ -59,4 +59,15 @@ class Position extends Model
 		$end = Carbon::create($cycleStart)->addYear()->subDay();
 		return $query->where('completed_at', '>=', $start)->where('completed_at', '<=', $end);
 	}
+
+	/**
+	 * Scope a query to only include positions before accounting was even started (invalid positions).
+	 *
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeBeforeBeginning(Builder $query)
+	{
+		$start = Carbon::create(Parameter::key('start_accounting'));
+		return $query->where('completed_at', '<', $start);
+	}
 }
