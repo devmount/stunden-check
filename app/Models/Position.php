@@ -53,7 +53,7 @@ class Position extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function scopeByCycle(Builder $query, Carbon $cycleStart)
+	public function scopeByCycle(Builder $query, Carbon|string $cycleStart)
 	{
 		$start = Carbon::create($cycleStart);
 		$end = Carbon::create($cycleStart)->addYear()->subDay();

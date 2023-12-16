@@ -104,65 +104,6 @@ class Account extends Model
 	}
 
 	/**
-	 * get sum of hours in current cycle
-	 */
-	public function getSumHoursCycleAttribute()
-	{
-		$hours = 0;
-		foreach ($this->users as $u) {
-			$hours += $u->sum_hours_cycle;
-		}
-		return $hours;
-	}
-
-	/**
-	 * get total number of days of all excemptions of all users
-	 */
-	public function getExcemptionDaysCycleAttribute()
-	{
-		$days = 0;
-		foreach ($this->users as $u) {
-			$days += $u->excemption_days_cycle;
-		}
-		return $days;
-	}
-
-	/**
-	 * get total target number of hours for current cycle
-	 */
-	public function getTotalHoursCycleAttribute()
-	{
-		$hours = 0;
-		if ($this->separate_accounting) {
-			foreach ($this->users as $u) {
-				$hours += $u->total_hours_cycle;
-			}
-		} else {
-			$days = Parameter::cycleDays($this->start) - $this->excemption_days_cycle;
-			$hours = $this->target_hours * round($days/Parameter::cycleDays(), 1);
-		}
-		return $hours;
-	}
-
-	/**
-	 * get hours still to work to reach quota until end of current cycle
-	 */
-	public function getMissingHoursCycleAttribute()
-	{
-		return $this->total_hours_cycle - $this->sum_hours_cycle;
-	}
-
-	/**
-	 * get status color depending on number of hours worked
-	 */
-	public function getStatusAttribute()
-	{
-		if ($this->sum_hours_cycle < $this->total_hours_cycle/2) return 0;
-		if ($this->sum_hours_cycle < $this->total_hours_cycle) return 1;
-		if ($this->sum_hours_cycle >= $this->total_hours_cycle) return 2;
-	}
-
-	/**
 	 * get sum of hours in given cycle
 	 */
 	public function sumHoursByCycle($cycleStart)

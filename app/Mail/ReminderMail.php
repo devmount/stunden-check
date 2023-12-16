@@ -35,9 +35,10 @@ class ReminderMail extends Mailable implements ShouldQueue
 		$title         = Parameter::key('branding_title');
 		$account       = $this->user->account;
 		$separate      = $account->separate_accounting;
-		$cycle_missing = $separate ? $this->user->missing_hours_cycle : $account->missing_hours_cycle;
-		$cycle_sum     = $separate ? $this->user->sum_hours_cycle     : $account->sum_hours_cycle;
-		$cycle_target  = $separate ? $this->user->total_hours_cycle   : $account->total_hours_cycle;
+		$start         = Parameter::cycleStart();
+		$cycle_missing = $separate ? $this->user->missingHoursByCycle($start) : $account->missingHoursByCycle($start);
+		$cycle_sum     = $separate ? $this->user->sumHoursByCycle($start)     : $account->sumHoursByCycle($start);
+		$cycle_target  = $separate ? $this->user->totalHoursByCycle($start)   : $account->totalHoursByCycle($start);
 		return $this->subject(
 			'[' . config('app.name', 'StundenCheck') . ' - ' . $title . '] Erinnerung Stunden eintragen'
 		)->view('mail.reminder-email', [

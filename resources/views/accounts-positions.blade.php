@@ -27,8 +27,8 @@
 						<div class="px-6 pb-4 flex justify-between items-center">
 							<div class="flex flex-col sm:flex-row sm:gap-4">
 								<span class="font-semibold">{{ $user->firstname }} {{ $user->lastname }}</span>
-								@if ($user->positionsByCycle($selectedStart)->count() > 1)
-									<span class="text-gray-600">{{ $user->positionsByCycle($selectedStart)->count() }} {{ __('Einträge') }}</span>
+								@if ($user->positions()->byCycle($selectedStart)->count() > 1)
+									<span class="text-gray-600">{{ $user->positions()->byCycle($selectedStart)->count() }} {{ __('Einträge') }}</span>
 								@endif
 							</div>
 						</div>
@@ -51,7 +51,7 @@
 								</tr>
 							</thead>
 							<tbody>
-							@forelse ($user->positionsByCycle($selectedStart)->sortByDesc('completed_at') as $position)
+							@forelse ($user->positions()->byCycle($selectedStart)->get()->sortByDesc('completed_at') as $position)
 								<tr>
 									<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
 										<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
