@@ -53,8 +53,10 @@
 							<tbody>
 							@forelse ($user->positions()->byCycle($selectedStart)->get()->sortByDesc('completed_at') as $position)
 								<tr>
-									<td class="text-left max-w-0 xs:max-w-md lg:max-w-xl">
-										<div class="truncate" title="{{ $position->description }}">{{ $position->description }}</div>
+									<td class="text-left max-w-0 xs:max-w-md lg:max-w-lg">
+										<div class="truncate" title="{{ $position->description }}">
+											{{ $position->description }}
+										</div>
 									</td>
 									<td class="whitespace-nowrap">
 										<span class="lg:hidden">{{ shortdate($position->completed_at) }}</span>
