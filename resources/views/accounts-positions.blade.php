@@ -8,7 +8,7 @@
 				/ {{ __('Einträge ansehen') }}
 			</div>
 			<x-select-input :label="false" class="-my-2" get-nav>
-				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
+				@foreach (App\Models\Parameter::cycles(true, $account->start) as $key => $date)
 					<option value="{{ $date->format('Y-m-d') }}" @selected($date == $selectedStart)>
 						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
 					</option>

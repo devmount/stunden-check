@@ -3,7 +3,7 @@
 		<h2 class="flex flex-col sm:flex-row gap-6 justify-between items-center">
 			<div>{{ __('Übersicht Stunden') }}</div>
 			<x-select-input :label="false" class="-my-2" get-nav>
-				@foreach (App\Models\Parameter::cycles(true) as $key => $date)
+				@foreach (App\Models\Parameter::cycles(true, $user->account->start) as $key => $date)
 					<option value="{{ $date->format('Y-m-d') }}" @selected($date == $selectedStart)>
 						{{ __('Ab') }} {{ $date->isoFormat('LL') }}
 					</option>
