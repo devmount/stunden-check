@@ -103,26 +103,26 @@
 								<td class="whitespace-nowrap text-left">
 									{{ $account->id }}
 								</td>
-								<td class="whitespace-nowrap text-left">
-									<div class="flex flex-row gap-4">
-									@foreach ($account->users as $user)
-										<div class="flex gap-2" title="{{ $user->is_admin ? 'Administrator' : '' }}">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												class="
-													w-6 h-6 fill-transparent stroke-1
-													{{ $user->is_admin ? 'stroke-teal-600 fill-teal-600' : 'stroke-current' }}
-												"
-												viewBox="0 0 24 24"
-											>
-												<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-												<circle cx="12" cy="7" r="4" />
-												<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-											</svg>
-											{{ $user->firstname }} {{ $user->lastname }}
-										</div>
-									@endforeach
-									{{ $account->note ? '(' . $account->note . ')' : '' }}
+								<td class="whitespace-nowrap text-left max-w-0 max-w-md">
+									<div class="flex flex-row gap-4" title="{{ $account->note }}">
+										@foreach ($account->users as $user)
+											<div class="flex gap-2" title="{{ $user->is_admin ? 'Administrator' : '' }}">
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="
+														w-6 h-6 fill-transparent stroke-1
+														{{ $user->is_admin ? 'stroke-teal-600 fill-teal-600' : 'stroke-current' }}
+													"
+													viewBox="0 0 24 24"
+												>
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+													<circle cx="12" cy="7" r="4" />
+													<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+												</svg>
+												{{ $user->firstname }} {{ $user->lastname }}
+											</div>
+										@endforeach
+										<div class="truncate">{{ $account->note ? '(' . $account->note . ')' : '' }}</div>
 									</div>
 								</td>
 								<td class="whitespace-nowrap">

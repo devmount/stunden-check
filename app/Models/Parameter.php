@@ -84,13 +84,22 @@ class Parameter extends Model
 	 * Calculate all cycles since beginning of accounting.
 	 *
 	 * @param Boolean|null  $reverse
-	 * @return CarbonPeriod
+	 * @param Carbon|string|null  $customStart
+	 * @return Array
 	 */
-	public static function cycles($reverse = false)
+	public static function cycles($reverse = false, $customStart = null): Array
 	{
-		$period = CarbonPeriod::create(self::key('start_accounting'), '1 year', self::cycleEnd());
+		$period = CarbonPeriod::create(self::key('start_accounting'), '1 year', self::cycleEnd())->toArray();
+		if ($customStart) {
+			$start = Carbon::create($customStart);
+			foreach ($period as $key => $date) {
+				if ($start >= Carbon::create($date)->addYear()) {
+					unset($period[$key]);
+				}
+			}
+		}
 		if ($reverse) {
-			return array_reverse($period->toArray());
+			return array_reverse($period);
 		} else {
 			return $period;
 		}

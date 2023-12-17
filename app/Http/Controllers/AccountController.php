@@ -374,18 +374,18 @@ class AccountController extends Controller
 	 */
 	private function reminderCandidates()
 	{
-		$accounts = Account::all();
+		$accounts = Account::active()->get();
+		$start    = Parameter::cycleStart();
 		$users = [];
 		foreach ($accounts as $account) {
-			if (!$account->active) continue;
 			if ($account->separate_accounting) {
 				foreach ($account->users as $user) {
-					if ($user->sum_hours_cycle < $user->total_hours_cycle) {
+					if ($user->sumHoursByCycle($start) < $user->totalHoursByCycle($start)) {
 						$users[] = $user;
 					}
 				}
 			} else {
-				if ($account->sum_hours_cycle < $account->total_hours_cycle) {
+				if ($account->sumHoursByCycle($start) < $account->totalHoursByCycle($start)) {
 					foreach ($account->users as $user) {
 						$users[] = $user;
 					}
