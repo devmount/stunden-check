@@ -44,10 +44,10 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 			[
 				__('Konto'),
 				null,
+				null,
+				null,
+				null,
 				"$start - $end",
-				null,
-				null,
-				null,
 				null,
 				null,
 				null,
