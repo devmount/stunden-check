@@ -55,7 +55,7 @@ class LoginRequest extends FormRequest
 			},
 			$this->boolean('remember')
 		)) {
-			// RateLimiter::hit($this->throttleKey());
+			RateLimiter::hit($this->throttleKey());
 
 			throw ValidationException::withMessages([
 				'email' => trans('auth.failed'),
