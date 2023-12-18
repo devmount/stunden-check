@@ -17,7 +17,7 @@ return [
 
 	'name' => env('APP_NAME', 'StundenCheck'),
 
-	'version' => env('APP_VERSION', '1.0.8'),
+	'version' => env('APP_VERSION', '1.1.0'),
 
 	/*
 	|--------------------------------------------------------------------------
