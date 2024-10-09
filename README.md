@@ -8,7 +8,7 @@ StundenCheck is an open source web application for managing participation in ini
 
 Prerequisites:
 
-- PHP 8.1 or later
+- PHP 8.2 or later
 - Composer 2.4 or later
 
 ```bash
