@@ -41,7 +41,7 @@ class Parameter extends Model
 	 */
 	public static function startAccounting()
 	{
-		return Carbon::parse(self::key('start_accounting'))->setYear(date('Y'));
+		return Carbon::parse(self::key('start_accounting'))->year(Carbon::now()->year);
 	}
 
 	/**
