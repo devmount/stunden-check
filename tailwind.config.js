@@ -1,6 +1,5 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+import formPlugin from '@tailwindcss/forms';
 
-/** @type {import('tailwindcss').Config} */
 export default {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
@@ -10,9 +9,9 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
+                sans: ['Open Sans', 'ui-sans-serif', 'system-ui', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
             },
         },
     },
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [formPlugin],
 };
