@@ -25,6 +25,12 @@ npm i                          # Install frontend dependencies
 
 ## Development
 
+If you don't want to start with an empty database, you can generate test accounts with fake data:
+
+```bash
+php artisan db:seed --class=TestDataSeeder # Fill database with fake test data
+```
+
 To start a local development server, run:
 
 ```bash
@@ -34,21 +40,15 @@ npm run dev       # Start dev frontend with hot module reload (HMR)
 
 Now you can log in on <http://localhost:8000> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
 
-If you don't want to start with an empty database, you can generate test accounts with fake data:
-
-```bash
-php artisan db:seed --class=TestDataSeeder # Fill database with fake test data
-```
-
 ## Production
 
 To build the application for production, run:
 
 ```bash
 composer install --optimize-autoloader --no-dev
-php artisan config:cache # combine all configuration files into a single, cached file
-php artisan route:cache  # reduce all route registrations into a single method call within a cached file
-php artisan view:cache   # precompile all blade views
+php artisan config:cache # Combine all configuration files into a single, cached file
+php artisan route:cache  # Reduce all route registrations into a single method call within a cached file
+php artisan view:cache   # Precompile all blade views
 npm run build
 ```
 
