@@ -98,6 +98,13 @@ class Parameter extends Model
 				}
 			}
 		}
+
+		// Handle the case that the current date is in the same year, but still before the cycle start
+		$lastEntry = last($period);
+		if (Carbon::create($lastEntry) > Carbon::now()) {
+			array_pop($period);
+		}
+
 		if ($reverse) {
 			return array_reverse($period);
 		} else {
