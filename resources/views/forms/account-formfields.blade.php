@@ -25,7 +25,7 @@
 		<x-text-input
 			type="date"
 			name="start"
-			:value="old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : $default_start)"
+			value="{{ old('start', isset($account) ? date('Y-m-d', strtotime($account->start)) : $default_start) }}"
 			:label="__('Datum Einstieg')"
 			:info="__('Ist der Einstieg nicht zum Start der Abrechnungsperiode, so sind Stunden nur anteilig zu erbringen.')"
 			required
@@ -36,7 +36,7 @@
 		<x-text-input
 			type="number"
 			name="target_hours"
-			:value="old('target_hours', isset($account) ? $account->target_hours : $default_hours)"
+			value="{{ old('target_hours', isset($account) ? $account->target_hours : $default_hours) }}"
 			:label="__('Mindestanzahl Pflichtstunden')"
 			:info="__('Gilt immer für das gesamte Konto. Bei getrennter Abrechnung ist von jeder Person die Hälfte zu erbringen.')"
 			step="0.25"
@@ -70,7 +70,7 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="firstname1"
-			:value="old('firstname1', isset($account) ? $account->users[0]->firstname : null)"
+			value="{{ old('firstname1', $account?->users[0]?->firstname) }}"
 			:label="__('Vorname')"
 			required
 		/>
@@ -79,7 +79,7 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="lastname1"
-			:value="old('lastname1', isset($account) ? $account->users[0]->lastname : null)"
+			value="{{ old('lastname1', $account?->users[0]?->lastname) }}"
 			:label="__('Nachname')"
 			required
 		/>
@@ -88,7 +88,7 @@
 			class="mt-4 block w-full"
 			type="email"
 			name="email1"
-			:value="old('email1', isset($account) ? $account->users[0]->email : null)"
+			value="{{ old('email1', $account?->users[0]?->email) }}"
 			:label="__('E-Mail-Adresse')"
 			required
 		/>
@@ -164,7 +164,7 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="firstname2"
-			:value="old('firstname2', isset($account) && isset($account->users[1]) ? $account->users[1]->firstname : null)"
+			value="{{ old('firstname2', isset($account) && isset($account->users[1]) ? $account->users[1]->firstname : null) }}"
 			:label="__('Vorname')"
 		/>
 		<!-- 2. lastname -->
@@ -172,7 +172,7 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="lastname2"
-			:value="old('lastname2', isset($account) && isset($account->users[1]) ? $account->users[1]->lastname : null)"
+			value="{{ old('lastname2', isset($account) && isset($account->users[1]) ? $account->users[1]->lastname : null) }}"
 			:label="__('Nachname')"
 		/>
 		<!-- 2. email -->
@@ -180,7 +180,7 @@
 			class="mt-4 block w-full"
 			type="email"
 			name="email2"
-			:value="old('email2', isset($account) && isset($account->users[1]) ? $account->users[1]->email : null)"
+			value="{{ old('email2', isset($account) && isset($account->users[1]) ? $account->users[1]->email : null) }}"
 			:label="__('E-Mail-Adresse')"
 		/>
 		<!-- 2. is_admin -->

@@ -20,7 +20,7 @@
 		"
 		type="{{ $attributes['type'] }}"
 		name="{{ $attributes['name'] }}"
-		value="{{ $attributes['value'] }}"
+		value="{{ html_entity_decode($attributes['value']) }}"
 		{{ $attributes['step'] ? 'step=' . $attributes['step'] : '' }}
 		{{ $attributes['min'] ? 'min=' . $attributes['min'] : '' }}
 		{{ $attributes['max'] ? 'max=' . $attributes['max'] : '' }}
