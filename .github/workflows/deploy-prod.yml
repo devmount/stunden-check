@@ -8,27 +8,22 @@ on:
   push:
     tags:
       - '*'
+  # Allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node.js 17
-      uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
       with:
-        node-version: 17.x
-    - name: Cache node_modules
-      uses: actions/cache@v3
-      id: node_modules-cache
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-build-${{ hashFiles('**/package.json') }}-${{ hashFiles('**/package-lock.json') }}
-    - name: Install node packages
-      if: steps.node_modules-cache.outputs.cache-hit != 'true'
-      run: npm ci
+        node-version: '20.x'
     - name: Build frontend
-      run: npm run build
+      run: |
+        npm ci
+        npm run build
     - name: Build .env
       run: printf "${{ secrets.LARAVEL_ENV_PROD }}" >> .env
     - name: Push project files to testing environment
@@ -54,11 +49,11 @@ jobs:
           cd ${{ secrets.DEPLOY_PATH_PROD }}
           composer update -qn
           composer install -qno --no-ansi --no-scripts --no-progress
-          php8.2 artisan migrate --force
-          php8.2 artisan config:clear
-          php8.2 artisan config:cache
-          php8.2 artisan route:clear
-          php8.2 artisan route:cache
-          php8.2 artisan view:clear
-          php8.2 artisan view:cache
+          php8.3 artisan migrate --force
+          php8.3 artisan config:clear
+          php8.3 artisan config:cache
+          php8.3 artisan route:clear
+          php8.3 artisan route:cache
+          php8.3 artisan view:clear
+          php8.3 artisan view:cache
           rm -rf node_modules .git* .editorconfig .env.* *.config.js
