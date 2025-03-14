@@ -70,7 +70,7 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="firstname1"
-			value="{{ old('firstname1', $account?->users[0]?->firstname) }}"
+			value="{{ old('firstname1', isset($account) ? $account->users[0]?->firstname : null) }}"
 			:label="__('Vorname')"
 			required
 		/>
@@ -79,7 +79,7 @@
 			class="mt-4 block w-full"
 			type="text"
 			name="lastname1"
-			value="{{ old('lastname1', $account?->users[0]?->lastname) }}"
+			value="{{ old('lastname1', isset($account) ? $account->users[0]?->lastname : null) }}"
 			:label="__('Nachname')"
 			required
 		/>
@@ -88,7 +88,7 @@
 			class="mt-4 block w-full"
 			type="email"
 			name="email1"
-			value="{{ old('email1', $account?->users[0]?->email) }}"
+			value="{{ old('email1', isset($account) ? $account->users[0]?->email : null) }}"
 			:label="__('E-Mail-Adresse')"
 			required
 		/>
