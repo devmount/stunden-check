@@ -8,7 +8,7 @@ use App\Models\User;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 
-test('settings page is displayed for admins', function () {
+test('settings page can be rendered for admins', function () {
 	$account = Account::factory()->create();
 	$user = User::factory()->admin()->for($account)->create();
 

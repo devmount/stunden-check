@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('profile page is displayed', function () {
+test('profile page can be rendered', function () {
 	$account = Account::factory()->create();
 	$user = User::factory()->for($account)->create();
 

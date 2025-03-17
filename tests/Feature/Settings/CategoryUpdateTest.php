@@ -1,40 +1,38 @@
 <?php
 
-use App\Enums\DateCycle;
 use App\Models\Account;
-use App\Models\Parameter;
 use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 
-test('category create page can be rendered for admins', function () {
+test('category edit page can be rendered for admins', function () {
 	$account = Account::factory()->create();
 	$user = User::factory()->admin()->for($account)->create();
 
-	$response = $this->actingAs($user)->get('/settings/cat/add');
+	$response = $this->actingAs($user)->get('/settings/cat/edit/1');
 
 	$response->assertOk();
 });
 
 
-test('category create page is forbidden for non-admins', function () {
+test('category edit page is forbidden for non-admins', function () {
 	$account = Account::factory()->create();
 	$user = User::factory()->for($account)->create();
 
-	$response = $this->actingAs($user)->get('/settings/cat/add');
+	$response = $this->actingAs($user)->get('/settings/cat/edit/1');
 
 	$response->assertRedirect('/');
 });
 
 
-test('category can be added', function () {
+test('category can be updated', function () {
 	$account = Account::factory()->create();
 	$user = User::factory()->admin()->for($account)->create();
 
 	$response = $this
 		->actingAs($user)
-		->post('/settings/cat/add', [
+		->post('/settings/cat/edit/1', [
 			'title' => 'New Cat',
 			'description' => 'Lorem Ipsum',
 		]);
@@ -51,7 +49,7 @@ test('required parameters are missing', function () {
 
 	$response = $this
 		->actingAs($user)
-		->post('/settings/cat/add', [
+		->post('/settings/cat/edit/1', [
 			'title' => null,
 			'description' => null,
 		]);
