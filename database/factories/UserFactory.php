@@ -35,6 +35,18 @@ class UserFactory extends Factory
 	}
 
 	/**
+	 * Indicate that the is an admin.
+	 *
+	 * @return static
+	 */
+	public function admin()
+	{
+		return $this->state(fn (array $attributes) => [
+			'is_admin' => true,
+		]);
+	}
+
+	/**
 	 * Indicate that the model's email address should be unverified.
 	 *
 	 * @return static
