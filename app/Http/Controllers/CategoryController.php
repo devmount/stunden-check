@@ -85,13 +85,11 @@ class CategoryController extends Controller
 		$category = Category::find($id);
 		$request->validate(['replacement' => 'required|numeric']);
 
-		// get and update all positions currently holding the category to delete
-		$positions = Position::where('category_id', $id)->get();
-		if (!empty($positions)) {
-			$positions->toQuery()->update([
-				'category_id' => $request->input('replacement'),
-			]);
-		}
+		// Update all positions currently holding the category to delete
+		Position::where('category_id', $id)->update([
+			'category_id' => $request->input('replacement'),
+		]);
+
 		// now the category can be removed, as it's no longer used
 		$category->delete();
 		return redirect()
