@@ -55,6 +55,7 @@ test('all parameters can be updated', function () {
 	expect(Parameter::key('target_hours'))->toBe('24');
 	expect(Parameter::key('cycle_reminder'))->toBe('monthly');
 	expect(Parameter::key('start_reminder'))->toBe('1');
+	expect(Parameter::cycles())->toBeArray();
 });
 
 
