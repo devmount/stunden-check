@@ -50,3 +50,12 @@ test('email is not verified with invalid hash', function () {
 
 	expect($user->fresh()->hasVerifiedEmail())->toBeFalse();
 });
+
+test('email verification notification can be sent', function () {
+	$account = Account::factory()->create();
+	$user = User::factory()->unverified()->for($account)->create();
+
+	$response = $this->actingAs($user)->post('/email/verification-notification');
+
+	$response->assertRedirect();
+});
