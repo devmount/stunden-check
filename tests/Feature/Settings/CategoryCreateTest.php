@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
@@ -40,6 +41,10 @@ test('category can be added', function () {
 	$response
 		->assertSessionHasNoErrors()
 		->assertRedirect('/settings?view=cat');
+
+	$category = Category::where('title', '=', 'New Cat')->first();
+	expect($category->description)->toBe('Lorem Ipsum');
+	expect($category->positions->count())->toBe(0);
 });
 
 
