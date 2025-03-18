@@ -4,7 +4,21 @@ use App\Models\Account;
 use App\Models\Position;
 use App\Models\User;
 
+use function PHPUnit\Framework\assertIsInt;
+
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+
+
+test('position query can be scoped', function () {
+	$account = Account::factory()->create();
+	$user = User::factory()->for($account)->create();
+
+	Position::factory(10)->for($user)->create();
+	assertIsInt($user->positions()->byCycle('2025-01-01')->count());
+
+	Position::factory(2)->for($user)->create();
+	assertIsInt($user->positions()->beforeBeginning()->count());
+});
 
 
 test('position create page can be rendered', function () {
