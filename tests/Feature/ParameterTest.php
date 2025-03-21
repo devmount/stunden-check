@@ -84,3 +84,18 @@ test('required parameters are missing', function () {
 		->assertRedirect('/');
 
 });
+
+
+test('test mail can be sent', function () {
+	$admin = User::find(1);
+
+	$response = $this
+		->actingAs($admin)
+		->post('/test/mail', ['testmail' => 'mail@example.com']);
+	$response->assertRedirect('/settings?view=email');
+
+	$response = $this
+		->actingAs(User::factory()->create())
+		->post('/test/mail');
+	$response->assertRedirect('/');
+});

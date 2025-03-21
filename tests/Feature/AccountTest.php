@@ -95,7 +95,8 @@ test('account can be edited', function () {
 			'target_hours' => 5.5,
 			'firstname1' => 'Peter',
 			'lastname1' => 'Shaw',
-			'email1' => 'peter.shaw@questionmarks.com',
+			'email1' => 'peter.shaw@threequestionmarks.com',
+			'separate_accounting' => true
 		]);
 
 	$response

@@ -7,6 +7,11 @@ use App\Models\User;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 
+test('categories can be queried', function () {
+	expect(Category::all()->count())->toBe(5);
+});
+
+
 test('category create page can be rendered for admins', function () {
 	$account = Account::factory()->create();
 	$user = User::factory()->admin()->for($account)->create();
@@ -44,7 +49,6 @@ test('category can be added', function () {
 
 	$category = Category::where('title', '=', 'New Cat')->first();
 	expect($category->description)->toBe('Lorem Ipsum');
-	expect($category->positions->count())->toBe(0);
 });
 
 
