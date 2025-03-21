@@ -31,7 +31,7 @@ class Parameter extends Model
 	 */
 	public static function key(string $key): string
 	{
-		return self::where('key', '=', $key)->first()?->value;
+		return self::where('key', '=', $key)->first()?->value ?? '';
 	}
 
 	/**
