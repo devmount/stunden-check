@@ -21,11 +21,4 @@ class Category extends Model
 		'description',
 	];
 
-	/**
-	 * get all users assigned to this account
-	 */
-	public function positions()
-	{
-		return $this->hasMany('App\Models\Position','category_id','id');
-	}
 }

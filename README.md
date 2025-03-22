@@ -56,6 +56,20 @@ In `.env` set `APP_DEBUG` to false and `APP_URL` to your production url. Change 
 
 The webserver should be configured to serve the `public/` directory as root.
 
+## Testing
+
+The application provides unit and feature tests that can be run with:
+
+```bash
+php artisan test
+```
+
+If you have `pcov` or `xdebug` available, you can check the test coverage with:
+
+```bash
+php artisan test --coverage
+```
+
 ## License
 
 This project is based on the Laravel framework open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

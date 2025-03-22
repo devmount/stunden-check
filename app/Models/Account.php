@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Parameter;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 
 class Account extends Model
 {

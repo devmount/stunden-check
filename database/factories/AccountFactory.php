@@ -26,7 +26,7 @@ class AccountFactory extends Factory
 	}
 
 	/**
-	 * Indicate that the model's active flag is false.
+	 * Indicate that the model is archived.
 	 *
 	 * @return static
 	 */
@@ -39,4 +39,5 @@ class AccountFactory extends Factory
 			];
 		});
 	}
+
 }
