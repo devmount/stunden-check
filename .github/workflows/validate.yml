@@ -44,6 +44,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: |
+          npm ci
           npm run build
 
       - name: Setup PHP with PECL extension
