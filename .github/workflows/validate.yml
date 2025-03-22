@@ -16,7 +16,7 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      validate-backend: ${{ steps.check.outputs.validate-backend }}
+      validate-app: ${{ steps.check.outputs.validate-app }}
     steps:
     - uses: actions/checkout@v4
 
@@ -24,17 +24,27 @@ jobs:
       id: check
       with:
         filters: |
-          validate-backend:
+          validate-app:
             - '**/*.php'
             - '.github/workflows/validate.yml'
 
-  validate-backend:
+  validate-app:
     needs: detect-changes
     runs-on: ubuntu-latest
-    if: needs.detect-changes.outputs.validate-backend == 'true'
+    if: needs.detect-changes.outputs.validate-app == 'true'
 
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install frontend dependencies
+        run: |
+          npm run build
 
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
@@ -53,13 +63,7 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
-
-      - name: Install dependencies
+      - name: Install backend dependencies
         run: |
           composer install --prefer-dist
           npm run build
