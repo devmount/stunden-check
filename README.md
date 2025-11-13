@@ -8,15 +8,16 @@ StundenCheck is an open source web application for managing participation in ini
 
 Prerequisites:
 
-- PHP 8.2 or later
-- Composer 2.4 or later
+- PHP ≥ 8.2
+- Composer ≥ 2.4
+- Node.js ≥ 24
 
 ```bash
 git clone https://github.com/devmount/stunden-check # Get project files
 cd stunden-check               # Switch to app directory
 composer install               # Install dependencies
 cp .env.example .env           # Init environment configuration
-touch database/database.sqlite # Create database file (only when using SQlite)
+nano .env                      # Set all env vars according to your web server environment
 php artisan migrate            # Create database structure
 php artisan key:generate       # Build a secure key for the app
 php artisan db:seed            # Create initial parameters, categories and admin user
@@ -52,7 +53,7 @@ php artisan view:cache   # Precompile all blade views
 npm run build
 ```
 
-In `.env` set `APP_DEBUG` to false and `APP_URL` to your production url. Change more values here if needed.
+In `.env` set `APP_DEBUG` to _false_ and `APP_URL` to your _production url_. Change more values here if needed.
 
 The webserver should be configured to serve the `public/` directory as root.
 
