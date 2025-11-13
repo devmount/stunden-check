@@ -47,9 +47,7 @@ To build the application for production, run:
 
 ```bash
 composer install --optimize-autoloader --no-dev
-php artisan config:cache # Combine all configuration files into a single, cached file
-php artisan route:cache  # Reduce all route registrations into a single method call within a cached file
-php artisan view:cache   # Precompile all blade views
+php artisan optimize # Cache configuration, events, routes, and views
 npm run build
 ```
 
