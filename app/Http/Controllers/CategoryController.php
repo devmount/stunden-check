@@ -45,7 +45,7 @@ class CategoryController extends Controller
 	 */
 	public function edit($id)
 	{
-		$category = Category::find($id);
+		$category = Category::findOrFail($id);
 
 		// go to edit the category
 		return view('categories-form', compact('category'));
@@ -60,7 +60,7 @@ class CategoryController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		$category = Category::find($id);
+		$category = Category::findOrFail($id);
 
 		$request->validate($this->rules());
 
@@ -82,7 +82,7 @@ class CategoryController extends Controller
 	 */
 	public function delete(Request $request, $id)
 	{
-		$category = Category::find($id);
+		$category = Category::findOrFail($id);
 		$request->validate(['replacement' => 'required|numeric']);
 
 		// Update all positions currently holding the category to delete

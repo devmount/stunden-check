@@ -147,7 +147,7 @@ class AccountController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		$account = Account::find($id);
+		$account = Account::findOrFail($id);
 		$uid1 = isset($account->users[0]) ? $account->users[0]->id : null;
 		$uid2 = isset($account->users[1]) ? $account->users[1]->id : null;
 
@@ -233,7 +233,7 @@ class AccountController extends Controller
 	 */
 	public function archive(Request $request, $id)
 	{
-		$account = Account::find($id);
+		$account = Account::findOrFail($id);
 		$account->active = false;
 		$account->archived_at = now();
 		$account->save();
@@ -253,7 +253,7 @@ class AccountController extends Controller
 	 */
 	public function recycle($id)
 	{
-		$account = Account::find($id);
+		$account = Account::findOrFail($id);
 		$account->active = true;
 		$account->save();
 
@@ -273,7 +273,7 @@ class AccountController extends Controller
 	 */
 	public function delete(Request $request, $id)
 	{
-		$account = Account::find($id);
+		$account = Account::findOrFail($id);
 		foreach ($account->users as $user) {
 			$user->positions()->delete();
 			$user->excemptions()->delete();
