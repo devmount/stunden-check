@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PositionController extends Controller
 {
@@ -20,7 +21,7 @@ class PositionController extends Controller
 	public function index(Request $request)
 	{
 		$start        = $request->has('start') ? $request->date('start') : Parameter::cycleStart();
-		$u            = User::find(auth()->user()->id);
+		$u            = Auth::user();
 		$a            = $u->account;
 		$separate     = $a->separate_accounting;
 		$p            = $u->partner;
@@ -64,7 +65,7 @@ class PositionController extends Controller
 	{
 		$request->validate($this->rules());
 
-		User::find(auth()->user()->id)->positions()->create([
+		Auth::user()->positions()->create([
 			'completed_at' => $request->input('completed_at'),
 			'hours'        => $request->input('hours'),
 			'category_id'  => $request->input('category_id'),
@@ -86,7 +87,7 @@ class PositionController extends Controller
 		$position = Position::find($id);
 
 		// check if user is allowed to edit the position
-		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
+		if (!Auth::user()->is_admin && $position->user->id !== Auth::user()->id) {
 			return redirect()
 				->route('dashboard')
 				->with('status', 'Dieser Eintrag gehört dir nicht.');
@@ -105,10 +106,10 @@ class PositionController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		$position = Position::find($id);
+		$position = Position::findOrFail($id);
 
 		// check if user is allowed to update the position
-		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
+		if (!Auth::user()->is_admin && $position->user->id !== Auth::user()->id) {
 			return redirect()
 				->route('dashboard')
 				->with('status', 'Dieser Eintrag gehört dir nicht.');
@@ -135,10 +136,10 @@ class PositionController extends Controller
 	 */
 	public function delete($id)
 	{
-		$position = Position::find($id);
+		$position = Position::findOrFail($id);
 
 		// check if user is allowed to delete the position
-		if (!auth()->user()->is_admin && $position->user->id !== auth()->user()->id) {
+		if (!Auth::user()->is_admin && $position->user->id !== Auth::user()->id) {
 			return redirect()
 				->route('dashboard')
 				->with('status', 'Dieser Eintrag gehört dir nicht.');

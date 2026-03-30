@@ -8,7 +8,7 @@ StundenCheck is an open source web application for managing participation in ini
 
 Prerequisites:
 
-- PHP ≥ 8.2
+- PHP ≥ 8.3
 - Composer ≥ 2.4
 - Node.js ≥ 24
 
@@ -40,6 +40,12 @@ npm run dev       # Start dev frontend with hot module reload (HMR)
 ```
 
 Now you can log in on <http://localhost:8000> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
+
+Alternatively you can use Docker and create all necessary containers by running:
+
+```bash
+ddev start
+```
 
 ## Production
 

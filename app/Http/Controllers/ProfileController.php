@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -44,8 +44,8 @@ class ProfileController extends Controller
 			'pass'    => 'required|string',
 			'newpass' => 'required|string|confirmed|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
 		]);
-		
-		$user = User::find(auth()->user()->id);
+
+		$user = Auth::user();
 
 		if (Hash::check($request->input('pass'), $user->password)) {
 			$user->password = Hash::make($request->input('newpass'));
@@ -56,7 +56,7 @@ class ProfileController extends Controller
 		} else {
 			throw ValidationException::withMessages(['pass' => 'Dein altes Passwort war nicht korrekt.']);
 		}
-			
+
 		return redirect()->route('password.change');
 	}
 }
