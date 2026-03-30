@@ -18,9 +18,9 @@ jobs:
     outputs:
       validate-app: ${{ steps.check.outputs.validate-app }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    - uses: dorny/paths-filter@v3
+    - uses: dorny/paths-filter@v4
       id: check
       with:
         filters: |
@@ -34,11 +34,11 @@ jobs:
     if: needs.detect-changes.outputs.validate-app == 'true'
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
 
@@ -50,7 +50,7 @@ jobs:
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: pcov
 
       - name: Get composer cache directory
@@ -58,7 +58,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}

@@ -14,11 +14,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Use Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: '20.x'
+        node-version: 24
     - name: Build frontend
       run: |
         npm ci
@@ -26,7 +26,7 @@ jobs:
     - name: Build .env
       run: printf "${{ secrets.LARAVEL_ENV_DEV }}" >> .env
     - name: Push project files to testing environment
-      uses: burnett01/rsync-deployments@5.2
+      uses: burnett01/rsync-deployments@v8
       with:
         switches: -avzr --exclude={'.git*','node_modules','.editorconfig','.env.*','vendor','storage'}
         path: ./
@@ -37,7 +37,7 @@ jobs:
         remote_key: ${{ secrets.DEPLOY_SSH_KEY_DEV }}
         remote_key_pass: ${{ secrets.DEPLOY_SSH_PHRASE_DEV }}
     - name: Build backend
-      uses: appleboy/ssh-action@v0.1.6
+      uses: appleboy/ssh-action@v1
       with:
         host: ${{ secrets.DEPLOY_HOST_DEV }}
         port: ${{ secrets.DEPLOY_PORT_DEV }}
@@ -48,11 +48,11 @@ jobs:
           cd ${{ secrets.DEPLOY_PATH_DEV }}
           composer update -qn
           composer install -qno --no-ansi --no-scripts --no-progress
-          php8.3 artisan migrate --force
-          php8.3 artisan config:clear
-          php8.3 artisan config:cache
-          php8.3 artisan route:clear
-          php8.3 artisan route:cache
-          php8.3 artisan view:clear
-          php8.3 artisan view:cache
+          php8.4 artisan migrate --force
+          php8.4 artisan config:clear
+          php8.4 artisan config:cache
+          php8.4 artisan route:clear
+          php8.4 artisan route:cache
+          php8.4 artisan view:clear
+          php8.4 artisan view:cache
           rm -rf node_modules .git* .editorconfig .env.* *.config.js
