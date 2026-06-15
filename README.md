@@ -41,11 +41,17 @@ npm run dev       # Start dev frontend with hot module reload (HMR)
 
 Now you can log in on <http://localhost:8000> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
 
-Alternatively you can use Docker and create all necessary containers by running:
+Alternatively you can use Docker and create all necessary containers (web, db, Mailpit) by running:
 
 ```bash
 ddev start
+ddev exec php artisan migrate
+ddev exec php artisan key:generate
+ddev exec php artisan db:seed
+ddev exec npm i
 ```
+
+Now you can log in on <https://stunden-check.ddev.site> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
 
 ## Production
 
