@@ -128,7 +128,7 @@
 				<div class="flex gap-4 mt-2 items-center">
 					<!-- start date -->
 					<input
-						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						class="block w-full rounded-md shadow-xs border-gray-300 focus:border-teal-300 focus:ring-3 focus:ring-teal-200/50"
 						type="date"
 						name="ex_start1[]"
 						required
@@ -136,7 +136,7 @@
 					<!-- end date -->
 					bis
 					<input
-						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						class="block w-full rounded-md shadow-xs border-gray-300 focus:border-teal-300 focus:ring-3 focus:ring-teal-200/50"
 						type="date"
 						name="ex_end1[]"
 						required
@@ -219,7 +219,7 @@
 				<div class="flex gap-4 mt-2 items-center">
 					<!-- start date -->
 					<input
-						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						class="block w-full rounded-md shadow-xs border-gray-300 focus:border-teal-300 focus:ring-3 focus:ring-teal-200/50"
 						type="date"
 						name="ex_start2[]"
 						required
@@ -227,7 +227,7 @@
 					<!-- end date -->
 					bis
 					<input
-						class="block w-full rounded-md shadow-sm border-gray-300 focus:border-teal-300 focus:ring focus:ring-teal-200 focus:ring-opacity-50"
+						class="block w-full rounded-md shadow-xs border-gray-300 focus:border-teal-300 focus:ring-3 focus:ring-teal-200/50"
 						type="date"
 						name="ex_end2[]"
 						required

@@ -16,7 +16,7 @@
 		{{ $disabled ? 'disabled' : '' }}
 		class="
 			block w-full
-			@error($attributes['name']) !border-red-400 dark:!border-red-500 @enderror
+			@error($attributes['name']) border-red-400! dark:border-red-500! @enderror
 		"
 		type="{{ $attributes['type'] }}"
 		name="{{ $attributes['name'] }}"

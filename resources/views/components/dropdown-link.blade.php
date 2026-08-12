@@ -1,6 +1,6 @@
 @props(['mail', 'xlsx', 'csv'])
 
-<a {{ $attributes->merge(['class' => 'flex items-center gap-2 px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 hover:dark:bg-gray-700 focus:outline-none focus:bg-gray-100 transition-colors']) }}>
+<a {{ $attributes->merge(['class' => 'flex items-center gap-2 px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 hover:dark:bg-gray-700 focus:outline-hidden focus:bg-gray-100 transition-colors']) }}>
 	@isset($mail)
 		<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 fill-transparent stroke-current stroke-2" viewBox="0 0 24 24">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>

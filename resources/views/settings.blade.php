@@ -18,7 +18,7 @@
 						<button
 							@click="active = 'param'"
 							:class="[
-								active === 'param' && 'bg-white text-black shadow',
+								active === 'param' && 'bg-white text-black shadow-sm',
 								active !== 'param' && 'text-gray-600 dark:text-gray-400'
 							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg transition-colors"
@@ -28,7 +28,7 @@
 						<button
 							@click="active = 'cat'"
 							:class="[
-								active === 'cat' && 'bg-white text-black shadow',
+								active === 'cat' && 'bg-white text-black shadow-sm',
 								active !== 'cat' && 'text-gray-600 dark:text-gray-400'
 							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg transition-colors"
@@ -38,7 +38,7 @@
 						<button
 							@click="active = 'email'"
 							:class="[
-								active === 'email' && 'bg-white text-black shadow',
+								active === 'email' && 'bg-white text-black shadow-sm',
 								active !== 'email' && 'text-gray-600 dark:text-gray-400'
 							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg transition-colors"

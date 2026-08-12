@@ -16,7 +16,7 @@
 	@endif
 	{{-- input --}}
 	<select
-		class="block w-ful @error($attributes['name']) border-red-400 dark:!border-red-500 @enderror"
+		class="block w-ful @error($attributes['name']) border-red-400 dark:border-red-500! @enderror"
 		name="{{ $attributes['name'] }}"
 		{{ $disabled ? 'disabled' : '' }}
 		{{ $required ? 'required' : '' }}
@@ -31,7 +31,7 @@
 </label>
 {{-- error message --}}
 @error($attributes['name'])
-	<div class="text-sm text-red-600 dark:!border-red-500">
+	<div class="text-sm text-red-600 dark:border-red-500!">
 		{{ $message }}
 	</div>
 @enderror
