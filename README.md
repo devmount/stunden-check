@@ -11,6 +11,7 @@ Prerequisites:
 - PHP ≥ 8.3
 - Composer ≥ 2.4
 - Node.js ≥ 24
+- pnpm ≥ 11
 
 ```bash
 git clone https://github.com/devmount/stunden-check # Get project files
@@ -21,7 +22,7 @@ nano .env                      # Set all env vars according to your web server e
 php artisan migrate            # Create database structure
 php artisan key:generate       # Build a secure key for the app
 php artisan db:seed            # Create initial parameters, categories and admin user
-npm i                          # Install frontend dependencies
+pnpm i                         # Install frontend dependencies
 ```
 
 ## Development
@@ -36,7 +37,7 @@ To start a local development server, run:
 
 ```bash
 php artisan serve # Start dev webserver
-npm run dev       # Start dev frontend with hot module reload (HMR)
+pnpm dev          # Start dev frontend with hot module reload (HMR)
 ```
 
 Now you can log in on <http://localhost:8000> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
@@ -48,7 +49,7 @@ ddev start
 ddev exec php artisan migrate
 ddev exec php artisan key:generate
 ddev exec php artisan db:seed
-ddev exec npm i
+ddev exec pnpm i
 ```
 
 Now you can log in on <https://stunden-check.ddev.site> with the initial admin user credentials (email: `admin@example.com`, password: `Joh.3,16`).
@@ -60,7 +61,7 @@ To build the application for production, run:
 ```bash
 composer install --optimize-autoloader --no-dev
 php artisan optimize # Cache configuration, events, routes, and views
-npm run build
+pnpm build
 ```
 
 In `.env` set `APP_DEBUG` to _false_ and `APP_URL` to your _production url_. Change more values here if needed.

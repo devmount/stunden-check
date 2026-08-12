@@ -1,14 +1,45 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+  --font-sans:
+    Open Sans, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
 	a {
-		@apply text-gray-600 dark:text-gray-300 hover:text-gray-900 hover:dark:text-white;
+		@apply text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white;
+	}
+
+	button, [type='button'], [type='submit'] {
+		@apply cursor-pointer;
 	}
 
 	input, select, textarea {
-		@apply transition-colors !rounded !shadow-sm focus:!ring focus:!ring-opacity-50 !bg-white dark:!bg-gray-800 !border-gray-300 dark:!border-gray-500 focus:!border-teal-300 focus:!ring-teal-200;
+		@apply transition-colors rounded-sm! shadow-xs! focus:ring-3! bg-white! dark:bg-gray-800! border-gray-300! dark:border-gray-500! focus:border-teal-300! focus:ring-teal-200/50!;
 	}
 
 	hr {
@@ -27,7 +58,7 @@
 		@apply px-3 md:px-6 py-3 align-middle border border-solid uppercase border-l-0 border-r-0 font-semibold whitespace-nowrap bg-gray-50 dark:bg-gray-800/80 text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700;
 	}
 	tbody>tr {
-		@apply even:bg-gray-50 even:dark:bg-gray-800/50 hover:bg-gray-200 hover:dark:bg-gray-700;
+		@apply even:bg-gray-50 dark:even:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700;
 	}
 	tbody>tr>td {
 		@apply px-3 md:px-6 py-3 md:py-4 align-middle;

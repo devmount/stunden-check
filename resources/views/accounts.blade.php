@@ -25,7 +25,7 @@
 						<button
 							@click="active = 'active'"
 							:class="[
-								active === 'active' && 'bg-white text-black shadow',
+								active === 'active' && 'bg-white text-black shadow-sm',
 								active !== 'active' && 'text-gray-600 dark:text-gray-400'
 							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
@@ -38,7 +38,7 @@
 						<button
 							@click="active = 'archived'"
 							:class="[
-								active === 'archived' && 'bg-white text-black shadow',
+								active === 'archived' && 'bg-white text-black shadow-sm',
 								active !== 'archived' && 'text-gray-600 dark:text-gray-400'
 							]"
 							class="py-2 px-4 inline-flex items-center justify-center text-center rounded-lg"
@@ -57,7 +57,7 @@
 						{{-- dropdown with addition functions --}}
 						<x-dropdown align="right">
 							<x-slot name="trigger">
-								<button class="group flex justify-center items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+								<button class="group flex justify-center items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-hidden focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
 									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-transparent stroke-current stroke-2" viewBox="0 0 24 24">
 										<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 										<line x1="4" y1="6" x2="20" y2="6" />

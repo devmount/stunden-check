@@ -36,16 +36,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install frontend dependencies
         run: |
-          npm ci
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm build
 
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
@@ -67,7 +69,7 @@ jobs:
       - name: Install backend dependencies
         run: |
           composer install --prefer-dist
-          npm run build
+          pnpm build
 
       - name: Test with Pest
         run: php artisan test --coverage

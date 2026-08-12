@@ -15,7 +15,7 @@
 	<div class="pt-12">
 		<div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 grid gap-4 grid-cols-1 md:grid-cols-3 justify-between">
 			<div class="
-				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
+				md:flex flex-col items-center shadow-md rounded-sm md:rounded-lg p-2 md:p-6 text-center
 				text-white bg-slate-600 md:border-4 border-white dark:border-slate-500
 			">
 				{{ __('Insgesamt') }}
@@ -26,7 +26,7 @@
 				{{ __('Stunden geleistet') }}
 			</div>
 			<div class="
-				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
+				md:flex flex-col items-center shadow-md rounded-sm md:rounded-lg p-2 md:p-6 text-center
 				text-white bg-teal-600 md:border-4 border-white dark:border-teal-500
 			">
 				{{ $selectedStart->isoFormat('ll') }} &mdash; {{ $selectedEnd->isoFormat('ll') }}
@@ -37,7 +37,7 @@
 				{{ __('Stunden geleistet') }}
 			</div>
 			<div class="
-				md:flex flex-col items-center shadow-md rounded md:rounded-lg p-2 md:p-6 text-center
+				md:flex flex-col items-center shadow-md rounded-sm md:rounded-lg p-2 md:p-6 text-center
 				text-white md:border-4 border-white dark:border-slate-500
 				@if ($missing > 0) bg-amber-600 dark:border-amber-500 @else bg-slate-600 @endif
 			">

@@ -65,7 +65,7 @@
 				<button
 					@click="open = !open"
 					class="
-						inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition
+						inline-flex items-center justify-center p-2 rounded-md focus:outline-hidden transition
 						text-gray-400 hover:text-gray-500 hover:dark:text-white hover:bg-gray-100 hover:dark:bg-gray-600 focus:text-gray-500 focus:dark:text-white focus:bg-gray-100 focus:dark:bg-gray-600
 					"
 				>
