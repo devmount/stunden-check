@@ -5,12 +5,12 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.5.2",
+        "@tailwindcss/forms": "^0.5.11",
         "@tailwindcss/vite": "^4.3.3",
-        "alpinejs": "^3.4.2",
-        "laravel-vite-plugin": "^3.1.0",
+        "alpinejs": "^3.16.3",
+        "laravel-vite-plugin": "^3.2.0",
         "tailwindcss": "^4.3.3",
-        "vite": "^8.0.16"
+        "vite": "^8.2.2"
     },
     "type": "module",
     "packageManager": "pnpm@11.21.0+sha512.521705bce689924eac72f5a3587122f362689ef6571e55ba80076fd637c11132ecffada26fad4ea79c485bfddbfd3d5a2a5b05805a77e893de71ec8a6cca3bb1"

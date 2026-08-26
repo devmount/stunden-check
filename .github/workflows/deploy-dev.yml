@@ -14,12 +14,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: pnpm/action-setup@v4
-    - name: Use Node.js
-      uses: actions/setup-node@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: pnpm/setup@bf5bfae7d43e2b2b1191383f5005cd3fb69b848d # v2.0.2
       with:
-        node-version: 24
+        runtime: node@24
+        install: false
     - name: Build frontend
       run: |
         pnpm install --frozen-lockfile
@@ -27,7 +26,7 @@ jobs:
     - name: Build .env
       run: printf "${{ secrets.LARAVEL_ENV_DEV }}" >> .env
     - name: Push project files to testing environment
-      uses: burnett01/rsync-deployments@v8
+      uses: burnett01/rsync-deployments@4d419d1dc46d4a8a2b6ceab2f951f0f93b2da8f5 # 9.0.0
       with:
         switches: -avzr --exclude={'.git*','node_modules','.editorconfig','.env.*','vendor','storage'}
         path: ./
@@ -38,7 +37,7 @@ jobs:
         remote_key: ${{ secrets.DEPLOY_SSH_KEY_DEV }}
         remote_key_pass: ${{ secrets.DEPLOY_SSH_PHRASE_DEV }}
     - name: Build backend
-      uses: appleboy/ssh-action@v1
+      uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
       with:
         host: ${{ secrets.DEPLOY_HOST_DEV }}
         port: ${{ secrets.DEPLOY_PORT_DEV }}
