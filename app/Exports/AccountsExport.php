@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Account;
 use App\Models\Parameter;
+use Illuminate\Database\Eloquent\Builder;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -27,7 +28,7 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 		return $this->start = $cycleStart;
 	}
 
-	public function query()
+	public function query(): Builder
 	{
 		return Account::query();
 	}
@@ -132,7 +133,7 @@ class AccountsExport implements FromQuery, ShouldAutoSize, WithMapping, WithHead
 		];
 	}
 
-	public function styles(Worksheet $sheet)
+	public function styles(Worksheet $sheet): array
 	{
 		return [
 			2 => ['font' => ['bold' => true]],
